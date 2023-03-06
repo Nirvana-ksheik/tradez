@@ -1,0 +1,43 @@
+.main-container{
+    background-color: #3bb19b;
+    border-radius: 4px;
+}
+
+.font-white{
+    color: whitesmoke;
+}
+
+.group{
+    
+}
+
+.sub-text{
+    color: whitesmoke;
+    font-size: 12px;
+    font-weight: 400;
+    margin-top: 1%;
+}
+
+input{
+    border: none !important;
+}
+
+.fileupload-input{
+    -webkit-font-smoothing: antialiased;
+    cursor: pointer;
+    opacity: 0.3;
+}
+
+.inputContainer{
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    color: #ececec;
+}
+
+.icon{
+    font-size: 2.4em;
+}
+
+hr{
+    color: whitesmoke;
+}

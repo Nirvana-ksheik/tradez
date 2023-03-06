@@ -1,0 +1,38 @@
+.title{
+    font-size: 2.4em;
+}
+
+.outer-box{
+    margin-top: 8%;
+}
+
+/* .main-image{
+    height:auto;
+    width: auto; 
+} */
+
+.main-image-box{
+    /* border: 1px solid green; */
+}
+
+.content-box{
+    /* border: 1px solid red; */
+}
+
+.approximate-price{
+    text-align: end;
+}
+
+.image-slider-box{
+
+}
+
+.small-image:hover{
+    transform: scale(1.2);
+    transition-duration: 500ms;
+    cursor: pointer;   
+}
+
+.user-icon, .location-icon{
+    margin-right: 2% !important;
+}
