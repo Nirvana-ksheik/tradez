@@ -6,25 +6,8 @@
     margin-top: 8%;
 }
 
-/* .main-image{
-    height:auto;
-    width: auto; 
-} */
-
-.main-image-box{
-    /* border: 1px solid green; */
-}
-
-.content-box{
-    /* border: 1px solid red; */
-}
-
 .approximate-price{
     text-align: end;
-}
-
-.image-slider-box{
-
 }
 
 .small-image:hover{
@@ -35,4 +18,8 @@
 
 .user-icon, .location-icon{
     margin-right: 2% !important;
+}
+
+.faded-div{
+    opacity: 0.05;
 }

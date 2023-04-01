@@ -55,12 +55,17 @@ const confirmAndUpdateState = async({id}) => {
                });
 }
 
-const forgotPassword = async({email}) => {
+const forgotPassword = async(email) => {
     console.log("email: ", email);
     const user = await model.findOne({email: email});
-    const token = createToken({user: {id: user._id, username: user.username, email: user.email}, secret: process.env.RESET_PASS_TOKEN_SECRET, expirydate: process.env.RESET_PASS_TOKEN_EXPIRY_DATE});
-    console.log("token: ", token);
-    await sendResetPasswordEmail({email, token});
+    if(user){
+        const token = createToken({user: {id: user._id, username: user.username, email: user.email}, secret: process.env.RESET_PASS_TOKEN_SECRET, expirydate: process.env.RESET_PASS_TOKEN_EXPIRY_DATE});
+        console.log("token: ", token);
+        await sendResetPasswordEmail({email, token});
+        
+    }else{
+        throw Error("Email not found in system");
+    }
 }
 
 const resetPassword = async({id, password}) => {
@@ -76,8 +81,9 @@ const resetPassword = async({id, password}) => {
 }
 
 const getById = async ({id}) => {
-    
-    const user = await model.findById({id});
+    console.log("iddd: ", id);
+    const user = await model.findById(id);
+    console.log("userrrr: ", user);
     return user;
 }
 

@@ -29,16 +29,23 @@ const createDirectory = ({userId, itemId}) => {
     const __dirname = path.dirname(__filename);
     console.log("dirname: ", __dirname);
     const dir = path.resolve(path.join(__dirname, '..', 'public', userId.toString(), itemId.toString()));
+    console.log("directory is: ", dir);
+
+    if(fs.existsSync(dir)){
+      fs.rmdirSync(dir, {recursive: true});
+    }
 
     if (!fs.existsSync(dir)) {
       console.log("directory doesnt exists...");
       fs.mkdirSync(dir, {recursive: true});
     }
+
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, {
         mode: 0o744, // Not supported on Windows. Default: 0o777
       });
     }
+    
     console.log("finished creating directory");
 
     return dir;

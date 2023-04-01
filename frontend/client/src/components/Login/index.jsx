@@ -62,6 +62,7 @@ const Login = ({setCookie}) => {
 						<button type="submit" className={classnames(styles.green_btn, styles.margin_top_btn)}>
 							Log In
 						</button>
+						<div>Forgot password ? <Link to="/forgot-password">click here</Link></div>
 					</form>
 				</div>
 				<div className={styles.right}>

@@ -1,52 +1,81 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { useParams } from "react-router-dom";
-import {format} from 'date-fns';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect } from "react";
+import { useRef } from 'react';
 import "./itemForm.css";
-const ItemForm = () => {
 
+const ItemForm = ({ data, setData, selectedFile, setSelectedFile, submitForm }) => {
+
+    const inputRef = useRef(null);
+
+	const handleChange = ({ currentTarget: input }) => {
+		setData({ ...data, [input.name] : input.value });
+	};
+
+    const handleFileSelect = (event) => {
+        console.log("handle files selecteddddddddddddddd: ", event.target.files);
+        setSelectedFile(event.target.files)
+    }
+
+    // const setImages = () => {
+    //     if(selectedFile != null && selectedFile != undefined && selectedFile != []){
+    //         console.log("selected filessssssssssssssssssss: ", selectedFile);
+    //         document.getElementsByName("imagesReferences")[0].value = selectedFile;
+    //     }
+    // };
+
+    useEffect(() => {
+        console.log("selected files: ", selectedFile);
+        if(selectedFile != null && selectedFile != undefined && selectedFile != []){
+            const fileInput = inputRef.current;
+            console.log("fileinput: ", fileInput);
+            Object.defineProperty(fileInput, 'files', {
+                value: selectedFile,
+                writable: false
+              }); 
+        }
+   }, []);
+    
 	return (
         <>
             <div className="container d-flex col-6 offset-3 mt-5 mb-3 main-container flex-column">
                 <h1 className="d-flex col-12 justify-content-center mt-2 font-white">ADD ITEM</h1>
                 <hr></hr>
-                <form className="d-flex col-12 flex-column">
-                    <div className="d-flex m-2 col-12 justify-content-around group" controlId="exampleForm.ControlInput1">
+                <form className="d-flex col-12 flex-column" encType="multipart/form-data" onSubmit={submitForm}>
+                    <div className="d-flex m-2 col-12 justify-content-around group">
                         <label className="col-3 font-white">Item Name</label>
-                        <input className="col-6 form-control-sm" type="text" placeholder="" />
+                        <input className="col-6 form-control-sm" type="text" placeholder="" name="name" value={data.name} onChange={handleChange}/>
                     </div>
-                    <div className="d-flex m-2 col-12 justify-content-around group" controlId="exampleForm.ControlInput1">
+                    <div className="d-flex m-2 col-12 justify-content-around group">
                         <label className="col-3 font-white">Approximate Value</label>
                         <div className="col-6">
-                            <input className="form-control-sm col-12" type="number" placeholder="e.g 9000.00 (S.P)" />
+                            <input className="form-control-sm col-12" type="number" placeholder="e.g 9000.00 (S.P)" name="approximateValue" value={data.approximateValue} onChange={handleChange}/>
                             <p className="sub-text">How much do you evaluate your item's price (S.P)</p>
                         </div>
 
                     </div>
-                    <div className="d-flex m-2 col-12 justify-content-around group" controlId="exampleForm.ControlInput1">
+                    <div className="d-flex m-2 col-12 justify-content-around group">
                         <label className="col-3 font-white">Location</label>
                         <div className="col-6">
-                            <input className="col-12 form-control-sm" type="text" placeholder="" />
+                            <input className="col-12 form-control-sm" type="text" placeholder="" name="locationName" value={data.locationName} onChange={handleChange}/>
                             <p className="sub-text">Your location for the trade</p>
                         </div>
                     </div>
-                    <div className="d-flex m-2 col-12 justify-content-around group" controlId="exampleForm.ControlInput1">
+                    <div className="d-flex m-2 col-12 justify-content-around group">
                         <label className="col-3 font-white">Item Description</label>
                         <div className="col-6">
-                            <textarea className="col-12 form-control-sm" type="textarea" placeholder="" />
+                            <textarea className="col-12 form-control-sm" type="textarea" placeholder="" name="description" value={data.description} onChange={handleChange} />
                             <p className="sub-text">Describe your item</p>
                         </div>
                     </div>
-                    <div className="d-flex m-2 col-12 justify-content-around align-items-center group" controlId="exampleForm.ControlInput1">
+                    <div className="d-flex m-2 col-12 justify-content-around align-items-center group">
                         <label className="col-3 font-white">Image Files</label>
-                        <div className="inputContainer col-6 d-flex flex-column align-items-center justify-content-center" tabindex="0" role="button">
+                        <div className="inputContainer col-6 d-flex flex-column align-items-center justify-content-center" tabIndex="0" role="button">
                             <FontAwesomeIcon icon="upload" className="mt-3 icon col-8 offset-2"></FontAwesomeIcon>
                             <p className="mt-1 col-8 offset-2 d-flex justify-content-center">Drag and drop files here</p>
-                            <input className="fileupload-input col-8 offset-2 btn btn-outline-light" type="file" multiple/>
+                            <input className="fileupload-input col-8 offset-2 btn btn-outline-light" type="file" multiple name="imagesReferences" ref={inputRef} onChange={handleFileSelect} />
                         </div>
                     </div>
-                    <input className="col-12 btn btn-light mt-5 mb-2" type="submit" value="Submit" />
+                    <input className="col-12 btn btn-light mt-5 mb-2" type="submit" value="Submit"/>
                 </form>
             </div>
         </>

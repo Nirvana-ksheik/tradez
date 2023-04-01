@@ -62,8 +62,7 @@ input:-webkit-autofill {
 
 .input {
 	outline: none;
-	border: none;
-	border-bottom: 1px solid;
+	border-bottom: 1px solid black !important;
 	width: 370px;
 	padding: 15px;
 	border-radius: 3px;

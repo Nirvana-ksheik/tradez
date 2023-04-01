@@ -1,13 +1,12 @@
 import React, {useState} from "react";
 import Dropdown from "../Dropdown";
-import { useNavigate } from "react-router-dom";
 import "./Item.css";
 
-const Item = ({data}) => {
+const Item = ({data, clickEvent}) => {
 
 	console.log("data is: ", data);
 	const [openDropDown, setOpenDropDown] = useState(false);
-	const navigate = useNavigate();
+
 	return (
 	<div className="container col-3 border m-3 shadow-sm item-container">
 		<div className="three-dots mt-1"
@@ -19,10 +18,7 @@ const Item = ({data}) => {
 					<Dropdown/>
 				</div>
 			}
-		<div onClick={()=>{
-					const location = "/items/" + data._id
-					navigate(location)
-		}}>
+		<div onClick={clickEvent}>
 			<div className="col-10 offset-1">
 				<img
 					src={"http://localhost:3000" + data.imagePaths[0]}

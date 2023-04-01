@@ -1,0 +1,27 @@
+.icon{
+    font-size: 8em !important;
+    color: #3bb19b;
+}
+
+.btnn:hover{
+    background-color: #3bb19b;
+    color: white;
+    border: none;
+    border-radius: 0.7em;
+}
+
+.btnn{
+    background-color: white;
+    color: #3bb19b;
+    border: 1px solid #3bb19b;
+    border-radius: 0.7em;
+}
+.email, .date{
+    color: #3bb19b;
+}
+
+.username{
+    color: white;
+    background-color: #3bb19b;
+    border-radius: 5px;
+}

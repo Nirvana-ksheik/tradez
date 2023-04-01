@@ -48,6 +48,10 @@ const itemSchema = new Schema({
     },
     publishedDate:{
         type: Date
+    },
+    archived:{
+        type: Boolean,
+        default: false
     }
 }, { _id: false });
 
@@ -63,6 +67,9 @@ export class ItemModel {
         this.ownerId = null;
         this.tradez = data.tradez;
         this._id = null;
+        this.tradezItems = null;
+        this.itemTradeInOrder = false;
+        this.archived = false;
     }
 
     setOwnerId = (id) => { this.ownerId = id; }
@@ -70,6 +77,7 @@ export class ItemModel {
     setItemId = (id) => { this._id = id; }
     setImageReferences = (refs) => { this.imagesReferences = refs; }
     setImagePaths = (refs) => { this.imagePaths = refs; }
+    setTradezItems = (items) => { this.tradezItems = items; }
 }
 
 const model = mongoose.model('Item', itemSchema);

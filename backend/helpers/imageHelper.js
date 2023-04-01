@@ -5,7 +5,7 @@ const createImagesAndReturnIds = async (files) => {
     const fileIds = [];
     for(const file of files){
         try{
-            const res = await model.create({...file});
+            const res = await model.create({...file}).catch((err) => console.log("error: ", err));
             console.log("saved images successfully: ", res);
             fileIds.push(res._id);
         }

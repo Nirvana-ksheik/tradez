@@ -41,14 +41,14 @@ const sendResetPasswordEmail = async ({email, token}) => {
 
     console.log("reached sending reset password email helper");
 
-    const url = `http://localhost:3000/api/auth/reset/${token}`;
+    const frontendUrl = `http://localhost:3001/auth/reset/${token}`;
 
     const transporter = getTransporter();
 
     const info = await transporter.sendMail({
         to: email,
         subject: 'Reset Password Email',
-        html: `Please click this link to proceed to reset your password: <a href="${url}">${url}</a>`
+        html: `Please click this link to proceed to reset your password: <a href="${frontendUrl}">Click Here!</a>`
     });
 
     console.log("finished sending email");

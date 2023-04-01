@@ -17,6 +17,7 @@ const checkUser = (req, res, next)=>{
             return res.sendStatus(403).json({message: "invalid token"});
         }
         req.user = user;
+        console.log("user in check user is: ", user);
         next();
     });
 }
@@ -40,12 +41,12 @@ const checkResetPasswordToken = (req, res, next) =>{
     verify(token, process.env.RESET_PASS_TOKEN_SECRET, (err, user) => {
         if(err){
             console.log("token no longer active");
-            return res.sendStatus(403);
+            return res.status(403).json({message: "Token no longer active"});
         }
         console.log("user from token: ", user);
         req.user = user;
         next();
-    })
+    }); 
 }
 
 const   loginHandleErrors = async(req, res, next) => {

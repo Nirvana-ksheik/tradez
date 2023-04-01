@@ -1,5 +1,5 @@
 import * as dotenv from 'dotenv';
-import { login, signup, confirmAndUpdateState, forgotPassword, resetPassword } from '../helpers/authHelper.js';
+import { login, signup, confirmAndUpdateState, forgotPassword, resetPassword, getById } from '../helpers/authHelper.js';
 
 dotenv.config();
 
@@ -60,11 +60,12 @@ const _forgotPassword = async(req, res) => {
     try{
         const {email} = req.body;
         console.log("email: ", email);
-        await forgotPassword({email});
+        await forgotPassword(email);
         console.log("reset password link sent successfully");
         res.status(200).json("A reset link has been sent to your email");
     } catch(err){
-        res.status(500).json({err});
+        console.log("error: ", err.message);
+        res.status(500).json(err.message);
     }
 }
 export {_forgotPassword as forgotPasswordController};
@@ -79,7 +80,22 @@ const _resetPassword = async(req, res) => {
         console.log("finished resetting password successfully");
         res.status(200).json("Password updated successfully");
     } catch(err){
+        console.log("err: ", err);
         res.status(401).json({err});
     }
 };
 export {_resetPassword as resetPasswordController};
+
+const _getUserProfile = async(req, res) => {
+    try{
+        const user = req.user;
+        console.log("user in controller: ", user);
+        const id = user.id;
+        const result = await getById({id});
+        console.log("result is: ", result);
+        res.status(200).json({result});
+    } catch(err){
+        res.status(500).json({err});
+    }
+};
+export {_getUserProfile as getUserProfileController};

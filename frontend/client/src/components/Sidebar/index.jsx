@@ -6,7 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 const SideBar = () => {
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  
   return (
     <div className="col-1 d-flex flex">
         <SideNav onSelect={(selected) => {
@@ -31,6 +32,10 @@ const SideBar = () => {
                 <NavItem eventKey="allitems">
                     <NavIcon><i className="fa fa-cubes icons"></i></NavIcon>
                     <NavText>All Items</NavText>
+                </NavItem>
+                <NavItem eventKey="items/archived">
+                    <NavIcon><i className="fa fa-file-archive icons"></i></NavIcon>
+                    <NavText>Archived Items</NavText>
                 </NavItem>
             </SideNav.Nav>
         </SideNav>

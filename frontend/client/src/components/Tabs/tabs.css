@@ -1,0 +1,17 @@
+.btn-custom{
+    text-decoration: none !important;
+    color: whitesmoke !important;
+    background-color: #3bb19b;
+}
+
+.btn-custom::after{
+    border: none !important;
+    border-color: #3bb19b !important;
+}
+
+.items-list{
+    border: 1px solid #3bb19b;
+    margin-top: 4%;
+    border-radius: 10px;
+    box-shadow: 0px 7px 29px 0px rgb(0, 90, 25);
+}
