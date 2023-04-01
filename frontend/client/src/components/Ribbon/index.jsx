@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function Ribbon({text, setShowValue}) {
+function Ribbon({text, setShowValue, isSuccess}) {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
@@ -15,17 +15,19 @@ function Ribbon({text, setShowValue}) {
   }, []);
 
   return (
-    <div
+    <div className="w-50 text-center"
       style={{
         display: isVisible ? 'block' : 'none',
-        backgroundColor: 'green',
+        backgroundColor: isSuccess == false ? 'red' : 'green',
         color: 'white',
         padding: '10px',
         position: 'fixed',
         top: '50px',
         left: '50%',
         transform: 'translateX(-50%)',
-        zIndex: 1000
+        zIndex: 1000,
+        alignItems: 'center',
+        fontSize: '2rem'
       }}
     >
       {text}

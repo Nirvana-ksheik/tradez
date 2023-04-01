@@ -16,6 +16,7 @@ import ArchivedItems from "pages/ArchivedItems";
 import UserProfile from "pages/UserProfile";
 import ResetPassword from "components/ResetPassword";
 import ForgotPassword from "components/ForgotPassword";
+import ConfirmEmail from "pages/ConfirmEmail";
 
 function App() {
 	const cookies = new Cookies();
@@ -66,6 +67,7 @@ function App() {
 				<Route path="/profile" element={<UserProfile getCookie={getCookie} />} />
 				<Route path="/auth/reset/:token" element={<ResetPassword />} />
 				<Route path="/forgot-password" element={<ForgotPassword />} />
+				<Route path="/confirm-email/:token" element={<ConfirmEmail />} />
 			</Routes>
 		</div>
 	);

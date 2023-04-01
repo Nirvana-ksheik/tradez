@@ -28,6 +28,9 @@ export { _createItemController as createItemController };
 
 const _editItemController = async (req, res) => {
     console.log("request body: ", req.body);
+    console.log("request files: ", req.files);
+    console.log("request body files: ", req.body.files);
+    return;
     try {
         const item = new ItemModel(req.body);
         item.setOwnerId(req.user.id);
@@ -81,18 +84,18 @@ export { _getAllItemsController as getAllItemsController };
 
 const _getItemImageController = async (req, res) => {
 
-    console.log("reached get item's image");
-    const parentDirectory = "../public"
-    try{
-        const params = req.params
-        console.log("params: ", params);
-        const dirname = parentDirectory + "/" + params.id + "/" + params.idd + "/" + params.iddd;
-        console.log("dirname: ", dirname);
-        return res.sendFile(__dirname + dirname);  
-        console.log("finished getting items for user");
-    } catch(err){
-        console.log(err);
-        res.status(500).json(err.message);
-    }
+    // console.log("reached get item's image");
+    // const parentDirectory = "../public"
+    // try{
+    //     const params = req.params
+    //     console.log("params: ", params);
+    //     const dirname = "/" + params.id + "/" + params.idd + "/" + params.iddd;
+    //     console.log("dirname: ", dirname);
+    //     const pathh = path.resolve(__dirname, dirname);
+    //     return res.sendFile(pathh);  
+    // } catch(err){
+    //     console.log(err);
+    //     res.status(500).json(err.message);
+    // }
 };
 export { _getItemImageController as getItemImageController };

@@ -7,6 +7,9 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import http from 'http';
+import { createProxyMiddleware } from 'http-proxy-middleware';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
 const app = express(); 
 
@@ -19,9 +22,31 @@ app.use(cookieParser());
 app.use(cors({credentials: true, origin: true }));
 
 app.use('/', (req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+    res.setHeader(
+      'Access-Control-Allow-Origin', 'http://localhost:3001'
+      );
     next();
-  });
+});
+
+// app.use(
+//   '/api',
+//   createProxyMiddleware({
+//     target: 'http://localhost:3001',
+//     changeOrigin: true,
+//     pathFilter: '/:id/:idd/:iddd',
+//   }));
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+app.get('/api/image/:id/:idd/:iddd', (req, res) => {
+
+    const params = req.params
+    console.log("params: ", params);
+    const dirname = "/public/" + params.id + "/" + params.idd + "/" + params.iddd;
+    // console.log("dirname: ", __dirname + dirname);
+    res.sendFile(__dirname + dirname);  
+});
 
 app.use('/', authRouter);
 app.use('/', itemRouter);

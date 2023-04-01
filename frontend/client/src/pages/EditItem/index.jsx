@@ -9,7 +9,7 @@ const EditItem = ({ getCookie }) => {
     const {id} = useParams();
 
     const [data, setData] = useState("");
-    const [selectedFile, setSelectedFile] = useState("");
+    const [selectedFile, setSelectedFile] = useState([]);
 
     useEffect(() => {   
         getItemDetails();
@@ -21,7 +21,10 @@ const EditItem = ({ getCookie }) => {
 
         let reqInstance = axios.create({
             headers: {
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+                'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization'
             }
         });
 
@@ -30,34 +33,11 @@ const EditItem = ({ getCookie }) => {
             url,
             {
                 withCredentials: true,
-                baseURL: 'http://localhost:3000'
+                baseURL:'http://localhost:3000'
             }
         ).then(async ({data}) => {
             console.log("data: ", data);
             setData(data);
-
-            const newFiles = [];
-
-            data.imagePaths.forEach((item, i) => {
-                console.log("item in foreach is: ", item);
-
-                const fileName = item.split("\\").pop();
-
-                reqInstance.get("http://localhost:3000/api" + item, {
-                    withCredentials: true,
-                    baseURL: 'http://localhost:3000'
-                })
-                    .then((response) => response.blob())
-                    .then((blob) => {    
-                        const file = new File([blob], fileName, { type: blob.type });
-                        newFiles.push(file);
-                        if (newFiles.length === data.imagePaths.length) {
-                          setSelectedFile(newFiles);
-                        }
-                    });
-                        
-                console.log("files: ", newFiles);
-            });
         });
     };
 
@@ -75,6 +55,8 @@ const EditItem = ({ getCookie }) => {
             formData.append('imagesReferences', selectedFile[i]);
         }
 
+        console.log("selectedFiles: ", selectedFile);
+        
         const token = getCookie();
 
         let reqInstance = axios.create({
@@ -89,7 +71,7 @@ const EditItem = ({ getCookie }) => {
 			await reqInstance.put(url, formData, 
 				{
 					withCredentials: true,
-					baseURL: 'http://localhost:3000'
+                    baseURL: 'http://localhost:3000'
 				});
 
 			navigate("/items/mine");
@@ -102,7 +84,7 @@ const EditItem = ({ getCookie }) => {
 	return (
         <>
             {   
-                data && selectedFile &&
+                data &&
                 <ItemForm data={data} setData={setData} selectedFile={selectedFile} setSelectedFile={setSelectedFile} submitForm={submitForm} />
             }
         </>

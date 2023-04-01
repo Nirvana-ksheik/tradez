@@ -23,14 +23,14 @@ const getTransporter = () => {
 const sendConfirmationEmail = async ({email, token}) => {
 
     console.log("reached sending confirmation email helper");
-    const url = `http://localhost:3000/api/auth/confirm/${token}`;
+    const frontEndUrl = `http://localhost:3001/confirm-email/${token}`;
 
     const transporter = getTransporter();
 
     const info = await transporter.sendMail({
         to: email,
         subject: 'Confirm Email',
-        html: `Please click this link to confirm your email: <a href="${url}">${url}</a>`
+        html: `Please click this link to confirm your email: <a href="${frontEndUrl}">Click Here</a>`
     });
 
     console.log("finished sending email");
