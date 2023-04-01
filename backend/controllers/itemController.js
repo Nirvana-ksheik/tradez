@@ -27,21 +27,25 @@ const _createItemController = async (req, res) => {
 export { _createItemController as createItemController };
 
 const _editItemController = async (req, res) => {
+
     console.log("request body: ", req.body);
     console.log("request files: ", req.files);
-    console.log("request body files: ", req.body.files);
-    return;
+    
     try {
         const item = new ItemModel(req.body);
         item.setOwnerId(req.user.id);
         item.setItemId(req.body._id)
         console.log("item: ", item);
-        const files = ImageModel.getImages(req.files);
-        const fileReferences = await createImagesAndReturnIds(files);
-        item.setImageReferences(fileReferences);
+        const files = req.files;
+        console.log("files: ", files);
+        if(files != [] && files != null && files != undefined && files != ''){
+            const files = ImageModel.getImages(req.files);
+            const fileReferences = await createImagesAndReturnIds(files);
+            item.setImageReferences(fileReferences);
+        }
         const result = await editItem({item});
         res.status(200).json(result);
-        console.log("finished creating item");
+        console.log("finished editing item");
     } catch (err) {
         res.status(500).json(err.message);
     }

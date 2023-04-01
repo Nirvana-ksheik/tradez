@@ -16,7 +16,10 @@ const createItem = async ({item}) => {
 
 const editItem = async ({item}) => {
     console.log("itemssss: ", {...item});
-    
+    if(item.imagesReferences == null || item.imagesReferences == undefined || item.imagesReferences == []){
+        const itemTemp = await model.findById(item._id);
+        item.imagesReferences = itemTemp.imagesReferences;
+    }
     return await model.findByIdAndUpdate(item._id, { ...item })
     .catch(err =>{
          console.log("error occured: ", err);

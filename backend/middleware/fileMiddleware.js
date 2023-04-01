@@ -6,15 +6,21 @@ import mongoose from 'mongoose';
 
 const fileStorageEngine = multer.diskStorage({
     destination: (req, file, cb) => {
-        console.log("reached file storage engine");
-        if(!req.body._id){
-          req.body._id = new mongoose.Types.ObjectId().toString();
+        console.log("file in middlware: ", file);
+
+        if(file != null && file != undefined && file != [] && file != ''){
+            console.log("reached file storage engine");
+            if(!req.body._id){
+              req.body._id = new mongoose.Types.ObjectId().toString();
+            }
+            const dir = createDirectory({userId: req.user.id, itemId: req.body._id});
+            cb(null, dir);
         }
-        const dir = createDirectory({userId: req.user.id, itemId: req.body._id});
-        cb(null, dir);
     },
     filename: (req, file, cb) => {
+      if(file != null && file != undefined && file != [] && file != ''){
         cb(null, Date.now() + '--' + file.originalname);
+      }
     }
 });
 

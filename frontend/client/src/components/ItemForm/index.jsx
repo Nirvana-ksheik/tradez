@@ -19,7 +19,6 @@ const ItemForm = ({ data, setData, selectedFile, setSelectedFile, submitForm }) 
 
             const files = createFileListFromBlobs(blobs);
             setFileList(files);
-            setSelectedFile(files);
         };
         
         getImages();
