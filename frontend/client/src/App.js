@@ -57,14 +57,20 @@ function App() {
 			<Routes>
 				<Route path="/signup" element={<Signup />} />
 				<Route path="/login" element={<Login setCookie={setCookie}/>} />
-				<Route path="/items/mine" element={<MyItems getCookie={getCookie}/>} />
+				{user != null && user != undefined && 
+					<Route path="/items/mine" element={<MyItems getCookie={getCookie}/>} />}
 				<Route path="/allitems" element={<AllItems getCookie={getCookie}/>} />
 				<Route path="/items/:id" element={<ItemDetails getCookie={getCookie} />} />
-				<Route path="/items/create" element={<AddItem getCookie={getCookie} />} />
-				<Route path="/items/edit/:id" element={<EditItem getCookie={getCookie} />} />
-				<Route path="/items/:primaryId/tradez/:id" element={<ItemDetails getCookie={getCookie} />} />
-				<Route path="/items/archived" element={<ArchivedItems getCookie={getCookie} />} />
-				<Route path="/profile" element={<UserProfile getCookie={getCookie} />} />
+				{user != null && user != undefined && 
+					<Route path="/items/create" element={<AddItem getCookie={getCookie} />} /> }
+				{user != null && user != undefined && 
+					<Route path="/items/edit/:id" element={<EditItem getCookie={getCookie} />} />}
+				{user != null && user != undefined && 
+					<Route path="/items/:primaryId/tradez/:id" element={<ItemDetails getCookie={getCookie} />} />}
+				{user != null && user != undefined && 
+					<Route path="/items/archived" element={<ArchivedItems getCookie={getCookie} />} />}
+				{user != null && user != undefined && 
+					<Route path="/profile" element={<UserProfile getCookie={getCookie} />} />}
 				<Route path="/auth/reset/:token" element={<ResetPassword />} />
 				<Route path="/forgot-password" element={<ForgotPassword />} />
 				<Route path="/confirm-email/:token" element={<ConfirmEmail />} />

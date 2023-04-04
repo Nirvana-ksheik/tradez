@@ -1,5 +1,5 @@
 .navbar {
-	background-color: #3bb19b;
+	background-color: #3cb88f;
 	height: 80px;
 	display: flex;
 	justify-content: center;
@@ -137,7 +137,6 @@ u{
 	text-decoration: none;
 }
 
-
 #popup-list > .tooltip-inner {
 	background-color: #fff !important;
 	border: 1px solid #3bb19b ;
@@ -146,11 +145,9 @@ u{
 #popup-list > .tooltip-arrow::before {
 	border-top: 1px solid #3bb19b !important;
 	border-bottom-color: #f7f7f7;
-
 }
 
 .popup-list-button{
-
 	background-color: #fff;
 	color: #3bb19b;
 }

@@ -4,6 +4,7 @@ import { ItemModel } from '../models/Item.js';
 import { createItem, getItemMetaData, getAllItems, editItem } from '../helpers/itemHelper.js';
 import { ImageModel } from '../models/Image.js';
 import { createImagesAndReturnIds } from '../helpers/imageHelper.js';
+import { deleteFilesWithItemId } from '../helpers/fileHelper.js';
 
 dotenv.config();
 
@@ -39,6 +40,8 @@ const _editItemController = async (req, res) => {
         const files = req.files;
         console.log("files: ", files);
         if(files != [] && files != null && files != undefined && files != ''){
+            console.log("item id: ", item._id);
+            await deleteFilesWithItemId(item._id);
             const files = ImageModel.getImages(req.files);
             const fileReferences = await createImagesAndReturnIds(files);
             item.setImageReferences(fileReferences);

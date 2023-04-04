@@ -49,7 +49,7 @@ const checkResetPasswordToken = (req, res, next) =>{
     }); 
 }
 
-const   loginHandleErrors = async(req, res, next) => {
+const loginHandleErrors = async(req, res, next) => {
 
     const {username, password } = req.body;
 

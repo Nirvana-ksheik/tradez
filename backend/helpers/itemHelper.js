@@ -6,7 +6,7 @@ import { getTradez } from './tradeHelper.js';
 import mongoose from 'mongoose';
 
 const createItem = async ({item}) => {
-    console.log("itemssss: ", {...item});
+    console.log("items: ", {...item});
     return await model.create({ ...item })
     .catch(err =>{
          console.log("error occured");
@@ -15,11 +15,12 @@ const createItem = async ({item}) => {
 }
 
 const editItem = async ({item}) => {
-    console.log("itemssss: ", {...item});
+    console.log("items: ", {...item});
     if(item.imagesReferences == null || item.imagesReferences == undefined || item.imagesReferences == []){
         const itemTemp = await model.findById(item._id);
         item.imagesReferences = itemTemp.imagesReferences;
     }
+
     return await model.findByIdAndUpdate(item._id, { ...item })
     .catch(err =>{
          console.log("error occured: ", err);

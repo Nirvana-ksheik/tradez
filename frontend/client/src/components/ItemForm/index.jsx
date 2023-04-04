@@ -11,37 +11,17 @@ const ItemForm = ({ data, setData, selectedFile, setSelectedFile, submitForm }) 
     const [fileList, setFileList] = useState(null);
 
     useEffect(()=>{
-        const dt = new DataTransfer();
-
-        const getImages = async() => {
-            const blobs = await Promise.all(data.imagePaths.map(imagePath => 
-                axios.get('http://localhost:3000/api/image' + imagePath, {responseType: 'blob'})));
-
-            const files = createFileListFromBlobs(blobs);
-            setFileList(files);
-        };
         
-        getImages();
-    }, []);
-
-    function createFileListFromBlobs(blobs) {
-        const dt = new DataTransfer();
-        for (let i = 0; i < blobs.length; i++) {
-            console.log("blob: ", blobs[i]);
-            const filename = getFileName(blobs[i].request.responseURL);
-            console.log("filename: ", filename);
-            const file = new File([blobs[i]], filename, { type: blobs[i].data.type });
-
-            dt.items.add(file);
+        if(data && data.imagePaths != [] && data.imagePaths != null && data.imagePaths != undefined){
+            const images = Array.from(data.imagePaths);
+            let urls = [];
+            images.forEach((image, i) => {
+                const url = 'http://localhost:3000' + image;
+                urls.push(url);
+            });
+            setFileList(urls);
         }
-        return dt.files;
-      }
-
-    const getFileName = (path) => {
-        console.log(path);
-        const filename = path.split('--')[1];
-        return filename
-    }
+    }, []);
 
 	return (
         <>
@@ -81,17 +61,31 @@ const ItemForm = ({ data, setData, selectedFile, setSelectedFile, submitForm }) 
                             <i className="fas fa-cloud-upload-alt icon"></i>
                             <p className="mt-1 col-8 d-flex justify-content-center">Drag and drop files here</p>        
                             <input className="fileupload-input col-8 btn btn-outline-light" 
-                                type="file" multiple name="imagesReferences" onChange={(e)=> setSelectedFile(Array.from(e.target.files))} />
+                                type="file" multiple name="imagesReferences" onChange={(e)=> {
+                                            const files = Array.from(e.target.files);
+                                            setSelectedFile(files);
+                                            if(files != [] && files != undefined){
+                                                let urls = [];
+                                                files.forEach((file, i)=>{
+                                                    const objectUrl = URL.createObjectURL(file);
+                                                    console.log("object url: ", objectUrl);
+                                                    urls.push(objectUrl);
+                                                });
+                                                setFileList(urls);
+                                            }
+                                            console.log("selected files: ", e.target.files);
+                                        }
+                                    } />
                             {
-                                data && data.imagePaths &&
+                                fileList &&
                                 <div className="d-flex justify-content-around col-12 flex-wrap mt-1">
                                 {(() => {
                                     let container = [];
                                     {
-                                        data.imagePaths.forEach((data, index) => {
+                                        fileList.forEach((data, index) => {
                                         console.log("single data is: ", data);
                                         container.push(
-                                            <img src={'http://localhost:3000'+data} className="col-4" />
+                                            <img src={data} className="col-4" key={index} />
                                         )
                                         })
                                     }
