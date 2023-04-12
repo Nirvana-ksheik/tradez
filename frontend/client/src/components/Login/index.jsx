@@ -1,9 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import styles from "./styles.module.css";
+import "./login.css"
 import {useNavigate} from 'react-router-dom';
-import classnames from 'classnames';
 
 const Login = ({setCookie}) => {
 	const [data, setData] = useState({ username: "", password: "" });
@@ -35,11 +34,11 @@ const Login = ({setCookie}) => {
 	};
 
 	return (
-		<div className={styles.login_container}>
-			<div className={styles.login_form_container}>
-				<div className={styles.left}>
-					<form className={styles.form_container} onSubmit={handleSubmit}>
-						<h1>Login to Your Account</h1>
+		<div className="d-flex justify-content-center align-items-center col-6 offset-3 mt-5 main-container">
+			<div className="login_form_container d-flex col-12">
+				<div className="left col-8 d-flex flex-column justify-content-center align-items-center">
+					<form className="col-12 d-flex flex-column align-items-center" onSubmit={handleSubmit}>
+						<p className="div-title mt-4">Login to Your Account</p>
 						<input
 							type="text"
 							placeholder="Username / Email"
@@ -47,7 +46,7 @@ const Login = ({setCookie}) => {
 							onChange={handleChange}
 							value={data.username}
 							required
-							className={styles.input}
+							className="input col-8 offset-2"
 						/>
 						<input
 							type="password"
@@ -56,22 +55,20 @@ const Login = ({setCookie}) => {
 							onChange={handleChange}
 							value={data.password}
 							required
-							className={styles.input}
+							className="input col-8 offset-2"
 						/>
-						{error && <div className={styles.error_msg}>{error}</div>}
-						<button type="submit" className={classnames(styles.green_btn, styles.margin_top_btn)}>
+						{error && <div className="error_msg col-8 offset-2">{error}</div>}
+						<button type="submit" className="green_btn col-5 margin_top_btn">
 							Log In
 						</button>
-						<div>Forgot password ? <Link to="/forgot-password">click here</Link></div>
+						<div className="m-2">Forgot password ? <Link to="/forgot-password">click here</Link></div>
 					</form>
 				</div>
-				<div className={styles.right}>
-					<h1>New Here ?</h1>
-					<Link to="/signup">
-						<button type="button" className={classnames(styles.white_btn, styles.login_box)}>
-							Sing Up
-						</button>
-					</Link>
+				<div className="d-flex col-4 flex-column justify-content-center right">
+					<p className="next-div-title">New Here ?</p>
+					<button type="button" className="white_btn login_box" onClick={() => navigate("/signup")}>
+						Sing Up
+					</button>
 				</div>
 			</div>
 		</div>

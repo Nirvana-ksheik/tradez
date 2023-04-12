@@ -1,8 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import styles from "./styles.module.css";
-import * as classnames from 'classnames'
+import "./signup.css"
 
 const Signup = () => {
 	const [data, setData] = useState({
@@ -40,19 +39,17 @@ const Signup = () => {
 	};
 
 	return (
-		<div className={styles.signup_container}>
-			<div className={styles.signup_form_container}>
-				<div className={styles.left}>
-					<h1>Welcome Back</h1>
-					<Link to="/login">
-						<button type="button" className={styles.white_btn}>
-							Log in
-						</button>
-					</Link>
+		<div className="d-flex justify-content-center align-items-center col-6 offset-3 mt-5 main-container">
+			<div className="login_form_container d-flex col-12">
+				<div className="d-flex col-4 flex-column justify-content-center right	">
+					<p className="next-div-title">Welcome Back</p>
+					<button type="button" className="white_btn login_box" onClick={() => navigate("/login")}>
+						Log in
+					</button>
 				</div>
-				<div className={styles.right}>
-					<form className={styles.form_container} onSubmit={handleSubmit}>
-						<h1>Create Account</h1>
+				<div className="left col-8 d-flex flex-column justify-content-center align-items-center">
+					<form className="col-12 d-flex flex-column align-items-center" onSubmit={handleSubmit}>
+						<p className="div-title mt-4">Create Account</p>
 						<input
 							type="text"
 							placeholder="User Name"
@@ -60,7 +57,7 @@ const Signup = () => {
 							onChange={handleChange}
 							value={data.username}
 							required
-							className={styles.input}
+							className="input col-8 offset-2"
 						/>
 						<input
 							type="email"
@@ -69,7 +66,7 @@ const Signup = () => {
 							onChange={handleChange}
 							value={data.email}
 							required
-							className={styles.input}
+							className="input col-8 offset-2"
 						/>
 						<input
 							type="password"
@@ -78,10 +75,10 @@ const Signup = () => {
 							onChange={handleChange}
 							value={data.password}
 							required
-							className={styles.input}
+							className="input col-8 offset-2"
 						/>
-						{error && <div className={styles.error_msg}>{error}</div>}
-						<button type="submit" className={classnames(styles.green_btn, styles.margin_top_btn)}>
+						{error && <div className="error_msg col-8 offset-2">{error}</div>}
+						<button type="submit" className="green_btn col-5 margin_top_btn">
 							Sing Up
 						</button>
 					</form>
