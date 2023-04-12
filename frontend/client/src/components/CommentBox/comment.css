@@ -1,0 +1,59 @@
+.comment-current-user-icon{
+    font-size: 4em !important;
+    color: #3bb19b;
+}
+
+.comment-input-text{
+    border: none !important;
+    border-bottom: 1px solid black !important;
+    border-radius: 0.2em;
+}
+
+.comment-input-text:focus, .comment-input-text::after, .comment-input-text::before{
+    border: none;
+    border-bottom: 1px solid black !important;
+    outline: 0 !important;
+}
+
+.comment-input-div{
+    margin-left: 2em;
+}
+
+.send-message-icon{
+    color: #3cb88f;
+    margin-left: 1em;
+}
+
+.comment-username{
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+.comment-commentdate{
+    font-size: 1.1em;
+    font-weight: light;
+}
+
+.comment-user-icon{
+    font-size: 1.3em !important;
+    color: #3bb19b;
+}
+
+.delete-reply-comment-icon{
+    color: red;
+    margin-left: 1em;
+}
+
+.delete-reply-comment-icon:hover{
+    cursor: pointer;
+}
+
+.link:hover{
+    cursor: pointer;
+    text-decoration: underline;
+    color: blue;
+}
+
+.comment-text{
+    font-size: 1.4em;
+}

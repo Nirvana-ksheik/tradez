@@ -89,20 +89,20 @@ const _getAllItemsController = async (req, res) => {
 export { _getAllItemsController as getAllItemsController };
 
 
-const _getItemImageController = async (req, res) => {
+const _getAllPublicItemsController = async (req, res) => {
 
-    // console.log("reached get item's image");
-    // const parentDirectory = "../public"
-    // try{
-    //     const params = req.params
-    //     console.log("params: ", params);
-    //     const dirname = "/" + params.id + "/" + params.idd + "/" + params.iddd;
-    //     console.log("dirname: ", dirname);
-    //     const pathh = path.resolve(__dirname, dirname);
-    //     return res.sendFile(pathh);  
-    // } catch(err){
-    //     console.log(err);
-    //     res.status(500).json(err.message);
-    // }
+    console.log("reached get all user items controller");
+    try{
+        const query = req.query;
+        query.isMine = false;
+        query.archived = false;
+        console.log("query params: ", query);
+        const items = await getAllItems({query});
+        res.status(200).json(items);
+        console.log("finished getting items for user");
+    } catch(err){
+        console.log("error: ", err);    
+        res.status(500).json(err.message);
+    }
 };
-export { _getItemImageController as getItemImageController };
+export { _getAllPublicItemsController as getAllPublicItemsController };

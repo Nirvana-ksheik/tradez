@@ -12,7 +12,7 @@ const itemSchema = new Schema({
     },
     description:{
         type: String,
-        required: [true, 'Please enter an item name'],
+        required: [true, 'Please enter an item description'],
         maxlength: [5000, 'Maximum descrption length is 5000 characters']
     },
     ownerId:{

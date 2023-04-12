@@ -15,7 +15,7 @@ const createToken = ({user, secret, expirydate}) =>{
         });
         return token;
     }
-    const token =  jwt.sign({id}, secret);
+    const token = jwt.sign({...user}, secret);
     return token;
 }
 
@@ -41,7 +41,7 @@ const login = async ({username, password}) => {
 const signup = async({username, email, password, resetToken}) => {
 
     const user = await model.create({username: username, email: email, password: password, resetToken: resetToken});
-    const token = createToken({user: {id: user._id, username: user.username, email: user.email}, secret: process.env.EMAIL_TOKEN_SECRET, undefined});
+    const token = createToken({user: {id: user._id, username: user.username, email: user.email}, secret: process.env.EMAIL_TOKEN_SECRET, expirydate: process.env.TOKEN_EXPIRY_DATE});
     await sendConfirmationEmail({email, token});
 }
 

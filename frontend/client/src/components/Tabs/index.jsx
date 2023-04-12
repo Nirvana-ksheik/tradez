@@ -4,6 +4,7 @@ import ItemsList from 'components/ItemsList';
 import axios from 'axios';
 import { useEffect } from 'react';
 import './tabs.css';
+import CommentBox from 'components/CommentBox';
 
 function Tabs(props) {
 
@@ -86,7 +87,7 @@ function Tabs(props) {
           <div className="tab-content col-12">
             {activeTab === 'comments' ? (
               <div>
-                {/* Display comments here */}
+                <CommentBox itemId={props.id} getCookie={props.getCookie} />
               </div>
             ) : (
                 items != null && items != [] && items != undefined && items != '' &&

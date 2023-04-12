@@ -46,7 +46,7 @@ function PopupScreen(props) {
                 }
             });
             console.log("token to be sent: ", token);
-            const url = "http://localhost:3000/api/item";
+            const url = "http://localhost:3000/api/items";
 
             reqInstance.get(
                 url, 

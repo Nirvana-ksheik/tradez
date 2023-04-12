@@ -25,7 +25,7 @@ const ItemsList = ({clickEvent, getData, items, orderValue, setOrderValue, order
         setPageCount(Math.ceil(items.length / itemsPerPage));
         const controller = new AbortController();
         getData(controller);
-        return ()=>{
+        return () =>{
             controller.abort();
         };
     }, 

@@ -29,7 +29,7 @@ const AllItems = ({getCookie}) => {
                 }
             });
             console.log("token to be sent: ", token);
-            const url = "http://localhost:3000/api/items";
+            const url = "http://localhost:3000/api/public/items";
 
             reqInstance.get(
                 url, 

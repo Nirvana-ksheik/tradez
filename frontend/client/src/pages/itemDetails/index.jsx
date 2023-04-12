@@ -3,11 +3,12 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import {format} from 'date-fns';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "./itemDetails.css";
 import jwt from 'jwt-decode';
 import { useNavigate } from "react-router-dom";
 import PopupScreen from "components/PopUpScreen";
 import Tabs from "components/Tabs";
+import IconTextButton from "components/IconTextButton";
+import "./itemDetails.css";
 
 const ItemDetails = ({getCookie}) => {
 
@@ -114,15 +115,27 @@ const ItemDetails = ({getCookie}) => {
             <div className="col-12 d-flex flex-column mt-5 outer-box">
             {
                 item && user && user.id === item.itemOwner.id &&
-                <button className="btn btn-success col-2 offset-2" onClick={() => {goToEdit(item._id)}}>Edit</button>
+                <IconTextButton 
+                    text={"Edit"}
+                    onClick={() => {goToEdit(item._id)}}
+                    icon={<i className="fa-regular fa-pen-to-square"></i>}
+                />
             }
             {
                 item.itemTradeInOrder &&
-                <button className="btn btn-success col-2 offset-2" onClick={() => {acceptTrade()}}>Accept Offer</button>
+                <IconTextButton 
+                    text={"Accept Offer"}
+                    onClick={() => {acceptTrade()}}
+                    icon={<i className="fa-solid fa-circle-check"></i>}
+                />
             }
             {
                 item && user && user.id !== item.itemOwner.id &&
-                <button className="btn btn-primary col-2 offset-2" onClick={() => {togglePopup()}}>Offer Trade</button>
+                <IconTextButton 
+                    text={"Offer Trade"}
+                    onClick={() => {togglePopup()}}
+                    icon={<i className="fa-solid fa-right-left"></i>}
+                />
             }
             {
                 item && 
@@ -173,8 +186,8 @@ const ItemDetails = ({getCookie}) => {
             </div>
             }
             </div>
+            <Tabs id={id} getCookie={getCookie}/>
         </div>
-        <Tabs id={id} getCookie={getCookie}/>
         </>
 	);
 };

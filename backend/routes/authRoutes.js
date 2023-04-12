@@ -5,7 +5,7 @@ import { loginHandleErrors, signupHandleErrors, checkConfirmationEmailToken, che
 const authRouter = Router();
 
 authRouter.post('/api/auth/login', loginHandleErrors, loginController);
-authRouter.post('/api/auth/signup', signupHandleErrors, signupController);
+authRouter.post('/api/auth/signup', signupHandleErrors,  signupController);
 authRouter.post('/api/auth/confirm/:token', checkConfirmationEmailToken, confirmController);
 authRouter.post('/api/auth/forgot', forgotPasswordController);
 authRouter.post('/api/auth/logout', logoutController);

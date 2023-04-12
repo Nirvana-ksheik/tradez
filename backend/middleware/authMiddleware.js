@@ -4,6 +4,7 @@ import model from '../models/User.js';
 dotenv.config();
 
 const checkUser = (req, res, next)=>{
+
     console.log('reached checking user token');
     console.log("cookie: ", req.headers.cookie);
     const authHeader = req.headers['authorization'];
