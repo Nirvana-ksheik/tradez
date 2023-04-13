@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const SideBar = () => {
 
   const navigate = useNavigate();
-  
+
   return (
     <div className="col-1 d-flex flex">
         <SideNav onSelect={(selected) => {
@@ -15,8 +15,7 @@ const SideBar = () => {
                 navigate(selected);
             }} className="sidenav">
             <SideNav.Toggle className="sidenav-toggle"/>
-
-            <SideNav.Nav defaultSelected="home">
+            <SideNav.Nav className="mt-5"  defaultSelected="home">
                 <NavItem eventKey="home">
                     <NavIcon><i className="fa fa-home icons"></i></NavIcon>
                     <NavText>Home</NavText>

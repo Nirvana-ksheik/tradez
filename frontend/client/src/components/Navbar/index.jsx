@@ -21,9 +21,9 @@ function NavBar({user}) {
 	<>
 		<nav className="navbar">
 		<div className="nav-container">
-			<NavLink to="/" className="nav-logo">
-			TradeZ
-			</NavLink>
+			<div className="nav-logo">
+				TradeZ
+			</div>
 
 			<ul className={click ? "nav-menu active" : "nav-menu"}>
 			<li className="nav-item">
