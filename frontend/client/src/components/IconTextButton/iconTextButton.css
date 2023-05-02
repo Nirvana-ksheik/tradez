@@ -1,9 +1,20 @@
 .button{
     border-radius: 1.2rem;
-    background-color: #3cb88f;
-    border-color: white;
+    border-color: transparent !important;
     width: fit-content;
     height:3rem;
+}
+
+.approve{
+    background-color: var(--approve);
+    box-shadow: 2px 2px rgb(16, 114, 16);
+    color: rgb(16, 114, 16);
+}
+
+.reject{
+    background-color: var(--reject);
+    box-shadow: 2px 2px rgb(163, 18, 18);
+    color:  rgb(163, 18, 18);
 }
 
 .text{
@@ -14,7 +25,6 @@
 }
 
 .button-icon{
-    color: #3cb88f;;
     font-size: 1.2rem;
     border: 1px solid white;
     border-radius: 1.5rem;

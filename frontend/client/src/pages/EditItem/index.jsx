@@ -50,7 +50,7 @@ const EditItem = ({ getCookie }) => {
         formData.append("approximateValue",  data.approximateValue);
         formData.append("locationName",  data.locationName);
         formData.append("description",  data.description);
-
+        
         for (let i = 0; i < selectedFile.length; i++) {
             formData.append('imagesReferences', selectedFile[i]);
         }
@@ -85,7 +85,7 @@ const EditItem = ({ getCookie }) => {
         <>
             {   
                 data &&
-                <ItemForm data={data} setData={setData} selectedFile={selectedFile} setSelectedFile={setSelectedFile} submitForm={submitForm} />
+                <ItemForm data={data} setData={setData} setSelectedFile={setSelectedFile} submitForm={submitForm} />
             }
         </>
 	);

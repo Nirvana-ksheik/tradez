@@ -1,5 +1,6 @@
 import mongoose, {Schema} from 'mongoose';
 import { UserModel } from './User.js';
+import { ItemStatus } from './Statics.js';
 
 const itemSchema = new Schema({
     _id:{
@@ -17,7 +18,7 @@ const itemSchema = new Schema({
     },
     ownerId:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'User', //reference
         required: true
     },
     // categoryId:{
@@ -52,6 +53,13 @@ const itemSchema = new Schema({
     archived:{
         type: Boolean,
         default: false
+    },
+    status:{
+        type: String,
+        default: ItemStatus.PENDING
+    },
+    rejectMessage:{
+        type: String
     }
 }, { _id: false });
 
@@ -69,7 +77,9 @@ export class ItemModel {
         this._id = null;
         this.tradezItems = null;
         this.itemTradeInOrder = false;
-        this.archived = false;
+        this.archived = data.archived != null && data.archived != undefined ? data.archived : false;
+        this.status = data.status;
+        this.rejectMessage = data.rejectMessage;
     }
 
     setOwnerId = (id) => { this.ownerId = id; }

@@ -1,6 +1,6 @@
 .search-input{
     border: none;
-    border-bottom: 1px solid black !important;
+    border-bottom: 1px solid var(--primary-variant-color) !important;
     text-decoration: none;
 }
 
@@ -12,19 +12,20 @@
     text-align: start;
     align-items: start;
     background-color: none !important;
-    border: 1px solid #3bb19b !important;
-    width: 10rem !important;
+    border: 1px solid var(--primary-variant-color) !important;
+    width: 10vw !important;
+    color: var(--primary-variant-color)
 }
 
 .dropdown-toggle{
-    background-color: #3bb19b;
+    background-color: var(--primary-variant-color);
     text-decoration-style: none !important;
     border: none !important;
     box-shadow: none !important;
 }
 
 .dropdown-toggle:focus, .dropdown-toggle:hover{
-    background-color: #3bb19b !important;
+    background-color: var(--primary-color) !important;
     text-decoration-style: none !important;
     border: none !important;
     box-shadow: none !important;
@@ -32,4 +33,12 @@
 
 .dropdown-container{
     margin: 1rem;
+}
+
+.dropDown-button{
+    background-color: white;
+}
+
+.dropdown{
+    width: max-content !important;
 }

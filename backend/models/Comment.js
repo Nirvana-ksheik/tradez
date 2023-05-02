@@ -42,6 +42,7 @@ export class CommentModel {
         this.user = null;
         this.replyCommentsNb = 0;
         this.replyComments = [];
+        this.commentDate = comment.commentDate;
     }
 }
 

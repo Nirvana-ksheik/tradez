@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Item from "../../components/Item";
 import SearchBar from "../../components/SearchBar";
-import ReactPaginate from 'react-paginate';
 import LoadingSpinner from "../../components/LoadingSpinner";
 import "./popupScreen.css";
-
+import Pagination from "../../components/Pagination";
+import { ItemStatus } from "lookups";
 function PopupScreen(props) {
 
     const [items, setItems] = useState('');
@@ -53,9 +53,11 @@ function PopupScreen(props) {
                 { 
                     params: { 
                         isMine: true,
+                        archived: false,
                         order: orderValue,
                         orderDirection: orderDirectionValue,
-                        searchText: searchTextValue
+                        searchText: searchTextValue,
+                        status: ItemStatus.APPROVED
                     },
                     signal: controller.signal
                 },
@@ -135,22 +137,7 @@ function PopupScreen(props) {
             {
                 isLoading && <LoadingSpinner />
             }
-            <div className="paginated-list-container">
-                <ReactPaginate
-                    breakLabel="..."
-                    nextLabel="next >"
-                    onPageChange={handlePageClick}
-                    pageRangeDisplayed={5}
-                    pageCount={pageCount}
-                    previousLabel="< previous"
-                    renderOnZeroPageCount={null}
-                    containerClassName="pagination"
-                    pageLinkClassName="page-num"
-                    previousLinkClassName="page-num"
-                    nextLinkClassName="page-num"
-                    activeLinkClassName="active"
-                />
-            </div>
+            <Pagination handlePageClick={handlePageClick} pageCount={pageCount} maxItems={9}/>
         </div>
     </>
 	);

@@ -72,13 +72,13 @@ function Tabs(props) {
         <div className="col-12">
           <div className="d-flex col-12 justify-content-between">
             <button
-              className={`btn col-5 btn-custom border-bottom-2 ${activeTab === 'products' ? 'active' : ''}`}
+              className={`col-5 btn-tabs-custom border-bottom-2 ${activeTab === 'products' ? 'active-tab' : ''}`}
               onClick={() => handleTabClick('products')}
             >
               Offers
             </button>
             <button
-              className={`btn col-5 btn-custom border-bottom-2 ${activeTab === 'comments' ? 'active' : ''}`}
+              className={`col-5 btn-tabs-custom border-bottom-2 ${activeTab === 'comments' ? 'active-tab' : ''}`}
               onClick={() => handleTabClick('comments')}
             >
               Comments

@@ -1,10 +1,10 @@
 .icon{
     font-size: 8em !important;
-    color: #3bb19b;
+    color: var(--secondary-color);
 }
 
 .btnn:hover{
-    background-color: #3bb19b;
+    background-color: var(--secondary-color);
     color: white;
     border: none;
     border-radius: 0.7em;
@@ -12,16 +12,19 @@
 
 .btnn{
     background-color: white;
-    color: #3bb19b;
-    border: 1px solid #3bb19b;
+    color: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
     border-radius: 0.7em;
 }
 .email, .date{
-    color: #3bb19b;
+    color: var(--secondary-color);
 }
 
+.date-weight{
+    font-weight: 700;
+}
 .username{
     color: white;
-    background-color: #3bb19b;
+    background-color: var(--secondary-color);
     border-radius: 5px;
 }

@@ -11,6 +11,8 @@ const MyItems = ({getCookie}) => {
     const [orderDirectionValue, setOrderDirectionValue] = useState(null);
     const [searchTextValue, setSearchTextValue] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [statusValue, setStatusValue] = useState(null);
+
     const navigate = useNavigate();
 
     const clickEvent = (id)=>{
@@ -39,6 +41,7 @@ const MyItems = ({getCookie}) => {
                         order: orderValue,
                         orderDirection: orderDirectionValue,
                         searchText: searchTextValue,
+                        status: statusValue
                     },
                     signal: controller.signal
                 },
@@ -58,13 +61,11 @@ const MyItems = ({getCookie}) => {
 
 
 	return (
-    <div className="col-10 offset-1">
         <ItemsList 
             clickEvent={clickEvent} getData={getData} items={items} orderValue={orderValue}
             setOrderValue={setOrderValue} orderDirectionValue={orderDirectionValue} setOrderDirectionValue={setOrderDirectionValue}
-            searchTextValue={searchTextValue} setSearchTextValue={setSearchTextValue} isLoading={isLoading}
+            searchTextValue={searchTextValue} setSearchTextValue={setSearchTextValue} setStatusValue={setStatusValue} statusValue={statusValue} isLoading={isLoading} canSeeStatusFilters={true}
         /> 
-    </div>
 	);
 };
 

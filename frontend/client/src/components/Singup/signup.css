@@ -1,94 +1,19 @@
-.login_form_container {
-	border-radius: 10px;
-	box-shadow: 0px 3px 3px -2px rgb(0 0 0 / 20%),
-		0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%);
-}
-
-.left {
-	background-color: white;
-	border-top-left-radius: 10px;
-	border-bottom-left-radius: 10px;
-}
-
-.div-title{
-	font-size: 1.5em !important;
-}
-
-.next-div-title{
-	font-size: 1.4em !important;
-	color: white;
-	align-self: center;
-}
-
-.form_container:focus, .form_container:active {
-    background: transparent;
-}
-
-input:-internal-autofill-selected{
-	background-color: transparent !important;
-	color: transparent !important;
-	background-image: none !important;	
-}
-
-input:-webkit-autofill {
-	-webkit-box-shadow: 0 0 0px 10000px white inset;
-}
-
-.input {
-	outline: none;
-	border-bottom: 1px solid black !important;
-	padding: 15px;
-	border-radius: 3px;
-	margin: 5px 0;
-	font-size: 14px;
-}
-
-.error_msg {
-	padding: 15px;
-	margin: 5px 0;
-	font-size: 14px;
-	background-color: #f34646;
-	color: white;
-	border-radius: 5px;
-	text-align: center;
-}
-
-.right {
-	background-color: #3bb19b;
-	border-top-right-radius: 10px;
-	border-bottom-right-radius: 10px;
-}
-
-.white_btn,
-.green_btn {
-	border: none;
-	outline: none;
-	padding: 12px 0;
-	background-color: white;
-	border-radius: 20px;
-	font-weight: bold;
-	font-size: 14px;
-	cursor: pointer;
-	color: #3bb19b;
-	align-self: center;
-}
-
-.green_btn {
-	background-color: #3bb19b;
-	color: white;
-	margin: 10px;
-}
-
-.login_box button.clicked{
-    margin-left:500px;
-    transition:1s;
-	-webkit-transition:1s;
+.main-container-signup{
+	margin-top: 15vh !important;
+	border-radius: 10px	 !important;
+	box-shadow: 10px 10px var(--secondary-color);
+	color: var(--secondary-color);
  }
 
- .margin_top_btn{
-	margin-top: 1rem;
- }
+ @media screen and (max-width: 767px) {
+	.right{
+		display: none !important;
+	}
+	.main-container-signup{
+		box-shadow: none !important;
+	}
 
- .main-container{
-	margin-top: 15vh !important
- }
+	.main-container{
+		box-shadow: none !important;
+	}
+}

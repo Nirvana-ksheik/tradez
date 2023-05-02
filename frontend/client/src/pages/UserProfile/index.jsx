@@ -88,7 +88,9 @@ const UserProfile = ({getCookie}) => {
                     <div className="col-3 offset-1">
                         <h2 className="username">{user.result.username}</h2>
                         <p className="email">{user.result.email}</p>
-                        <p className="date">Joined on {user.createdOn}</p>
+                        <div className='d-flex col-8 justify-content-between'>
+                            <p className='date'>Joined on </p><span className="date date-weight">{user.result.createdDate}</span>
+                        </div>
                     </div>
                 </div>
             </div>}

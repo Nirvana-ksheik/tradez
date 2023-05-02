@@ -18,8 +18,95 @@
 
 .user-icon, .location-icon{
     margin-right: 2% !important;
+    color: var(--secondary-variant-color) !important;
 }
 
 .faded-div{
     opacity: 0.02;
 }
+
+.item-details-container{
+    box-shadow: 8px 8px var(--primary-color);
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+}
+
+.item-details-text{
+    color: var(--secondary-variant-color)
+}
+
+.line-break{
+    color: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
+    background-color: var(--secondary-color);
+    height: 1px !important;
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+    border-radius: 2px;
+}
+
+ .item-details-container, .pending, .approved, .rejected{
+    border: 1px solid var(--primary-color) !important;
+    box-shadow: 4px 4px var(--primary-color) !important;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .item-details-container{
+    background-color: white;
+  }
+
+  .item-details-container::before, .pending::before, .approved::before, .rejected::before{
+    position: absolute;
+    top: 1rem;
+    right: -2rem;
+    width: 8rem;
+    text-align: center;
+    transform: rotate(45deg);
+    padding: 2px;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  
+  .pending::before{
+    background: var(--pending);
+    content: "Pending";
+  }
+
+  .approved::before{
+    background: var(--approve);
+    content: "Approved";
+  }
+
+  .rejected::before{
+    background: var(--reject);
+    content: "Rejecetd";
+  }
+
+  .sub-text{
+    color: white !important;
+    font-size: 12px;
+    font-weight: 400;
+    margin-top: 1%;
+  }
+
+  .confirmation-dialogue{
+    border: 1px solid var(--secondary-variant-color);
+    background-color: var(--secondary-color);
+    border-radius: 1rem;
+  }
+
+  .submit-btn-confirm-dialogue{
+    color: white;
+    background-color: var(--primary-color);
+    border-radius: 1rem;
+  }
+
+  .submit-btn-confirm-dialogue:hover{
+    background-color: var(--primary-variant-color);
+  }
+
+  .rejected-message-container{
+    border-radius: 0.3rem;
+  }

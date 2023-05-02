@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import LoadingSpinner from 'components/LoadingSpinner';
-import ReactPaginate from 'react-paginate';
 import "./comment.css";
+import Pagination from "../../components/Pagination";
+import 'font-awesome/css/font-awesome.min.css';
 
 function CommentBox({getCookie, itemId}) {
 
   const [comment, setComment] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [totalComments, setTotalComments] = useState([]);
-  const itemsPerPage = 5;
+  const itemsPerPage = 20;
 
   const [itemOffset, setItemOffset] = useState(0);
   const [currentItems, setCurrentItems] = useState([]);
@@ -40,7 +41,8 @@ function CommentBox({getCookie, itemId}) {
     const token = getCookie();
     let reqInstance = axios.create({
         headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
+            TimeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
         }
     });
 
@@ -89,7 +91,8 @@ function CommentBox({getCookie, itemId}) {
     const token = getCookie();
     let reqInstance = axios.create({
         headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
+            TimeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
         }
     });
 
@@ -115,7 +118,8 @@ function CommentBox({getCookie, itemId}) {
       setCurrentItems(totalComments.slice(itemOffset, endOffset));
       setPageCount(Math.ceil(totalComments.length / itemsPerPage));
       const replyDiv = document.getElementById(parentCommentId + '_reply_comment');
-      replyDiv.remove();
+      if(replyDiv != undefined)
+        replyDiv.remove();
     }).catch(err => {
       console.log("error: ", err);
       setIsLoading(false);
@@ -186,7 +190,15 @@ function CommentBox({getCookie, itemId}) {
   useEffect(()=>{
     setIsLoading(true);
     const controller = new AbortController();
-    axios.get(
+    var timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    console.log("TimeZONEEEEEEEEEEEEEEEEEEEEEEEEEE:", timeZone);
+    let reqInstance = axios.create({
+      headers: {
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+      }
+    });
+
+    reqInstance.get(
       'http://localhost:3000/api/comments/' + itemId,
       {
         signal: controller.signal
@@ -214,14 +226,14 @@ function CommentBox({getCookie, itemId}) {
     { 
     isLoading == false ?
     <div className="mt-5">
-        <div className = "d-flex col-12 align-items-center">
-          <i className="fas fa-user-circle col-1 comment-current-user-icon"></i>
-          <div className='d-flex col-8 comment-input-div align-items-end justify-content-start'>
-            <input type="text" value={comment} className='comment-input-text col-10' placeholder='Leave a comment' onChange={handleChange} />
-            <i className="fa-solid fa-paper-plane send-message-icon" onClick={handleSubmit}/>
-          </div>
+        <div className = "d-flex col-12 align-items-end justify-content-start">
+            <i className="fa fa-user user-comment-icon-main-comment"></i>
+            <div className='d-flex col-8 comment-input-div justify-content-start'>
+              <input type="text" value={comment} className='comment-input-text col-10' placeholder='Leave a comment' onChange={handleChange} />
+              <i className="fa-solid fa-paper-plane send-message-icon" onClick={handleSubmit}/>
+            </div>
         </div>
-        <hr/>
+        <hr/> 
         <ul className="d-flex col-12 flex-column">
         {
           currentItems.length > 0 &&
@@ -229,15 +241,15 @@ function CommentBox({getCookie, itemId}) {
           currentItems.map((comment, index) =>         
             
               <li key={index} className="m-2 col-12 d-flex flex-column" id={comment.commentId}>
-                <div className='col-12' key={index}>
-                  <i className="fas fa-user-circle comment-user-icon me-2"></i>
+                <div className='col-12 d-flex align-items-center' key={index}>
+                  <i className="fa fa-user user-comment-icon me-2"></i>
                   <span className="comment-username me-2">{comment.user.username}</span>
                   <span className="comment-commentdate">{comment.commentDate}</span>
                 </div>
                 <p className='col-12 m-2 comment-text'>{comment.commentText}</p>
                 <div className='col-12 d-flex flex-column justify-content-start align-items-start'>
                   <div className='col-12 d-flex justify-content-start align-items-start'>
-                    <i className="fa-solid fa-reply me-4" onClick={() => handleReplyHTML(comment)}></i>
+                    <i className="fa-solid fa-reply me-4 reply-icon" onClick={() => handleReplyHTML(comment)}></i>
                     {
                       comment.replyComments.length > 0 && 
                       <i className='link mb-4 comment-text' onClick={async() => await showReplyComments(comment.commentId)} id={"show_reply_comments_link_" + comment.commentId}>show {comment.replyComments.length} replies</i>
@@ -250,8 +262,8 @@ function CommentBox({getCookie, itemId}) {
                       
                         Array.from(comment.replyComments).map((replyComment, i) => 
                             <li key={i} className="m-2 col-12 d-flex flex-column">
-                                <div className='col-12'>
-                                  <i className="fas fa-user-circle comment-user-icon me-2"></i>
+                                <div className='col-12 align-items-center d-flex'>
+                                  <i className="fa fa-user comment-user-icon me-2"></i>
                                   <span className="comment-username me-2">{replyComment.user.username}</span>
                                   <span className="comment-commentdate">{replyComment.commentDate}</span>
                                 </div>
@@ -268,22 +280,7 @@ function CommentBox({getCookie, itemId}) {
     </div>
     : <LoadingSpinner />
     }
-      <div className="paginated-list-container">
-          <ReactPaginate
-              breakLabel="..."
-              nextLabel="next >"
-              onPageChange={handlePageClick}
-              pageRangeDisplayed={5}
-              pageCount={pageCount}
-              previousLabel="< previous"
-              renderOnZeroPageCount={null}
-              containerClassName="pagination"
-              pageLinkClassName="page-num"
-              previousLinkClassName="page-num"
-              nextLinkClassName="page-num"
-              activeLinkClassName="active"
-          />
-      </div>
+    <Pagination handlePageClick={handlePageClick} pageCount={pageCount} maxItems={5}/>
     </>
   );
 }

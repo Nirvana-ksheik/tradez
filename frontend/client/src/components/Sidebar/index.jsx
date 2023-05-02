@@ -9,7 +9,7 @@ const SideBar = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="col-1 d-flex flex">
+    <div className="col-1 d-flex flex sidenav-container">
         <SideNav onSelect={(selected) => {
                 console.log(selected);
                 navigate(selected);

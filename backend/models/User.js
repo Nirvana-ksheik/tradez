@@ -24,6 +24,14 @@ const userSchema = new Schema({
         type: Boolean,
         default: false
     },
+    isAdmin:{
+        type: Boolean,
+        default: false
+    },
+    createdDate: {
+        type: Date,
+        default: new Date().toISOString()
+    },
     resetToken:{
         type: String,
     }
@@ -47,6 +55,8 @@ export class UserModel {
         this.id = data.id;
         this.username = data.username;
         this.email = data.email;
+        this.role = data.role;
+        this.createdDate = data.createdDate;
     }
 }
 

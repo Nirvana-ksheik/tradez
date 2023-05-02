@@ -29,7 +29,8 @@ const getTrade = async (item1, item2) => {
 const getTradez = async (itemId) => {
     console.log("item iddd: ", itemId);
     const tradez = await model.find({
-        primaryItemId: itemId
+        primaryItemId: itemId,
+        accepted: false
     });
     console.log("tradezItems: ", tradez);
     let items = [];
@@ -57,8 +58,8 @@ const acceptTrade = async (body) => {
     await model.deleteMany({
         $and:[
                 {$or:[
-                    {primaryItemId: {$in:[body.primaryItemId, body.secondaryItemId]}},
-                    {secondaryItemId: {$in:[body.primaryItemId, body.secondaryItemId]}}
+                    {primaryItemId: {$in:[mongoose.Types.ObjectId(body.primaryItemId), mongoose.Types.ObjectId(body.secondaryItemId)]}},
+                    {secondaryItemId: {$in:[mongoose.Types.ObjectId(body.primaryItemId), mongoose.Types.ObjectId(body.secondaryItemId)]}}
                 ]},
                 {accepted: false},
                 {closed: false}

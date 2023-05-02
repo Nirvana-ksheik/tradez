@@ -1,6 +1,7 @@
 import model from '../models/Image.js';
 
 const createImagesAndReturnIds = async (files) => {
+    console.log("entered create Images and return Ids");
     console.log("files: ", files);
     const fileIds = [];
     for(const file of files){

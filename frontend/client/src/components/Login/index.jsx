@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useLayoutEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "./login.css"
@@ -8,10 +8,18 @@ const Login = ({setCookie}) => {
 	const [data, setData] = useState({ username: "", password: "" });
 	const [error, setError] = useState("");
 	const navigate = useNavigate();
+	const [screenWidth, setScreenWidth] = useState();
 
 	const handleChange = ({ currentTarget: input }) => {
 		setData({ ...data, [input.name]: input.value });
 	};
+
+	useLayoutEffect(() => {
+		function detectScreenWidth() { setScreenWidth(window.screen.availWidth) }
+		window.addEventListener('resize', detectScreenWidth);
+		setScreenWidth(window.screen.availWidth);
+		return () => window.removeEventListener('resize', detectScreenWidth);
+	}, []);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -34,9 +42,9 @@ const Login = ({setCookie}) => {
 	};
 
 	return (
-		<div className="d-flex justify-content-center align-items-center col-6 offset-3 mt-5 main-container">
+		<div className="d-flex justify-content-center align-items-center col-12 col-md-10 offset-md-1 col-xl-6 offset-xl-3 mt-5 main-container">
 			<div className="login_form_container d-flex col-12">
-				<div className="left col-8 d-flex flex-column justify-content-center align-items-center">
+				<div className="left col-md-8 col-12 d-flex flex-column justify-content-center align-items-center">
 					<form className="col-12 d-flex flex-column align-items-center" onSubmit={handleSubmit}>
 						<p className="div-title mt-4">Login to Your Account</p>
 						<input
@@ -61,7 +69,8 @@ const Login = ({setCookie}) => {
 						<button type="submit" className="green_btn col-5 margin_top_btn">
 							Log In
 						</button>
-						<div className="m-2">Forgot password ? <Link to="/forgot-password">click here</Link></div>
+						<div className="m-2 form-link">Forgot password ? <Link to="/forgot-password">click here</Link></div>
+						{screenWidth < 768 && <div className="form-link">Signup Instead ? <Link to="/signup">click here</Link></div>}
 					</form>
 				</div>
 				<div className="d-flex col-4 flex-column justify-content-center right">

@@ -27,7 +27,9 @@ const _getCommentsController = async (req, res) => {
     try {
         const itemId = req.params.itemId;
         console.log("itemId: ", itemId);
-        const comments = await getComments(itemId);
+        const timeZone = req.headers['timezone'];
+        console.log("timeZoneeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: ", timeZone);
+        const comments = await getComments({itemId: itemId, timeZone: timeZone});
         console.log("comments: ", comments);
         res.status(200).json(comments);
     } catch (err) {

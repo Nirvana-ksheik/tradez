@@ -3,7 +3,6 @@ import Signup from "./components/Singup";
 import Login from "./components/Login";
 import { hot } from 'react-hot-loader/root';
 import NavBar from "./components/Navbar";
-import SideBar from "components/Sidebar";
 import MyItems from "./pages/myItems";
 import ItemDetails from "pages/itemDetails";
 import AllItems from "pages/AllItems";
@@ -40,25 +39,23 @@ function App() {
 		if(token == null || token == undefined) {return null;}
 		const decodedToken = jwt(token);
 		console.log("decoded token: ", decodedToken);
-		setUser(decodedToken);
-		return user;
+		return decodedToken;
 	}
 
 	useEffect(() => {
-		  const loggedInUser = getUser();
-		  console.log("user is useEffect: ", loggedInUser);
-		  if (loggedInUser != null && loggedInUser != undefined) setUser(loggedInUser);
-	  }, [user]);
+		const loggedInUser = getUser();
+		console.log("user is useEffect: ", loggedInUser);
+		setUser(loggedInUser);
+	  }, []);
 	
 	return (
 		<div>
-			<SideBar />
 			<NavBar user={user}/>
 			<Routes>
 				<Route path="/signup" element={<Signup />} />
 				<Route path="/login" element={<Login setCookie={setCookie}/>} />
 				<Route path="/items/mine" element={ user ? <MyItems getCookie={getCookie}/> : <Login setCookie={setCookie}/>} />
-				<Route path="/allitems" element={<AllItems getCookie={getCookie}/>} />
+				<Route path="/allitems" element={<AllItems getCookie={getCookie} user={user}/>} />
 				<Route path="/items/:id" element={<ItemDetails getCookie={getCookie} />} />
 				<Route path="/items/create" element={ user ? <AddItem getCookie={getCookie} /> : <Login setCookie={setCookie}/>} /> 
 				<Route path="/items/edit/:id" element={ user ? <EditItem getCookie={getCookie} /> : <Login setCookie={setCookie}/>} />

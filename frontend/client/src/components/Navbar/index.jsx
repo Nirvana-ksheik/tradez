@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./navBar.css";
+import { Role } from "lookups";
 import { ListGroup, OverlayTrigger, Tooltip } from "react-bootstrap";
 
 function NavBar({user}) {
 
 	const [click, setClick] = useState(false);
+	const [screenWidth, setScreenWidth] = useState();
 
 	const handleClick = () => setClick(!click);
 
@@ -17,71 +19,12 @@ function NavBar({user}) {
 		navigate("/login")
 	}
 
-	return (
-	<>
-		<nav className="navbar">
-		<div className="nav-container">
-			<div className="nav-logo">
-				TradeZ
-			</div>
-
-			<ul className={click ? "nav-menu active" : "nav-menu"}>
-			<li className="nav-item">
-				<NavLink
-				to="/items"
-				className="nav-links"
-				onClick={handleClick}
-				>
-				Items
-				</NavLink>
-			</li>
-			<li className="nav-item">
-				<NavLink
-				to="/items/mine"
-				className="nav-links"
-				onClick={handleClick}
-				>
-				My Items
-				</NavLink>
-			</li>
-			{
-				user == null &&
-				
-				<li>
-					<button type="button" onClick={handleLogin} className="white_btn">
-						Log In
-					</button>
-				</li>	
-			}
-			{
-				user != null &&
-				<li>
-					<PopupList user={user}/>
-				</li>
-			}
-			</ul>
-			<div className="nav-icon" onClick={handleClick}>
-			<i className={click ? "fas fa-times" : "fas fa-bars"}></i>
-			</div>
-		</div>
-		</nav>
-	</>
-	);
-}
-
-
-function PopupList({user}) {
-
-	const navigate = useNavigate();
-	const [showList, setShowList] = useState(false);
-
-	const handleShowList = () => {
-		setShowList(!showList);
-	};
-
-	const showProfile = () =>{
-		navigate('/profile');
-	}
+	useLayoutEffect(() => {
+		function detectScreenWidth() { setScreenWidth(window.screen.availWidth) }
+		window.addEventListener('resize', detectScreenWidth);
+		setScreenWidth(window.screen.availWidth);
+		return () => window.removeEventListener('resize', detectScreenWidth);
+	  }, []);
 
 	const handleLogout = async() => {
 		try {
@@ -98,28 +41,165 @@ function PopupList({user}) {
 		}
 		window.location.reload();
 	}
+
 	return (
-		<div className="popup-list">
-		  <OverlayTrigger className="popup-list"
+	<>
+		<nav className="navbar d-flex col-12 main-navbar">
+		<div className="col-12 d-flex justify-content-between">
+			<img src="http://localhost:3000/logo.png" className="logo-icon"/>
+			<ul className={click ? "nav-menu active col-10" : "nav-menu"}>			
+				<li className="nav-item">
+					<NavLink
+					to="/allitems"
+					className="nav-links"
+					onClick={handleClick}
+					>
+					All Items
+					</NavLink>
+				</li>		
+				{
+					user != null && user.role == Role.USER && screenWidth < 992 &&
+					<li className="nav-item">
+						<NavLink
+						to="/items/mine"
+						className="nav-links"
+						onClick={handleClick}
+						>
+						My Items
+						</NavLink>
+					</li>
+				}
+				{
+					user != null && user.role == Role.USER && screenWidth < 992 &&
+					<li className="nav-item">
+						<NavLink
+						to="/items/create"
+						className="nav-links"
+						onClick={handleClick}
+						>
+						Add Item
+						</NavLink>
+					</li>
+				}
+				{
+					user != null && screenWidth < 992 &&
+					<li className="nav-item">
+						<NavLink
+						to="/items/archived"
+						className="nav-links"
+						onClick={handleClick}
+						>
+						Archived
+						</NavLink>
+					</li>
+				}
+				{
+					user == null &&
+					<li className="nav-item-btn">
+						<button type="button" onClick={handleLogin} className="white_btn">
+							Log In
+						</button>
+					</li>	
+				}
+				{
+					user != null && user.role == Role.USER && screenWidth < 992 &&
+					<li className="nav-item">
+						<NavLink
+						to="/items/archived"
+						className="nav-links"
+						onClick={handleLogout}
+						>
+						Log Out
+						</NavLink>
+					</li>
+				}
+				{
+					user != null && screenWidth >= 992 &&
+					<li className="nav-item-btn">
+						<PopupList user={user} handleLogout={handleLogout}/>
+					</li>
+				}
+			</ul>
+			<div className="nav-icon" onClick={handleClick}>
+				<i className={click ? "fas fa-times" : "fas fa-bars"}></i>
+			</div>
+		</div>
+		</nav>
+	</>
+	);
+}
+
+
+function PopupList({user, handleLogout}) {
+
+	const navigate = useNavigate();
+	const [showList, setShowList] = useState(false);
+
+	const handleShowList = () => {
+		setShowList(!showList);
+	};
+
+
+	return (
+		<div>
+		  <OverlayTrigger
 			trigger="click"
 			placement="bottom"
 			show={showList}
 			overlay={
-			  <Tooltip id="popup-list" className="popup-list">
-				<ListGroup className="popup-list">
-				  <ListGroup.Item action onClick={showProfile} className="popup-list-button">
-					Show Profile
-				  </ListGroup.Item>
-				  <ListGroup.Item action onClick={handleLogout} className="popup-list-button">
-					Logout
-				  </ListGroup.Item>
+			  <Tooltip id="popup-list">
+				<ListGroup>
+					<ListGroup.Item action onClick={()=> {navigate("/profile")}} className="popup-list-button">
+						<div className="d-flex align-items-center justify-content-between col-12">
+							<i className=" fa-solid fa-user-gear nav-bar-icon"></i>
+							<span className="col-8 offset-1 d-flex justify-content-start align-items-center">Profile</span>
+						</div>
+					</ListGroup.Item>
+					{
+						user.role == Role.USER &&
+						<ListGroup.Item action onClick={()=> {navigate("/items/create")}} className="popup-list-button">
+							<div className="d-flex align-items-center justify-content-between col-12">
+								<i className="col-3 fa fa-plus-circle nav-bar-icon"></i>
+								<span className="col-8 offset-1 d-flex justify-content-start align-items-center">Add Item</span>
+							</div>
+						</ListGroup.Item>
+					}
+					{
+						user.role == Role.USER &&
+						<ListGroup.Item action onClick={()=> {navigate("/items/mine")}} className="popup-list-button">
+							<div className="d-flex align-items-center justify-content-between col-12">
+								<i className="col-3 fa fa-cube nav-bar-icon"></i>
+								<span className="col-8 offset-1 d-flex justify-content-start align-items-center">My Items</span>
+							</div>
+						</ListGroup.Item>
+					}
+					<ListGroup.Item action onClick={()=> {navigate("/allitems")}} className="popup-list-button">
+						<div className="d-flex align-items-center justify-content-between col-12">
+							<i className="col-3 fa fa-cubes nav-bar-icon"></i>
+							<span className="col-8 offset-1 d-flex justify-content-start align-items-center">All Items</span>
+						</div>
+					</ListGroup.Item>
+					{
+						user.role == Role.USER && 
+						<ListGroup.Item action onClick={()=> {navigate("/items/archived")}} className="popup-list-button">
+							<div className="d-flex align-items-center justify-content-between col-12">
+								<i className="col-3 fa fa-file-archive nav-bar-icon"></i>
+								<span className="col-8 offset-1 d-flex justify-content-start align-items-center">Archived</span>
+							</div>
+						</ListGroup.Item>	
+					}
+					<ListGroup.Item action onClick={handleLogout} className="popup-list-button">
+						<div className="d-flex align-items-center justify-content-between col-12">
+							<i className="col-3 fas fa-sign-out-alt nav-bar-icon"></i>
+							<span className="col-8 offset-1 d-flex justify-content-start align-items-center">Log Out</span>
+						</div>
+					</ListGroup.Item>
 				</ListGroup>
 			  </Tooltip>
 			}
 		  >
 			<button type="button" onClick={handleShowList} className="white_btn">
 				<div className="d-flex justify-content-center align-items-center">
-					<i className="fa-solid fa-user-gear me-2"></i>
 					<span>{user.username}</span>
 				</div>
 			</button>

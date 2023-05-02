@@ -2,6 +2,7 @@ import model from "../models/Comment.js";
 import { CommentModel } from "../models/Comment.js";
 import {default as userSchema} from '../models/User.js';
 import { UserModel } from "../models/User.js";
+import { convertUtcToClientDate } from "./dateHelper.js";
 
 const addComment = async (comment) => {
     console.log("comment: ", comment);
@@ -11,12 +12,13 @@ const addComment = async (comment) => {
          throw Error(err);
     });
     const commentModel = new CommentModel(result);
+    commentModel.commentDate = convertUtcToClientDate({utcDate: result.commentDate});
     const user = await userSchema.findById(result.userId);
     commentModel.user = new UserModel(user);
     return commentModel;
 }
 
-const getComments = async (itemId) => {
+const getComments = async ({itemId}) => {
     console.log("itemId: ", itemId);
 
     const result = await model.find({itemId: itemId, $or:[
@@ -33,6 +35,7 @@ const getComments = async (itemId) => {
 
     for await (const comment of result){
         const commentModel = new CommentModel(comment);
+        commentModel.commentDate = convertUtcToClientDate({utcDate: comment.commentDate});
         console.log("comment model: ", commentModel);
         const user = await userSchema.findById(comment.userId);
         commentModel.user = new UserModel(user);
@@ -62,6 +65,7 @@ const getCommentReplies = async (commentId) => {
 
     for await (const comment of result){
         const commentModel = new CommentModel(comment);
+        commentModel.commentDate = convertUtcToClientDate({utcDate: comment.commentDate});
         console.log("comment model: ", commentModel);
         const user = await userSchema.findById(comment.userId);
         commentModel.user = new UserModel(user);

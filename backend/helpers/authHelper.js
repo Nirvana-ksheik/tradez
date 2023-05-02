@@ -2,14 +2,18 @@ import * as dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import pkg from 'bcryptjs';
 const { compare } = pkg;
-import model from '../models/User.js';
+import model, { UserModel } from '../models/User.js';
 import {sendConfirmationEmail, sendResetPasswordEmail} from '../helpers/emailHelper.js';
+import { Role } from '../models/Statics.js';
+import moment from "moment/moment.js";
+
 dotenv.config();
 
-const createToken = ({user, secret, expirydate}) =>{
+const createToken = ({user, secret, role, expirydate}) =>{
     console.log("reached createToken");
     if(expirydate)
     {
+        user.role = role;
         const token =  jwt.sign({...user}, secret, {
             expiresIn: expirydate
         });
@@ -31,7 +35,8 @@ const login = async ({username, password}) => {
             if(!user.confirmed){
                 throw new Error(JSON.stringify({message: "Please validate your email to log in"}));
             }
-            const token = createToken({user: {id: user._id, username: user.username, email: user.email}, secret: process.env.ACCESS_TOKEN_SECRET, expirydate: process.env.TOKEN_EXPIRY_DATE});
+            const role = user.isAdmin ? Role.ADMIN : Role.USER;
+            const token = createToken({user: {id: user._id, username: user.username, email: user.email}, secret: process.env.ACCESS_TOKEN_SECRET, role: role, expirydate: process.env.TOKEN_EXPIRY_DATE});
             return {token};
        }
     }
@@ -41,7 +46,7 @@ const login = async ({username, password}) => {
 const signup = async({username, email, password, resetToken}) => {
 
     const user = await model.create({username: username, email: email, password: password, resetToken: resetToken});
-    const token = createToken({user: {id: user._id, username: user.username, email: user.email}, secret: process.env.EMAIL_TOKEN_SECRET, expirydate: process.env.TOKEN_EXPIRY_DATE});
+    const token = createToken({user: {id: user._id, username: user.username, email: user.email}, secret: process.env.EMAIL_TOKEN_SECRET, role: Role.USER, expirydate: process.env.TOKEN_EXPIRY_DATE});
     await sendConfirmationEmail({email, token});
 }
 
@@ -59,7 +64,8 @@ const forgotPassword = async(email) => {
     console.log("email: ", email);
     const user = await model.findOne({email: email});
     if(user){
-        const token = createToken({user: {id: user._id, username: user.username, email: user.email}, secret: process.env.RESET_PASS_TOKEN_SECRET, expirydate: process.env.RESET_PASS_TOKEN_EXPIRY_DATE});
+        const role = user.isAdmin ? Role.ADMIN : Role.USER;
+        const token = createToken({user: {id: user._id, username: user.username, email: user.email}, secret: process.env.RESET_PASS_TOKEN_SECRET, role: role, expirydate: process.env.RESET_PASS_TOKEN_EXPIRY_DATE});
         console.log("token: ", token);
         await sendResetPasswordEmail({email, token});
         
@@ -81,10 +87,10 @@ const resetPassword = async({id, password}) => {
 }
 
 const getById = async ({id}) => {
-    console.log("iddd: ", id);
     const user = await model.findById(id);
-    console.log("userrrr: ", user);
-    return user;
+    const userDTO = new UserModel(user);
+    userDTO.createdDate = moment.utc(user.createdDate).format('DD/MM/YYYY');
+    return userDTO;
 }
 
 export {login ,signup, getById, confirmAndUpdateState, forgotPassword, resetPassword};

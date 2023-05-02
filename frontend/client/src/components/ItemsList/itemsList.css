@@ -1,0 +1,18 @@
+
+@media (min-width: 0px) and (max-width: 768px){
+    .no-data-img{
+        width: 100%;
+        aspect-ratio: 3/2;
+        object-fit: contain;
+
+    }
+}
+
+@media (min-width: 768px){
+    .no-data-img{
+        width: 50%;
+        aspect-ratio: 3/2;
+        object-fit: contain;
+    }
+}
+

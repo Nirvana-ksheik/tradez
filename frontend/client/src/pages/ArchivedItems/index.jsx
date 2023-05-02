@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./archivedItems.css";
 import ItemsList from "components/ItemsList";
+import { ItemStatus } from "lookups";
 
 const ArchivedItems = ({getCookie}) => {
 
@@ -39,6 +40,7 @@ const ArchivedItems = ({getCookie}) => {
                         order: orderValue,
                         orderDirection: orderDirectionValue,
                         searchText: searchTextValue,
+                        status: ItemStatus.APPROVED
                     },
                     signal: controller.signal
                 },
@@ -58,13 +60,11 @@ const ArchivedItems = ({getCookie}) => {
 
 
 	return (
-    <div className="col-10 offset-1">
         <ItemsList 
             clickEvent={clickEvent} getData={getData} items={items} orderValue={orderValue}
             setOrderValue={setOrderValue} orderDirectionValue={orderDirectionValue} setOrderDirectionValue={setOrderDirectionValue}
             searchTextValue={searchTextValue} setSearchTextValue={setSearchTextValue} isLoading={isLoading}
         /> 
-    </div>
 	);
 };
 

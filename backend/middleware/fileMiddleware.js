@@ -1,25 +1,20 @@
 import multer from 'multer';
-import fsPromises from 'fs/promises';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import mongoose from 'mongoose';
 
-//TODO::::: remove logic and check if directory exists only if not create it,
-         // keep reference of old files and delete them if changed
-
 const fileStorageEngine = multer.diskStorage({
     destination: (req, file, cb) => {
-        console.log("file in middlware: ", file);
-
-        if(file != null && file != undefined && file != [] && file != ''){
-            console.log("reached file storage engine");
-            if(!req.body._id){
-              req.body._id = new mongoose.Types.ObjectId().toString();
-            }
-            const dir = createDirectory({userId: req.user.id, itemId: req.body._id});
-            cb(null, dir);
-        }
+      console.log("reached file storage engine");
+      if(file != null && file != undefined && file != [] && file != ''){
+          console.log("item Id in file storage: ", req.body._id);
+          if(req.body._id == null || req.body._id == undefined){
+            req.body._id = new mongoose.Types.ObjectId().toString();
+          }
+          const dir = createDirectory({userId: req.user.id, itemId: req.body._id});
+          cb(null, dir);
+      }
     },
     filename: (req, file, cb) => {
       if(file != null && file != undefined && file != [] && file != ''){
@@ -30,54 +25,27 @@ const fileStorageEngine = multer.diskStorage({
     }
 });
 
-const upload = multer({ storage: fileStorageEngine });
-
-export default upload;
-
 const createDirectory = ({userId, itemId}) => {
-    console.log("itemId: ", itemId);
     const __filename = fileURLToPath(import.meta.url);
-    console.log("filename: ", __filename);
     const __dirname = path.dirname(__filename);
-    console.log("dirname: ", __dirname);
     const dir = path.resolve(path.join(__dirname, '..', 'public', userId.toString(), itemId.toString()));
-    console.log("directory is: ", dir);
-
-    if(!fs.existsSync(dir)){
-      console.log("directory doesnt exists !");
-      createDirectoryFunc(dir);
-      console.log("finished creating directory");
-    }
-    else{
-      console.log("diretory exists");
-    }
-
-    // if (!fs.existsSync(dir)) {
-    //   fs.mkdirSync(dir, {
-    //     mode: 0o744, // Not supported on Windows. Default: 0o777
-    //   });
-    // }
-    
-
+    console.log("directory in first createDirectory: ", dir)
+    createDirectoryFunc(dir);
     return dir;
 }
 
-function createDirectoryFunc(path) {
-  fsPromises.access(path)
-    .then(() => {
-      console.log(`Directory ${path} already exists`);
-    })
-    .catch((err) => {
-      if (err.code === 'ENOENT') {
-        fsPromises.mkdir(path, { recursive: true })
-          .then(() => {
-            console.log(`Directory ${path} created`);
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      } else {
-        console.error(err);
-      }
-    });
+function createDirectoryFunc(dir) {
+  console.log("path: ", dir);
+  if(fs.existsSync(dir)){
+    console.log(`Directory ${dir} already exists`);
+  }
+  else{
+    fs.mkdirSync(dir, { recursive: true });
+    console.log(`Directory ${dir} created`);
+  }
+  return dir;
 }
+
+const upload = multer({ storage: fileStorageEngine });
+
+export default upload;

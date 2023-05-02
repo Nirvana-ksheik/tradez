@@ -2,7 +2,6 @@ import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import styles from "./styles.module.css";
-import {useNavigate} from 'react-router-dom';
 import classnames from 'classnames';
 import './styles.module.css'
 import Ribbon from "components/Ribbon";
@@ -13,8 +12,6 @@ const ForgotPassword = () => {
 	const [error, setError] = useState("");
     const [forgotPassRibbon, setForgotPassRibbon] = useState(false);
     const [forgotPassText, setForgotPassText] = useState('');
-
-	const navigate = useNavigate();
 
 	const handleChange = ({ currentTarget: input }) => {
 		setEmail(input.value);

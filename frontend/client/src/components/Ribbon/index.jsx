@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 
-function Ribbon({text, setShowValue, isSuccess}) {
+function Ribbon({text, setShowValue, isSuccess, showTime}) {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
+    if(showTime == undefined || showTime == null){
+      showTime = 4000;
+    }
     const timeout = setTimeout(() => {
       setIsVisible(false);
       setShowValue(false);
-    }, 3000);
+    }, showTime);
 
     return () => {
       clearTimeout(timeout);

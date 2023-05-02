@@ -1,13 +1,13 @@
 .login_form_container {
 	border-radius: 10px;
-	box-shadow: 0px 3px 3px -2px rgb(0 0 0 / 20%),
-		0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%);
+	background-color: white;
 }
 
 .left {
-	background-color: white;
-	border-top-left-radius: 10px;
-	border-bottom-left-radius: 10px;
+	z-index: 10;
+	border-radius: 2px !important;
+	animation-name: move-left;
+	animation-duration: 0.5s;
 }
 
 .div-title{
@@ -20,8 +20,16 @@
 	align-self: center;
 }
 
-.form_container:focus, .form_container:active {
-    background: transparent;
+.login_form_container{
+	animation-name: move-right-container;
+	animation-duration: 0.5s;
+	background-color: white;
+}
+
+.signup_form_container{
+	animation-name: move-left-container;
+	animation-duration: 0.5s;
+	background-color: white;
 }
 
 input:-internal-autofill-selected{
@@ -54,9 +62,10 @@ input:-webkit-autofill {
 }
 
 .right {
-	background-color: #3bb19b;
-	border-top-right-radius: 10px;
-	border-bottom-right-radius: 10px;
+	background-color: var(--primary-color);
+	border-radius: 10px;
+	animation-name: move-left;
+	animation-duration: 0.2s;
 }
 
 .white_btn,
@@ -74,9 +83,18 @@ input:-webkit-autofill {
 }
 
 .green_btn {
-	background-color: #3bb19b;
+	background-color: var(--secondary-color);
 	color: white;
 	margin: 10px;
+}
+
+.white_btn:hover{
+	background-color: var(--secondary-color);
+	color: white;
+}
+
+.green_btn:hover {
+	background-color: var(--secondary-variant-color);
 }
 
 .login_box button.clicked{
@@ -90,5 +108,32 @@ input:-webkit-autofill {
  }
 
  .main-container{
-	margin-top: 15vh !important
+	margin-top: 15vh !important;
+	border-radius: 10px	 !important;
+	box-shadow: -10px 10px var(--secondary-color);
+	color: var(--secondary-color)
  }
+
+ @keyframes move-right {
+	0%   {translate: 500%;}
+	100%  {translate: 0%;}
+  }
+
+@keyframes move-left {
+	0%   {translate: -500%;}
+	100%  {translate: 0%;}
+}
+
+@keyframes move-right-container {
+	0%   {translate: 600%;}
+	100%  {translate: 0%;}
+  }
+
+@keyframes move-left-container {
+	0%   {translate: -600%;}
+	100%  {translate: 0%;}
+}
+
+.form-link a{
+	color: var(--primary-variant-color) !important;
+}

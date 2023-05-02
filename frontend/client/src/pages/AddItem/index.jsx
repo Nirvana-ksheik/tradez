@@ -2,6 +2,8 @@ import ItemForm from "components/ItemForm";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { ItemStatus } from "lookups";
+
 import "./addItem.css";
 
 const AddItem = ({getCookie}) => {
@@ -24,6 +26,7 @@ const AddItem = ({getCookie}) => {
         formData.append("approximateValue",  data.approximateValue);
         formData.append("locationName",  data.locationName);
         formData.append("description",  data.description);
+        formData.append("status", ItemStatus.PENDING);
 
         for (let i = 0; i < selectedFile.length; i++) {
             formData.append('imagesReferences', selectedFile[i]);
@@ -55,7 +58,7 @@ const AddItem = ({getCookie}) => {
 
 	return (
         <>
-            <ItemForm data={data} setData={setData} selectedFile={selectedFile} setSelectedFile={setSelectedFile} submitForm={submitForm} />
+            <ItemForm data={data} setData={setData} setSelectedFile={setSelectedFile} submitForm={submitForm} />
         </>
 	);
 };

@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import PopupScreen from "components/PopUpScreen";
 import Tabs from "components/Tabs";
 import IconTextButton from "components/IconTextButton";
+import { ItemStatus, Role } from "lookups";
 import "./itemDetails.css";
 
 const ItemDetails = ({getCookie}) => {
@@ -17,6 +18,9 @@ const ItemDetails = ({getCookie}) => {
     const [user, setUser] = useState('');
     const [showPopup, setShowPopup] = useState(false);
     const [location, setLocation] = useState('');
+
+    const [showConfirmationDialogue, setShowConfirmationDialogue] = useState(false);
+    const [itemStatus, setItemStatus] = useState();
 
 	const navigate = useNavigate();
 
@@ -32,15 +36,6 @@ const ItemDetails = ({getCookie}) => {
         }
     }
 
-    const getUser = () => {
-		const token = getCookie();
-		console.log("cooooooookie: ", token);
-		if(token == null || token == undefined) {return null;}
-		const decodedToken = jwt(token);
-		console.log("decoded token: ", decodedToken);
-		return decodedToken;
-	}
-
     const goToEdit = (id) => {
         setLocation("/items/edit/" + id);
         navigate(location);
@@ -48,7 +43,7 @@ const ItemDetails = ({getCookie}) => {
 
     useEffect(() => {
         const token = getCookie();
-        const usr = getUser();
+        const usr = jwt(token);
         setUser(usr);
         console.log("userrrrrrrrrrrr: ", user);
 
@@ -114,7 +109,7 @@ const ItemDetails = ({getCookie}) => {
         <div className="container" id="main_details_div">
             <div className="col-12 d-flex flex-column mt-5 outer-box">
             {
-                item && user && user.id === item.itemOwner.id &&
+                item  && item.status == ItemStatus.APPROVED && item.archived == false && user && user.role === Role.USER && user.id === item.itemOwner.id &&
                 <IconTextButton 
                     text={"Edit"}
                     onClick={() => {goToEdit(item._id)}}
@@ -122,7 +117,7 @@ const ItemDetails = ({getCookie}) => {
                 />
             }
             {
-                item.itemTradeInOrder &&
+                item && item.status === ItemStatus.APPROVED && item.archived == false && user && user.role === Role.USER && item.itemTradeInOrder &&
                 <IconTextButton 
                     text={"Accept Offer"}
                     onClick={() => {acceptTrade()}}
@@ -130,7 +125,7 @@ const ItemDetails = ({getCookie}) => {
                 />
             }
             {
-                item && user && user.id !== item.itemOwner.id &&
+                item && item.status === ItemStatus.APPROVED && user && user.role === Role.USER && user.id !== item.itemOwner.id &&
                 <IconTextButton 
                     text={"Offer Trade"}
                     onClick={() => {togglePopup()}}
@@ -138,8 +133,29 @@ const ItemDetails = ({getCookie}) => {
                 />
             }
             {
+                item && item.status === ItemStatus.PENDING && user && user.role === Role.ADMIN &&
+                <div className="d-flex col-10 offset-1 mb-3 justify-content-between">
+                    <IconTextButton 
+                        text={"Approve"}
+                        onClick={() => {setItemStatus(ItemStatus.APPROVED); setShowConfirmationDialogue(true);}}
+                        icon={<i className="fas fa-check"></i>}
+                        btnClass={"approve"}
+                    />    
+                    <IconTextButton 
+                        text={"Reject"}
+                        onClick={() => {setItemStatus(ItemStatus.REJECTED); setShowConfirmationDialogue(true);}}
+                        icon={<i className="fas fa-times"></i>}
+                        btnClass={"reject"}
+                    />         
+                </div>  
+            }
+            {
+                showConfirmationDialogue &&
+                <RejectDialogue id={item._id} status={itemStatus} getCookie={getCookie} setShowDialogue={setShowConfirmationDialogue}/>
+            }
+            {
                 item && 
-                <div className="d-flex col-10 offset-1 mt-2 flex border shadow-lg">
+                <div className={"d-flex col-10 offset-1 mt-2 flex item-details-container mb-5 " + item.status}>
                     <div className="d-flex col-12 flex-row">
                     <div className="col-5 d-flex align-items-center main-image-box m-2">
                         <img src={mainImage} className="col-12 main-image align-item-center" id="main_image"/>
@@ -147,20 +163,20 @@ const ItemDetails = ({getCookie}) => {
                     
                     <div className="col-6 offset-1 m-2 content-box">
                         <div className="col-12 d-flex flex justify-content-between align-items-center">
-                            <div className="col-8 title">{item.name}</div>
-                            <div className="col-4 pe-3 approximate-price">~ {item.approximateValue} S.P</div>
+                            <div className="col-8 title item-details-text">{item.name}</div>
+                            <div className="col-4 pe-3 approximate-price item-details-text">~ {item.approximateValue} S.P</div>
                         </div>
-                        <div className="col-12">{format(new Date(item.publishedDate), "y MMM do hh:mm")}</div>
+                        <div className="col-12 item-details-text">{format(new Date(item.publishedDate), "y MMM do hh:mm")}</div>
                         <div className="col-12 d-flex align-items-center">
                             <FontAwesomeIcon icon={"user"} className="user-icon"/>
-                            <span>{item.itemOwner.username}</span>
+                            <span className="item-details-text">{item.itemOwner.username}</span>
                         </div>
                         <div className="col-12 d-flex align-items-center">
                             <FontAwesomeIcon icon={"map-marker-alt"} className="location-icon"/>
-                            <span>{item.locationName}</span>
+                            <span className="item-details-text">{item.locationName}</span>
                         </div>
-                        <hr/>
-                        <div className="col-12">{item.description}</div>
+                        <div className="line-break"></div>
+                        <div className="col-12 item-details-text">{item.description}</div>
                         <div className="col-12 mt-4 d-flex justify-content-start image-slider">
                             {
                                 (() => {
@@ -186,10 +202,97 @@ const ItemDetails = ({getCookie}) => {
             </div>
             }
             </div>
-            <Tabs id={id} getCookie={getCookie}/>
+            {
+                item && item.archived == false && item.status === ItemStatus.APPROVED && user && user.role === Role.USER &&
+                <Tabs id={id} getCookie={getCookie}/>
+            }
+            {
+                 item && item.status === ItemStatus.REJECTED && user &&
+                <div className="bg-danger font-white d-flex flex-column col-10 offset-1 mt-5 rejected-message-container p-3">
+                    <h4>Rejection Message: </h4>
+                    <p>{item.rejectMessage}</p>
+                </div>
+            }
         </div>
         </>
 	);
 };
+
+const RejectDialogue = ({id, status, getCookie, setShowDialogue}) => {
+
+    const navigate = useNavigate();
+    const [rejectMessage, setRejectMessage] = useState('');
+
+    const changeItemStatus = async(e) => {
+        e.preventDefault();
+        console.log("item id: ", id);
+        console.log("status: ", status);
+        const token = getCookie();
+        let reqInstance = axios.create({
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        const itemUrl = "http://localhost:3000/api/admin/item/" + id;
+        await reqInstance.put(
+            itemUrl,
+            {
+                status: status,
+                rejectMessage: status == ItemStatus.REJECTED ? rejectMessage : null
+            },
+            {
+                withCredentials: true,
+                baseURL: 'http://localhost:3000'
+            }
+        ).then(({data: res}) => {
+            const location = "/allitems";
+            navigate(location);
+        }).catch((err) => {
+            console.log("error: ", err);
+        })
+    }
+
+    const handleChange = (e) => {
+        console.log("reject message: ", e.target.value);
+        setRejectMessage(e.target.value);
+    }
+
+    return (
+        <>
+            <div className="d-flex col-8 offset-2 mb-5 flex-column confirmation-dialogue">
+                <div className="col-12 d-flex justify-content-start m-2 font-white">
+                    <button className="btn btn-danger justify-content-start col-1" onClick={()=>{setShowDialogue(false)}}>X</button>
+                </div>
+                <div className="d-flex col-12 flex-column justify-content-center align-items-center">
+                    <form onSubmit={changeItemStatus} className="col-12" method="POST">
+                        {
+                            status === ItemStatus.REJECTED &&
+                            <div className="d-flex col-10 offset-1 flex-column mt-3 justify-content-center align-items-center group p-2">
+                                <h3 className="mb-2 font-white align-center">Rejection Message</h3>
+                                <div className="d-flex flex-column col-12">
+                                    <input className="form-control-sm col-12" type="text" placeholder="rejection message..." name="rejectMessage" value={rejectMessage} onChange={handleChange}/>
+                                    <p className="sub-text">A brief explanation why the item was rejected</p>
+                                </div>
+                            </div>
+                        }
+                        {
+                            status === ItemStatus.APPROVED &&
+                            <div className="d-flex col-12 flex-column mt-3 col-12 align-items-center justify-content-center group">
+                                <h3 className="font-white align-center">Confirmation Dialogue</h3>
+                                <h5 className="font-white">Are you sure you want to approve this item ?</h5>
+                                <h5 className="font-white">This action can't be undone !</h5>
+                            </div>
+                        }
+                        <div className="col-12 d-flex justify-content-center mb-lg-1">
+                            <input type="submit" className="m-1 mb-2 submit-btn-confirm-dialogue col-4" value="Submit"/>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </>
+    );
+}
 
 export default ItemDetails;

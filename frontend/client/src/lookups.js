@@ -16,3 +16,20 @@ export const itemOrderDirectionLookups = [
     new Lookups(1, "Ascending", 1),
     new Lookups(-1, "Descending", 2)
 ]
+
+export const Role = {
+    ADMIN: 'admin',
+    USER: 'user' 
+}
+
+export const ItemStatus = {
+    PENDING: 'pending',
+    APPROVED: 'approved',
+    REJECTED: 'rejected'
+}
+
+export const ItemStatusLookups = [
+    new Lookups(ItemStatus.APPROVED, "Approved", 1),
+    new Lookups(ItemStatus.PENDING, "Pending", 2),
+    new Lookups(ItemStatus.REJECTED, "Rejected", 3)
+]

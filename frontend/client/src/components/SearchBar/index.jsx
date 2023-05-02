@@ -2,28 +2,34 @@ import React, {useState} from "react";
 import Dropdown from 'react-bootstrap/Dropdown';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
-import { itemOrderByLookups, itemOrderDirectionLookups } from "lookups";
+import { itemOrderByLookups, itemOrderDirectionLookups, ItemStatusLookups } from "lookups";
 import "./searchBar.css";
 
-const SearchBar = ({setOrderValue, setOrderDirectionValue, setSearchTextValue}) => {
+const SearchBar = ({setOrderValue, setOrderDirectionValue, setSearchTextValue, setStatusValue}) => {
 
   return (
     <>
-      <div className="mt-5 mb-5">
-          <div className="d-flex col-6 offset-3 flex justify-content-between align-items-baseline">
-              <input type="text" id ="search_text" className="col-11 search-input form-control" onChange={(e) => {
+      <div className="mt-5 mb-5 d-flex col-12">
+          <div className="d-flex col-lg-6 col-10 offset-1 offset-lg-3 justify-content-lg-between justify-content-around align-items-lg-baseline">
+              <input type="text" id ="search_text" className="col-lg-11 col-11 search-input form-control" onChange={(e) => {
                   setSearchTextValue(e.target.value);
                 }} 
                 placeholder="Search anything..."/>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" 
-                  className="col-1 search-icon bi bi-search" viewBox="0 0 16 16">
-                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-              </svg>
           </div>
       </div>
-      <div className="d-flex col-6 offset-3 flex-row justify-content-around">
-        <DropDownButton btnName={"Order By"} setDropValue={setOrderValue} list={itemOrderByLookups}/>
-        <DropDownButton btnName={"Order Direction"} setDropValue={setOrderDirectionValue} list={itemOrderDirectionLookups}/>
+      <div className="d-flex col-lg-6 col-12 offset-lg-3 flex-md-row flex-column justify-content-around">
+        {
+          setOrderValue !== null && setOrderValue !== undefined &&
+          <DropDownButton btnName={"Order By"} setDropValue={setOrderValue} list={itemOrderByLookups}/>
+        }
+        {
+          setOrderDirectionValue !== null && setOrderDirectionValue !== undefined &&
+          <DropDownButton btnName={"Order Direction"} setDropValue={setOrderDirectionValue} list={itemOrderDirectionLookups}/>
+        }
+        {
+          setStatusValue !== null && setStatusValue !== undefined &&
+          <DropDownButton btnName={"Item Status"} setDropValue={setStatusValue} list={ItemStatusLookups}/>
+        }
       </div>
     </>
   );
@@ -34,7 +40,7 @@ const DropDownButton = ({btnName, setDropValue, list}) => {
   const [buttonName, setButtonName] = useState(btnName);
   console.log("list is: ", list);
   return (
-    <div className="d-flex col-2 justify-content-center dropdown-container">
+    <div className="d-flex col-lg-2 col-md-3 justify-content-lg-center justify-content-around dropdown-container m-0">
       <Dropdown as={ButtonGroup}>
             <Button variant="none" className="dropDown-button">{ buttonName }</Button>
             <Dropdown.Toggle split  id="dropdown-basic-button" className="dropdown-toggle"/>
