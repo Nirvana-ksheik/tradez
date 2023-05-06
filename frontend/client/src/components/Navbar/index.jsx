@@ -145,7 +145,7 @@ function PopupList({user, handleLogout}) {
 		  <OverlayTrigger
 			trigger="click"
 			placement="bottom"
-			show={showList}
+			rootClose
 			overlay={
 			  <Tooltip id="popup-list">
 				<ListGroup>

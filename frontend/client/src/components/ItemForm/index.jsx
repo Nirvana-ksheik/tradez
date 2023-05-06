@@ -56,7 +56,7 @@ const ItemForm = ({ data, setData, setSelectedFile, submitForm }) => {
                             <div className="d-flex mt-5 col-12 justify-content-around group input-container">
                                 <label className="col-3 font-white">Item Description</label>
                                 <div className="col-7">
-                                    <textarea className="col-12 form-control-sm" type="textarea" placeholder="" name="description" value={data.description} onChange={handleChange} />
+                                    <textarea className="col-12 form-control-sm text-area-description" type="textarea" placeholder="" name="description" value={data.description} onChange={handleChange} />
                                     <p className="sub-text">Describe your item</p>
                                 </div>
                             </div>

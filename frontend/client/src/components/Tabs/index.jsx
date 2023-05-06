@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import ItemsList from 'components/ItemsList';
 import axios from 'axios';
 import { useEffect } from 'react';
-import './tabs.css';
 import CommentBox from 'components/CommentBox';
+import jwt from 'jwt-decode';
+import './tabs.css';
 
 function Tabs(props) {
 
@@ -23,8 +24,19 @@ function Tabs(props) {
   };
 
   const clickEvent = (id) => {
-      const loc = '/items/' + props.id + '/tradez/' + id;
-      console.log("location: ", location);
+      const token = props.getCookie();
+      let decodedToken = undefined;
+
+      if(token != null && token != undefined){
+        decodedToken = jwt(token);
+        console.log("decodedToken: ", decodedToken);
+        console.log("ownerId: ", props.ownerId);
+      }
+
+      let loc = '/items/' + id;
+      if(decodedToken != null && decodedToken != undefined && decodedToken.id == props.ownerId){
+        loc = '/items/' + props.id + '/tradez/' + id;
+      }
       navigate(loc);
       window.location.reload();
   };

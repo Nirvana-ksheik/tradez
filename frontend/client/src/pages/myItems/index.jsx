@@ -1,16 +1,18 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "./myItems.css";
 import ItemsList from "components/ItemsList";
+import { Role } from "lookups";
+import jwt from'jwt-decode';
+import "./myItems.css";
 
-const MyItems = ({getCookie}) => {
+const MyItems = ({getCookie, user}) => {
 
     const [items, setItems] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const [orderValue, setOrderValue ] = useState(null);
     const [orderDirectionValue, setOrderDirectionValue] = useState(null);
     const [searchTextValue, setSearchTextValue] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
     const [statusValue, setStatusValue] = useState(null);
 
     const navigate = useNavigate();
@@ -22,16 +24,23 @@ const MyItems = ({getCookie}) => {
 
     const getData = (controller) => {
         setIsLoading(true);
-        try {
-            const token = getCookie();
-            let reqInstance = axios.create({
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            console.log("token to be sent: ", token);
-            const url = "http://localhost:3000/api/items";
+        const token = getCookie();
+        let decodedToken = undefined;
+        if(token != null && token != undefined){
+            decodedToken = jwt(token);
+        }
 
+        let reqInstance = decodedToken != undefined && decodedToken.role == Role.USER ?
+        axios.create({
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }) : axios;
+
+        console.log("token to be sent: ", token);
+        const url = "http://localhost:3000/api/items";
+        
+        try {
             reqInstance.get(
                 url, 
                 { 
@@ -56,6 +65,7 @@ const MyItems = ({getCookie}) => {
         
         } catch (error) { 
             console.log("error: ", error);
+            setIsLoading(false);
         }
     }
 
@@ -64,7 +74,8 @@ const MyItems = ({getCookie}) => {
         <ItemsList 
             clickEvent={clickEvent} getData={getData} items={items} orderValue={orderValue}
             setOrderValue={setOrderValue} orderDirectionValue={orderDirectionValue} setOrderDirectionValue={setOrderDirectionValue}
-            searchTextValue={searchTextValue} setSearchTextValue={setSearchTextValue} setStatusValue={setStatusValue} statusValue={statusValue} isLoading={isLoading} canSeeStatusFilters={true}
+            searchTextValue={searchTextValue} setSearchTextValue={setSearchTextValue} 
+            statusValue={statusValue} setStatusValue={setStatusValue} isLoading={isLoading} canSeeStatusFilters={user != undefined && user != null && user.role == Role.USER}
         /> 
 	);
 };

@@ -23,11 +23,11 @@ const Item = ({data, clickEvent}) => {
 				<img
 					src={"http://localhost:3000" + data.imagePaths[0]}
 					alt=""
-					className="card-img product-img"
+					className="card-img product-img mt-2"
 				/>
 			</div>
 			<div className="col-12">
-				<p className="product-title">{data.name}</p>
+				<p className="product-title">{data.name}</p> 
 			</div>
 
 			<div className="d-flex col-12 justify-content-between">

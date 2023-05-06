@@ -17,10 +17,11 @@ const _createTradeController = async (req, res) => {
             console.log("res out: ", result);
             return res.status(200).json(result);
         }
-        return res.status(601).json("Trade exists");
+        const result = {message: "Trade exists"}
+        return res.status(601).json(result);
     } catch (err) {
         console.log("err ", err);
-        res.status(500).json(err.message);
+        res.status(500).json({err});
     }
 };
 export { _createTradeController as createTradeController };

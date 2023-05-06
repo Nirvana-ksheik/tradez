@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function Ribbon({text, setShowValue, isSuccess, showTime}) {
+function Ribbon({text, setShowValue, isSuccess, showTime, callbackFunction}) {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
@@ -10,6 +10,9 @@ function Ribbon({text, setShowValue, isSuccess, showTime}) {
     const timeout = setTimeout(() => {
       setIsVisible(false);
       setShowValue(false);
+      if(callbackFunction != undefined && callbackFunction != null){
+        callbackFunction();
+      }
     }, showTime);
 
     return () => {

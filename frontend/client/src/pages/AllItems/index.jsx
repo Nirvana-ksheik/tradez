@@ -25,7 +25,10 @@ const AllItems = ({getCookie, user}) => {
     const getData = (controller) => {
         setIsLoading(true);
         const token = getCookie();
-        const decodedToken = jwt(token);
+        let decodedToken = undefined;
+        if(token != null && token != undefined){
+            decodedToken = jwt(token);
+        }
         console.log("decoded token in get data: ", decodedToken);
         let reqInstance = decodedToken != undefined && decodedToken.role == Role.ADMIN ?
         axios.create({

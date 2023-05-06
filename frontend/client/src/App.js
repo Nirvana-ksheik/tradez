@@ -16,6 +16,7 @@ import UserProfile from "pages/UserProfile";
 import ResetPassword from "components/ResetPassword";
 import ForgotPassword from "components/ForgotPassword";
 import ConfirmEmail from "pages/ConfirmEmail";
+import HomePage from "pages/HomePage";
 
 function App() {
 	const cookies = new Cookies();
@@ -52,14 +53,15 @@ function App() {
 		<div>
 			<NavBar user={user}/>
 			<Routes>
+				<Route path="/" element={<HomePage getCookie={getCookie}/>} />
 				<Route path="/signup" element={<Signup />} />
 				<Route path="/login" element={<Login setCookie={setCookie}/>} />
-				<Route path="/items/mine" element={ user ? <MyItems getCookie={getCookie}/> : <Login setCookie={setCookie}/>} />
+				<Route path="/items/mine" element={ user ? <MyItems getCookie={getCookie} user={user}/> : <Login setCookie={setCookie}/>} />
 				<Route path="/allitems" element={<AllItems getCookie={getCookie} user={user}/>} />
-				<Route path="/items/:id" element={<ItemDetails getCookie={getCookie} />} />
+				<Route path="/items/:id" element={ user ? <ItemDetails getCookie={getCookie} enableTrade={false}/> : <Login setCookie={setCookie}/>} />
 				<Route path="/items/create" element={ user ? <AddItem getCookie={getCookie} /> : <Login setCookie={setCookie}/>} /> 
 				<Route path="/items/edit/:id" element={ user ? <EditItem getCookie={getCookie} /> : <Login setCookie={setCookie}/>} />
-				<Route path="/items/:primaryId/tradez/:id" element={ user ? <ItemDetails getCookie={getCookie} /> : <Login setCookie={setCookie}/>} />
+				<Route path="/items/:primaryId/tradez/:id" element={ user ? <ItemDetails getCookie={getCookie} enableTrade={true}/> : <Login setCookie={setCookie}/>} />
 				<Route path="/items/archived" element={ user ? <ArchivedItems getCookie={getCookie} /> : <Login setCookie={setCookie}/>} />
 				<Route path="/profile" element={ user ? <UserProfile getCookie={getCookie} /> : <Login setCookie={setCookie}/>} />
 				<Route path="/auth/reset/:token" element={<ResetPassword />} />

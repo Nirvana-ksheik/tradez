@@ -71,6 +71,7 @@
       color: white;
       font-size: 1rem;
       font-weight: 600;
+      z-index: 100;
     }
     
     .pending::before{

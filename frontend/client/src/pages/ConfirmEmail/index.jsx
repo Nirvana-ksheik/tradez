@@ -43,7 +43,7 @@ const ConfirmEmail = () => {
                 setConfirmEmailText(res);
                 setTimeout(()=>{
                     navigate('/login');
-                }, 3000);
+                }, 10000);
             }).catch(err => {
                 console.log("err: ", err);
                 setConfirmEmailRibbon(true);

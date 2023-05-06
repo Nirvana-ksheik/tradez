@@ -10,15 +10,15 @@ import Tabs from "components/Tabs";
 import IconTextButton from "components/IconTextButton";
 import { ItemStatus, Role } from "lookups";
 import "./itemDetails.css";
+import LoadingSpinner from "components/LoadingSpinner";
 
-const ItemDetails = ({getCookie}) => {
+const ItemDetails = ({getCookie, enableTrade}) => {
 
     const [item, setItem] = useState('');
     const [mainImage, setMainImage] = useState('');
     const [user, setUser] = useState('');
     const [showPopup, setShowPopup] = useState(false);
-    const [location, setLocation] = useState('');
-
+    const [isLoading, setIsLoading] = useState(false);
     const [showConfirmationDialogue, setShowConfirmationDialogue] = useState(false);
     const [itemStatus, setItemStatus] = useState();
 
@@ -37,14 +37,18 @@ const ItemDetails = ({getCookie}) => {
     }
 
     const goToEdit = (id) => {
-        setLocation("/items/edit/" + id);
+        const location = "/items/edit/" + id;
         navigate(location);
     }
 
     useEffect(() => {
+        setIsLoading(true);
         const token = getCookie();
-        const usr = jwt(token);
-        setUser(usr);
+        let decodedToken = undefined;
+        if(token != null && token != undefined){
+            decodedToken = jwt(token);
+            setUser(decodedToken);
+        }
         console.log("userrrrrrrrrrrr: ", user);
 
         const controller = new AbortController();
@@ -66,13 +70,16 @@ const ItemDetails = ({getCookie}) => {
                 baseURL: 'http://localhost:3000'
             }
         ).then(({data: res}) => {
+            setIsLoading(false);
             setItem(res);
             console.log("item is: ", res)
             const img = 'http://localhost:3000' + res.imagePaths[0];
             setMainImage(img);
             console.log("itemTradeInOrder: ", res.itemTradeInOrder);
             return controller.abort();
-        });
+        }).catch((err)=>{
+            setIsLoading(false);
+        })
     }, []);
 
     const acceptTrade = async () =>{
@@ -97,123 +104,129 @@ const ItemDetails = ({getCookie}) => {
             }
         );
 
-        setLocation("/items/" + primaryId);
+        const location = "/items/" + primaryId;
         navigate(location);
     }
 
 	return (
         <>
         {
-            showPopup && item && <PopupScreen togglePopup={togglePopup} getCookie={getCookie} itemId={item._id} userId={item.ownerId} />
-        }
-        <div className="container" id="main_details_div">
-            <div className="col-12 d-flex flex-column mt-5 outer-box">
-            {
-                item  && item.status == ItemStatus.APPROVED && item.archived == false && user && user.role === Role.USER && user.id === item.itemOwner.id &&
-                <IconTextButton 
-                    text={"Edit"}
-                    onClick={() => {goToEdit(item._id)}}
-                    icon={<i className="fa-regular fa-pen-to-square"></i>}
-                />
-            }
-            {
-                item && item.status === ItemStatus.APPROVED && item.archived == false && user && user.role === Role.USER && item.itemTradeInOrder &&
-                <IconTextButton 
-                    text={"Accept Offer"}
-                    onClick={() => {acceptTrade()}}
-                    icon={<i className="fa-solid fa-circle-check"></i>}
-                />
-            }
-            {
-                item && item.status === ItemStatus.APPROVED && user && user.role === Role.USER && user.id !== item.itemOwner.id &&
-                <IconTextButton 
-                    text={"Offer Trade"}
-                    onClick={() => {togglePopup()}}
-                    icon={<i className="fa-solid fa-right-left"></i>}
-                />
-            }
-            {
-                item && item.status === ItemStatus.PENDING && user && user.role === Role.ADMIN &&
-                <div className="d-flex col-10 offset-1 mb-3 justify-content-between">
-                    <IconTextButton 
-                        text={"Approve"}
-                        onClick={() => {setItemStatus(ItemStatus.APPROVED); setShowConfirmationDialogue(true);}}
-                        icon={<i className="fas fa-check"></i>}
-                        btnClass={"approve"}
-                    />    
-                    <IconTextButton 
-                        text={"Reject"}
-                        onClick={() => {setItemStatus(ItemStatus.REJECTED); setShowConfirmationDialogue(true);}}
-                        icon={<i className="fas fa-times"></i>}
-                        btnClass={"reject"}
-                    />         
-                </div>  
-            }
-            {
-                showConfirmationDialogue &&
-                <RejectDialogue id={item._id} status={itemStatus} getCookie={getCookie} setShowDialogue={setShowConfirmationDialogue}/>
-            }
-            {
-                item && 
-                <div className={"d-flex col-10 offset-1 mt-2 flex item-details-container mb-5 " + item.status}>
-                    <div className="d-flex col-12 flex-row">
-                    <div className="col-5 d-flex align-items-center main-image-box m-2">
-                        <img src={mainImage} className="col-12 main-image align-item-center" id="main_image"/>
-                    </div>
-                    
-                    <div className="col-6 offset-1 m-2 content-box">
-                        <div className="col-12 d-flex flex justify-content-between align-items-center">
-                            <div className="col-8 title item-details-text">{item.name}</div>
-                            <div className="col-4 pe-3 approximate-price item-details-text">~ {item.approximateValue} S.P</div>
-                        </div>
-                        <div className="col-12 item-details-text">{format(new Date(item.publishedDate), "y MMM do hh:mm")}</div>
-                        <div className="col-12 d-flex align-items-center">
-                            <FontAwesomeIcon icon={"user"} className="user-icon"/>
-                            <span className="item-details-text">{item.itemOwner.username}</span>
-                        </div>
-                        <div className="col-12 d-flex align-items-center">
-                            <FontAwesomeIcon icon={"map-marker-alt"} className="location-icon"/>
-                            <span className="item-details-text">{item.locationName}</span>
-                        </div>
-                        <div className="line-break"></div>
-                        <div className="col-12 item-details-text">{item.description}</div>
-                        <div className="col-12 mt-4 d-flex justify-content-start image-slider">
-                            {
-                                (() => {
-                                    let container = [];
+            isLoading == true ? <LoadingSpinner /> 
+            :
+            <>
+                {
+                    showPopup && item && <PopupScreen togglePopup={togglePopup} getCookie={getCookie} itemId={item._id} userId={item.ownerId} />
+                }
+                <div className="container" id="main_details_div">
+                    <div className="col-12 d-flex flex-column mt-5 outer-box">
+                    {
+                        item  && item.status == ItemStatus.APPROVED && item.archived == false && user && user.role === Role.USER && user.id === item.itemOwner.id &&
+                        <IconTextButton 
+                            text={"Edit"}
+                            onClick={() => {goToEdit(item._id)}}
+                            icon={<i className="fa-regular fa-pen-to-square"></i>}
+                        />
+                    }
+                    {
+                        item && item.status === ItemStatus.APPROVED && item.archived == false && user && user.role === Role.USER && item.itemTradeInOrder && enableTrade == true &&
+                        <IconTextButton 
+                            text={"Accept Offer"}
+                            onClick={() => {acceptTrade()}}
+                            icon={<i className="fa-solid fa-circle-check"></i>}
+                        />
+                    }
+                    {
+                        item && item.status === ItemStatus.APPROVED && user && user.role === Role.USER && user.id !== item.itemOwner.id &&
+                        <IconTextButton 
+                            text={"Offer Trade"}
+                            onClick={() => {togglePopup()}}
+                            icon={<i className="fa-solid fa-right-left"></i>}
+                        />
+                    }
+                    {
+                        item && item.status === ItemStatus.PENDING && user && user.role === Role.ADMIN &&
+                        <div className="d-flex col-10 offset-1 mb-3 justify-content-between">
+                            <IconTextButton 
+                                text={"Approve"}
+                                onClick={() => {setItemStatus(ItemStatus.APPROVED); setShowConfirmationDialogue(true);}}
+                                icon={<i className="fas fa-check"></i>}
+                                btnClass={"approve"}
+                            />    
+                            <IconTextButton 
+                                text={"Reject"}
+                                onClick={() => {setItemStatus(ItemStatus.REJECTED); setShowConfirmationDialogue(true);}}
+                                icon={<i className="fas fa-times"></i>}
+                                btnClass={"reject"}
+                            />         
+                        </div>  
+                    }
+                    {
+                        showConfirmationDialogue &&
+                        <RejectDialogue id={item._id} status={itemStatus} getCookie={getCookie} setShowDialogue={setShowConfirmationDialogue}/>
+                    }
+                    {
+                        item && 
+                        <div className={"d-flex col-10 offset-1 mt-2 flex item-details-container mb-5 " + item.status}>
+                            <div className="d-flex col-12 flex-row">
+                            <div className="col-5 d-flex align-items-center main-image-box m-2">
+                                <img src={mainImage} className="col-12 main-image align-item-center" id="main_image"/>
+                            </div>
+                            
+                            <div className="col-6 offset-1 m-2 content-box">
+                                <div className="col-12 d-flex flex justify-content-between align-items-center">
+                                    <div className="col-8 title item-details-text">{item.name}</div>
+                                    <div className="col-4 pe-3 approximate-price item-details-text">~ {item.approximateValue} S.P</div>
+                                </div>
+                                <div className="col-12 item-details-text">{format(new Date(item.publishedDate), "y MMM do hh:mm")}</div>
+                                <div className="col-12 d-flex align-items-center">
+                                    <FontAwesomeIcon icon={"user"} className="user-icon"/>
+                                    <span className="item-details-text">{item.itemOwner.username}</span>
+                                </div>
+                                <div className="col-12 d-flex align-items-center">
+                                    <FontAwesomeIcon icon={"map-marker-alt"} className="location-icon"/>
+                                    <span className="item-details-text">{item.locationName}</span>
+                                </div>
+                                <div className="line-break"></div>
+                                <div className="col-12 item-details-text">{item.description}</div>
+                                <div className="col-12 mt-4 d-flex justify-content-start image-slider">
                                     {
-                                        item !== undefined && item !== null && item.imagePaths.forEach((data, index) => {
-                                        container.push(
-                                            <div className="each-slide col-2 border shadow-sm small-image m-1" key={index} onClick={()=>{
-                                                const img = "http://localhost:3000" + data;
-                                                setMainImage(img);
-                                            }}>
-                                                <img className="col-12" src={"http://localhost:3000" + data} alt="Image"/>
-                                            </div>
-                                        )
-                                        })
+                                        (() => {
+                                            let container = [];
+                                            {
+                                                item !== undefined && item !== null && item.imagePaths.forEach((data, index) => {
+                                                container.push(
+                                                    <div className="each-slide col-2 border shadow-sm small-image m-1" key={index} onClick={()=>{
+                                                        const img = "http://localhost:3000" + data;
+                                                        setMainImage(img);
+                                                    }}>
+                                                        <img className="col-12" src={"http://localhost:3000" + data} alt="Image"/>
+                                                    </div>
+                                                )
+                                                })
+                                            }
+                                            return container;
+                                        })()
                                     }
-                                    return container;
-                                })()
-                            }
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    }
+                    </div>
+                    {
+                        item && item.archived == false && item.status === ItemStatus.APPROVED && user && user.role === Role.USER &&
+                        <Tabs id={id} getCookie={getCookie} ownerId={item.ownerId}/>
+                    }
+                    {
+                        item && item.status === ItemStatus.REJECTED && user &&
+                        <div className="bg-danger font-white d-flex flex-column col-10 offset-1 mt-5 rejected-message-container p-3">
+                            <h4>Rejection Message: </h4>
+                            <p>{item.rejectMessage}</p>
+                        </div>
+                    }
                 </div>
-            </div>
-            }
-            </div>
-            {
-                item && item.archived == false && item.status === ItemStatus.APPROVED && user && user.role === Role.USER &&
-                <Tabs id={id} getCookie={getCookie}/>
-            }
-            {
-                 item && item.status === ItemStatus.REJECTED && user &&
-                <div className="bg-danger font-white d-flex flex-column col-10 offset-1 mt-5 rejected-message-container p-3">
-                    <h4>Rejection Message: </h4>
-                    <p>{item.rejectMessage}</p>
-                </div>
-            }
-        </div>
+            </>
+        }
         </>
 	);
 };

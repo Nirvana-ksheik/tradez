@@ -35,13 +35,13 @@ const ItemsList = ({clickEvent, getData, items, orderValue, setOrderValue, order
     [items.length, orderValue, orderDirectionValue, searchTextValue, statusValue, itemOffset, itemsPerPage]);
 
     return (
-    <div className="d-flex flex-column col-xl-10 offset-xl-1">
+    <div className="d-flex flex-column col-xl-10 offset-xl-1 justify-content-center">
 
         <SearchBar setOrderValue={setOrderValue} setOrderDirectionValue={setOrderDirectionValue} setSearchTextValue={setSearchTextValue} setStatusValue={canSeeStatusFilters === true ? setStatusValue : undefined}/>
         {
             items != null && items != undefined && currentItems != null && currentItems != undefined && currentItems.length > 0 && isLoading === false && 
             <>
-                <div className="d-flex flex-wrap col-12 justify-content-start mt-4">
+                <div className="d-flex flex-wrap col-12 justify-content-center mt-4">
                     {
                         (() => {
                             console.log("current items: ", currentItems);
@@ -69,7 +69,7 @@ const ItemsList = ({clickEvent, getData, items, orderValue, setOrderValue, order
                 <img src={NoData} className="no-data-img"/>
             </div>
         }
-        <Pagination handlePageClick={handlePageClick} pageCount={pageCount} maxItems={9}/>
+        <Pagination handlePageClick={handlePageClick} pageCount={pageCount} maxItems={itemsPerPage}/>
     </div>
     );
 }

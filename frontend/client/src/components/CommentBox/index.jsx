@@ -10,7 +10,7 @@ function CommentBox({getCookie, itemId}) {
   const [comment, setComment] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [totalComments, setTotalComments] = useState([]);
-  const itemsPerPage = 20;
+  const itemsPerPage = 25;
 
   const [itemOffset, setItemOffset] = useState(0);
   const [currentItems, setCurrentItems] = useState([]);

@@ -6,6 +6,9 @@ import LoadingSpinner from "../../components/LoadingSpinner";
 import "./popupScreen.css";
 import Pagination from "../../components/Pagination";
 import { ItemStatus } from "lookups";
+import { useNavigate } from "react-router-dom";
+import Ribbon from "components/Ribbon";
+
 function PopupScreen(props) {
 
     const [items, setItems] = useState('');
@@ -16,8 +19,12 @@ function PopupScreen(props) {
     const [currentItems, setCurrentItems] = useState([]);
     const [pageCount, setPageCount] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
+    const [tradeRibbon, setTradeRibbon] = useState(false);
+    const [tradeText, setTradeText] = useState('');
+    const [isSuccess, setIsSuccess] = useState(null);
     const itemsPerPage = 9;
 
+    const navigate = useNavigate();
 
     useEffect(() => {
         const endOffset = itemOffset + itemsPerPage;
@@ -76,7 +83,7 @@ function PopupScreen(props) {
     }
 
     const clickEvent = (data) => {
-
+        setTradeRibbon(false);
         console.log("primaryItemId: ", props.itemId);
         console.log("primaryUserId: ", props.userId);
         console.log("secondaryItemId: ", data._id);
@@ -104,12 +111,28 @@ function PopupScreen(props) {
             }
         ).then(({data: res}) => { 
             console.log("performed trade: ", res);
-        });
+            setIsSuccess(true);
+            setTradeRibbon(true);
+            setTradeText("Trade Succeeded");
+        }).catch((err)=> {
+            console.log("error: ", {err});
+            setIsSuccess(false);
+            setTradeRibbon(true);
+            setTradeText(err.response.data.message);
+        })
+    }
+
+    const callbackFunction = () => {
+        navigate("/items/mine");
     }
 
 	return (
     <>
-        <div className="pop-up-div d-flex flex-column col-10 offset-1 mt-4">
+        <div className="pop-up-div d-flex flex-column col-10 offset-1 mt-4">      
+            {
+                tradeRibbon &&
+                <Ribbon text={tradeText} setShowValue={setTradeRibbon} isSuccess={isSuccess} callbackFunction={isSuccess == true ? callbackFunction : undefined}/>
+            }          
             <button className = "btn btn-danger col-1" onClick={() => {props.togglePopup()}}>X</button>
             <SearchBar setOrderValue={setOrderValue} setOrderDirectionValue={setOrderDirectionValue} setSearchTextValue={setSearchTextValue} />
             {

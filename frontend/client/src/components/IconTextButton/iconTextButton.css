@@ -3,6 +3,8 @@
     border-color: transparent !important;
     width: fit-content;
     height:3rem;
+    background-color: var(--primary-variant-color);
+    color: var(--primary-color)
 }
 
 .approve{

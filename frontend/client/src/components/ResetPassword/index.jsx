@@ -71,7 +71,7 @@ function ResetPassword() {
 				setSuccess(true);
 				setTimeout(()=>{
 					navigate('/login');
-				}, 3000);
+				}, 10000);
 			}).catch((err)=>{
 				setError("Invalid Token / Token Expired");
 			});
