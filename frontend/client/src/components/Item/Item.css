@@ -1,0 +1,104 @@
+
+    .product-description{
+      font-size: 1em;
+    }
+
+    .three-dots:after {
+      cursor: pointer;
+      color: #444;
+      content: '\2807';
+      font-size: 20px;
+      padding: 0 5px;
+    }
+
+    .product-title{
+      font-size: 1.2rem;
+      color: var(--secondary-variant-color);
+      text-align: start;
+      text-size-adjust: auto;
+    }
+
+    .product-price{
+      color: var(--secondary-variant-color);;
+      font-weight: bold;
+      font-size: 0.8rem;
+      justify-content: flex-end;
+      display: flex;
+      margin-right: 5%;
+    }
+
+    .product-tradez{
+      color: var(--secondary-variant-color);
+      font-size: 0.8rem;
+    }
+
+    .product-description{
+      color: var(--secondary-variant-color);;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      font-size: 0.9rem;
+    }
+
+    .product-description-container{
+      max-height: 3rem;
+      margin-bottom: 3px;
+      text-overflow: ellipsis;
+    }
+
+    .product-img{
+      position: relative;
+      max-width:12rem;
+      max-height:12rem;
+    }
+
+    .item-container, .pending, .approved, .rejected{
+      border: 1px solid var(--secondary-color) !important;
+        position: relative;
+      overflow: hidden;
+    }
+
+    .item-container::before, .pending::before, .approved::before, .rejected::before{
+      position: absolute;
+      top: 1rem;
+      right: -2rem;
+      width: 8rem;
+      text-align: center;
+      transform: rotate(45deg);
+      padding: 2px;
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      z-index: 100;
+    }
+    
+    .pending::before{
+      background: var(--pending);
+      content: "Pending";
+    }
+
+    .approved::before{
+      background: var(--approve);
+      content: "Approved";
+    }
+
+    .rejected::before{
+      background: var(--reject);
+      content: "Rejecetd";
+    }
+
+    .item-container:hover{
+      cursor: pointer;
+    }
+
+    .item-container{
+      background-color: white;
+    }
+
+    .card-img-div{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 12rem;
+    }

@@ -1,0 +1,27 @@
+.btn-tabs-custom{
+    color: var(--primary-variant-color) !important;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid !important;
+    border-radius: 0.2rem;
+}
+
+.btn-tabs-custom:hover, .active-tab{
+    color: white !important;
+    background-color: var(--primary-variant-color);
+}
+
+.btn-tabs-custom::after{
+    border-color: var(--primary-color) !important;
+}
+
+.items-list{
+    border: 1px solid var(--primary-color);
+    margin-top: 4%;
+    border-radius: 10px;
+    box-shadow: 0px 7px 29px 0px rgb(0, 90, 25);
+}
+
+.tab-content{
+    margin-bottom: 10rem;
+}

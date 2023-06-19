@@ -1,0 +1,34 @@
+body {
+    font-family: "Dosis", sans-serif !important;
+    background-color: var(--background-color);
+
+}
+
+:root{
+    --primary-color: #8c5b97;
+    --secondary-color: #60b0ba;
+    --primary-variant-color: #8b479a;
+    --secondary-variant-color: #187e8c;
+    --background-color: #ede4f4;
+
+    --approve: rgb(40, 177, 40);
+    --reject: rgb(230, 61, 61);
+    --pending: rgb(254, 188, 144);
+}
+
+/* ALI
+:root{
+    --primary-color: #8c5b97;
+    --secondary-color: #60b0ba;
+    --primary-variant-color: #8b479a;
+    --secondary-variant-color: #187e8c;
+    --background-color: #e4d3f2;
+
+    --approve: rgb(40, 177, 40);
+    --reject: rgb(230, 61, 61);
+    --pending: rgb(254, 188, 144);
+}
+ */
+
+/* purple : #8c5b97
+teal: #60b0ba */

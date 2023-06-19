@@ -1,0 +1,78 @@
+.comment-input-text{
+    border: none !important;
+    border-bottom: 1px solid black !important;
+    border-radius: 0.2em;
+}
+
+.comment-input-text:focus, .comment-input-text::after, .comment-input-text::before{
+    border: none;
+    border-bottom: 1px solid black !important;
+    outline: 0 !important;
+}
+
+.comment-input-div{
+    margin-left: 2em;
+}
+
+.send-message-icon{
+    color: var(--approve);
+    margin-left: 1em;
+}
+
+.send-message-icon:hover{
+    cursor: pointer;
+}
+
+.comment-username{
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--secondary-variant-color)
+}
+
+.comment-commentdate{
+    font-size: 1.1em;
+    font-weight: light;
+    color: var(--secondary-variant-color)
+}
+
+.comment-user-icon{
+    width: 1.3rem !important;
+    color: var(--secondary-variant-color);
+}
+
+.delete-reply-comment-icon{
+    color: var(--reject);
+    margin-left: 1em;
+}
+
+.delete-reply-comment-icon:hover{
+    cursor: pointer;
+}
+
+.link:hover{
+    cursor: pointer;
+    text-decoration: underline;
+    color: blue;
+}
+
+.comment-text{
+    font-size: 1.1em;
+}
+
+.reply-icon{
+    color: var(--secondary-color);
+}
+
+.reply-icon:hover{
+    cursor: pointer;
+}
+
+.user-comment-icon-main-comment{
+    color: var(--secondary-variant-color);
+    font-size: 2rem;
+}
+
+.user-comment-icon{
+    color: var(--secondary-variant-color);
+    font-size: 1.2rem;
+}

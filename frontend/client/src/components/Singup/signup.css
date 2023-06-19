@@ -1,0 +1,19 @@
+.main-container-signup{
+	margin-top: 15vh !important;
+	border-radius: 10px	 !important;
+	box-shadow: 10px 10px var(--secondary-color);
+	color: var(--secondary-color);
+ }
+
+ @media screen and (max-width: 767px) {
+	.right{
+		display: none !important;
+	}
+	.main-container-signup{
+		box-shadow: none !important;
+	}
+
+	.main-container{
+		box-shadow: none !important;
+	}
+}

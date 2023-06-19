@@ -1,0 +1,15 @@
+.charity-input {
+	outline: none;
+	border-bottom: 1px solid black !important;
+	border-radius: 3px;
+	font-size: 14px;
+}
+
+.charity-div {
+    padding: 10px;
+}
+
+.charity-container-signup{
+	margin-left: 5% !important;
+	margin-right: 5% !important;
+}

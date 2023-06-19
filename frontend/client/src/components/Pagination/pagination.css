@@ -1,0 +1,24 @@
+.page-icon{
+    color: var(--primary-color) !important;
+    font-size: 1.5rem;
+}
+
+.page-icon:hover{
+    font-size: 1.5rem;
+    background-color: white !important;
+}
+
+.page-link{
+    background-color: var(--primary-color) !important;
+    border-radius: 5px;
+    margin: 10px;
+    color: white !important;
+}
+
+.active{
+    background-color: var(--primary-variant-color) !important;
+}
+
+.page-link:hover, .active :hover{
+    background-color: var(--primary-variant-color) !important;
+}

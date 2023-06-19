@@ -1,0 +1,139 @@
+.login_form_container {
+	border-radius: 10px;
+	background-color: white;
+}
+
+.left {
+	z-index: 10;
+	border-radius: 2px !important;
+	animation-name: move-left;
+	animation-duration: 0.5s;
+}
+
+.div-title{
+	font-size: 1.5em !important;
+}
+
+.next-div-title{
+	font-size: 1.4em !important;
+	color: white;
+	align-self: center;
+}
+
+.login_form_container{
+	animation-name: move-right-container;
+	animation-duration: 0.5s;
+	background-color: white;
+}
+
+.signup_form_container{
+	animation-name: move-left-container;
+	animation-duration: 0.5s;
+	background-color: white;
+}
+
+input:-internal-autofill-selected{
+	background-color: transparent !important;
+	color: transparent !important;
+	background-image: none !important;	
+}
+
+input:-webkit-autofill {
+	-webkit-box-shadow: 0 0 0px 10000px white inset;
+}
+
+.input {
+	outline: none;
+	border-bottom: 1px solid black !important;
+	padding: 15px;
+	border-radius: 3px;
+	margin: 5px 0;
+	font-size: 14px;
+}
+
+.error_msg {
+	padding: 15px;
+	margin: 5px 0;
+	font-size: 14px;
+	background-color: #f34646;
+	color: white;
+	border-radius: 5px;
+	text-align: center;
+}
+
+.right {
+	background-color: var(--primary-color);
+	border-radius: 10px;
+	animation-name: move-left;
+	animation-duration: 0.2s;
+}
+
+.white_btn,
+.green_btn {
+	border: none;
+	outline: none;
+	padding: 12px 0;
+	background-color: white;
+	border-radius: 20px;
+	font-weight: bold;
+	font-size: 14px;
+	cursor: pointer;
+	color: #3bb19b;
+	align-self: center;
+}
+
+.green_btn {
+	background-color: var(--secondary-color);
+	color: white;
+	margin: 10px;
+}
+
+.white_btn:hover{
+	background-color: var(--secondary-color);
+	color: white;
+}
+
+.green_btn:hover {
+	background-color: var(--secondary-variant-color);
+}
+
+.login_box button.clicked{
+    margin-left:500px;
+    transition:1s;
+	-webkit-transition:1s;
+ }
+
+ .margin_top_btn{
+	margin-top: 3rem;
+ }
+
+ .main-container{
+	margin-top: 15vh !important;
+	border-radius: 10px	 !important;
+	box-shadow: -10px 10px var(--secondary-color);
+	color: var(--secondary-color)
+ }
+
+ @keyframes move-right {
+	0%   {translate: 500%;}
+	100%  {translate: 0%;}
+  }
+
+@keyframes move-left {
+	0%   {translate: -500%;}
+	100%  {translate: 0%;}
+}
+
+@keyframes move-right-container {
+	0%   {translate: 600%;}
+	100%  {translate: 0%;}
+  }
+
+@keyframes move-left-container {
+	0%   {translate: -600%;}
+	100%  {translate: 0%;}
+}
+
+.form-link a{
+	color: var(--primary-variant-color) !important;
+}
