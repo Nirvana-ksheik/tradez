@@ -1,8 +1,14 @@
 import mongoose, {Schema} from 'mongoose';
 import validator from 'validator';
+import bcrypt from 'bcryptjs';
+const { genSalt, hash } = bcrypt;
 const {isEmail} = validator;
 
 const charitySchemma = new Schema({
+    _id:{
+        type: mongoose.Types.ObjectId,
+        required: true
+    },
     organizationName:{
         type: String,
         require: true
@@ -58,22 +64,41 @@ const charitySchemma = new Schema({
         default: false
     },
     password:{
-        type: String
+        type: String,
+        reuired: true
     },
     status:{
         type: String,
         require: true
     },
+    didChangePassword: {
+        type: Boolean,
+        default: false
+    },
+    logo:{
+        type: String
+    },
     createdDate: {
         type: Date,
         default: new Date().toISOString()
     }
+}, {_id: false});
+
+charitySchemma.post('save', function(doc, next){
+    console.log('user has been saved and added successfully');
+    next();
+});
+
+charitySchemma.pre('save', async function(next){
+    const salt = await genSalt();
+    this.password = hash(this.password, salt);
+    next();
 });
 
 export class CharityModel {
 
     constructor(data){
-
+        this._id = data.id;
         this.organizationName = data.organizationName;
         this.address = data.address;
         this.telephoneNb = data.telephoneNb;
@@ -88,6 +113,8 @@ export class CharityModel {
         this.email = data.email;
         this.confirmed = data.confirmed;
         this.status = data.status;
+        this.didChangePassword = data.didChangePassword;
+        this.logo = data.logo;
         this.createdDate = data.createdDate;
     }
 }

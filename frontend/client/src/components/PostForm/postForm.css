@@ -1,0 +1,56 @@
+.post-form {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--primary-color);
+    color: whitesmoke;
+    border-radius: 1em;
+  }
+  
+  .post-form-label {
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .post-form-textarea {
+    height: 100px;
+    padding: 8px;
+    margin-bottom: 16px;
+    border: 1px solid whitesmoke;
+    border-radius: 4px;
+  }
+  
+  .post-form-file-input {
+    margin-bottom: 16px;
+    cursor: pointer;
+    background-color: var(--primary-color);
+    color: whitesmoke;
+    border-radius: 0.4rem;
+    border: 1px solid whitesmoke !important;
+  }
+  
+  .post-form-submit-button {
+    padding: 10px 16px;
+    background-color: whitesmoke;
+    color: var(--primary-variant-color);
+    border: 2px solid whitesmoke;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 3em;
+    margin-bottom: 1em;
+  }
+  
+  .post-form-submit-button:hover {
+    background-color: var(--primary-variant-color);
+    border: none;
+    color: whitesmoke;
+  }
+
+  .post-charity-images{
+    margin: 10px;
+  }
+  
+  .larger-font-size{
+    font-size: large;
+  }

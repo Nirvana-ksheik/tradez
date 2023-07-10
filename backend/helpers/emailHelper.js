@@ -20,20 +20,26 @@ const getTransporter = () => {
 }
 
 
-const sendConfirmationEmail = async ({email, token, password}) => {
+const sendConfirmationEmail = async ({email, token, password, isCharity = false}) => {
 
     console.log("reached sending confirmation email helper");
-    const frontEndUrl = `http://localhost:3001/confirm-email/${token}`;
+
+    const frontEndUrl = isCharity ? 
+                        `http://localhost:3001/charity/confirm-email/${token}` : 
+                        `http://localhost:3001/confirm-email/${token}`;
 
     const transporter = getTransporter();
 
     const info = await transporter.sendMail({
         to: email,
         subject: 'Confirm Email',
-        html: `NOTE: Your application is being processed by an expert user <br><br/>
-               To continue the process Please click this link to confirm your email: <a href="${frontEndUrl}">Click Here</a><br></br>
-               Please use this password to login to the portal: ${password} <br><br/>
-               You can change it anytime after you confirm your email address.`
+        html: isCharity ? 
+            `NOTE: Your application is being processed by an expert user <br><br/>
+             To continue the process Please click this link to confirm your email: <a href="${frontEndUrl}">Click Here</a><br></br>
+             Please use this password to login to the portal: ${password} <br><br/>
+             You can change it anytime after you confirm your email address.` :
+
+             `Please click this link to confirm your email: <a href="${frontEndUrl}">Click Here</a>`
     });
 
     console.log("finished sending email");

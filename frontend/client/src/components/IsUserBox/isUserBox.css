@@ -1,0 +1,21 @@
+.user-box{
+	padding: 4%;
+	margin: 3%;
+    box-shadow: 5px 5px 5px 5px whitesmoke;
+    border-radius: 1rem;
+}
+
+.user-box-label{
+    font-size: 1.2rem;
+    color: whitesmoke;
+    text-align: center;
+}
+
+.white-btn{
+    border-radius: 20px;
+    padding: 3%;
+    margin: 2%;
+    color: var(--secondary-variant-color);
+    background-color: whitesmoke;
+    border-color: whitesmoke;
+}

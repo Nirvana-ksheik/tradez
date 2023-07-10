@@ -3,12 +3,16 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import "./login.css"
 import {useNavigate} from 'react-router-dom';
+import CharityUser from "components/CharityUser";
+import { useTranslation } from "react-i18next";
 
-const Login = ({setCookie}) => {
+const Login = ({setCookie, currentLanguage}) => {
 	const [data, setData] = useState({ username: "", password: "" });
 	const [error, setError] = useState("");
-	const navigate = useNavigate();
 	const [screenWidth, setScreenWidth] = useState();
+
+	const { t } = useTranslation();
+	const navigate = useNavigate();
 
 	const handleChange = ({ currentTarget: input }) => {
 		setData({ ...data, [input.name]: input.value });
@@ -42,11 +46,13 @@ const Login = ({setCookie}) => {
 	};
 
 	return (
-		<div className="d-flex flex-column justify-content-center align-items-center col-12 col-md-10 offset-md-1 col-xl-6 offset-xl-3 mt-5 main-container">
+		<div dir={currentLanguage === "ar" ? "rtl" : "ltr"} className="col-12 col-md-10 offset-md-1 col-xl-6 offset-xl-3 d-flex flex-column align-items-center form-parent-container">
+		<CharityUser />
+		<div className="col-12 d-flex flex-column justify-content-center align-items-center mt-5 main-container">
 			<div className="login_form_container d-flex col-12">
 				<div className="left col-md-8 col-12 d-flex flex-column justify-content-center align-items-center">
 					<form className="col-12 d-flex flex-column align-items-center" onSubmit={handleSubmit}>
-						<p className="div-title mt-4">Login to Your Account</p>
+						<p className="div-title mt-4">{t("LoginAsUser")}</p>
 						<input
 							type="text"
 							placeholder="Username / Email"
@@ -67,22 +73,21 @@ const Login = ({setCookie}) => {
 						/>
 						{error && <div className="error_msg col-8 offset-2">{error}</div>}
 						<button type="submit" className="green_btn col-5 margin_top_btn">
-							Log In
+							{t("Login")}
 						</button>
-						<div className="m-2 form-link">Forgot password ? <Link to="/forgot-password">click here</Link></div>
-						{screenWidth < 768 && <div className="form-link">Signup Instead ? <Link to="/signup">click here</Link></div>}
+						<div className="m-2 form-link">{t("ForgotPassword?")} <Link to="/forgot-password">{t("ClickHere")}</Link></div>
+						{screenWidth < 768 && <div className="form-link">{t("SignupInstead?")} <Link to="/signup">{t("ClickHere")}</Link></div>}
 					</form>
+
 				</div>
 				<div className="d-flex col-4 flex-column justify-content-center right">
-					<p className="next-div-title">New Here ?</p>
+					<p className="next-div-title">{t("NewHere?")}</p>
 					<button type="button" className="white_btn login_box" onClick={() => navigate("/signup")}>
-						Sing Up
+						{t("Signup")}
 					</button>
 				</div>
 			</div>
-			<div>
-				<label>Continue as charity</label>
-			</div>
+		</div>
 		</div>
 	);
 };

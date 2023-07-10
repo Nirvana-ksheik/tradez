@@ -1,17 +1,18 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "./archivedItems.css";
 import ItemsList from "components/ItemsList";
 import { ItemStatus } from "lookups";
+import "./archivedItems.css";
 
-const ArchivedItems = ({getCookie}) => {
+const ArchivedItems = ({getCookie, currentLanguage}) => {
 
-    const [items, setItems] = useState('');
+    const [items, setItems] = useState([]);
     const [orderValue, setOrderValue ] = useState(null);
     const [orderDirectionValue, setOrderDirectionValue] = useState(null);
     const [searchTextValue, setSearchTextValue] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    
     const navigate = useNavigate();
 
     const clickEvent = (id)=>{
@@ -41,10 +42,10 @@ const ArchivedItems = ({getCookie}) => {
                         orderDirection: orderDirectionValue,
                         searchText: searchTextValue,
                         status: ItemStatus.APPROVED
-                    },
-                    signal: controller.signal
+                    }
                 },
                 {
+                    signal: controller.signal,
                     withCredentials: true,
                     baseURL: 'http://localhost:3000'
                 }
@@ -60,11 +61,13 @@ const ArchivedItems = ({getCookie}) => {
 
 
 	return (
-        <ItemsList 
-            clickEvent={clickEvent} getData={getData} items={items} orderValue={orderValue}
-            setOrderValue={setOrderValue} orderDirectionValue={orderDirectionValue} setOrderDirectionValue={setOrderDirectionValue}
-            searchTextValue={searchTextValue} setSearchTextValue={setSearchTextValue} isLoading={isLoading}
-        /> 
+        <div className="col-12 d-flex justify-content-center align-items-center">
+            <ItemsList 
+                clickEvent={clickEvent} getData={getData} items={items} orderValue={orderValue}
+                setOrderValue={setOrderValue} orderDirectionValue={orderDirectionValue} setOrderDirectionValue={setOrderDirectionValue}
+                searchTextValue={searchTextValue} setSearchTextValue={setSearchTextValue} isLoading={isLoading} currentLanguage={currentLanguage}
+            /> 
+        </div>
 	);
 };
 

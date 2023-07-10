@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Notifications, parseModelString } from 'notifications';
+import { notificationSender } from 'helpers/notificationHelper';
+import { useTranslation } from 'react-i18next';
 import LoadingSpinner from 'components/LoadingSpinner';
-import "./comment.css";
 import Pagination from "../../components/Pagination";
 import 'font-awesome/css/font-awesome.min.css';
+import "./comment.css";
+import { formatNumberWithCommas } from '../../helpers/numberFormatHelper';
+import { formatDateWithLanguage } from '../../helpers/dateFormatHelper';
 
-function CommentBox({getCookie, itemId}) {
+function CommentBox({getCookie, itemId, ownerId, user, currentLanguage}) {
 
   const [comment, setComment] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -15,6 +20,8 @@ function CommentBox({getCookie, itemId}) {
   const [itemOffset, setItemOffset] = useState(0);
   const [currentItems, setCurrentItems] = useState([]);
   const [pageCount, setPageCount] = useState(0);
+
+  const {t} = useTranslation();
 
   const handlePageClick = (event) => {
       const newOffset = (event.selected * itemsPerPage) % totalComments.length;
@@ -28,7 +35,7 @@ function CommentBox({getCookie, itemId}) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(comment == '' || comment == null || comment == undefined){
+    if(comment === '' || comment == null || comment === undefined){
       setIsLoading(false);
       return;
     }
@@ -53,7 +60,7 @@ function CommentBox({getCookie, itemId}) {
           withCredentials: true,
           baseURL: 'http://localhost:3000'
       }
-    ).then(({data: res}) => { 
+    ).then(async({data: res}) => { 
       console.log("comment result: ", res);
       let newCommentList = currentItems;
       newCommentList.push(res);
@@ -62,6 +69,13 @@ function CommentBox({getCookie, itemId}) {
       setPageCount(Math.ceil(newCommentList.length / itemsPerPage));
       setComment("");
       setIsLoading(false);
+      const modelData = {
+        username: user.username
+      };
+      const notificationObject = Notifications.USER_COMMENTED_ITEM;
+      const notificationMessage = parseModelString(notificationObject.message, modelData);
+
+      await notificationSender({userId: ownerId, message: notificationMessage, title: notificationObject.title});
     });
   }
 
@@ -71,12 +85,12 @@ function CommentBox({getCookie, itemId}) {
     console.log("replyCommentInput = ", replyCommentInput);
     let replyComment = '';
 
-    if(replyCommentInput != undefined && replyCommentInput != null){
+    if(replyCommentInput !== undefined && replyCommentInput != null){
       replyComment = replyCommentInput.value;
       console.log('reply comment: ', replyComment);
     }
 
-    if(replyComment == '' || replyComment == null || replyComment == undefined){
+    if(replyComment === '' || replyComment == null || replyComment === undefined){
       setIsLoading(false);
       return;
     }
@@ -103,10 +117,12 @@ function CommentBox({getCookie, itemId}) {
           withCredentials: true,
           baseURL: 'http://localhost:3000'
       }
-    ).then(({data: res}) => { 
+    ).then(async({data: res}) => { 
+      
       setIsLoading(false);
       console.log("comment result: ", res);
       let newCommentsList = [];
+
       currentItems.forEach((cmnt, i) => {
         if(cmnt.commentId == parentCommentId){
           console.log("idddddddddddddddddd match.............");
@@ -114,12 +130,24 @@ function CommentBox({getCookie, itemId}) {
         }
         newCommentsList.push(cmnt);
       });
+
       const endOffset = itemOffset + itemsPerPage;
       setCurrentItems(totalComments.slice(itemOffset, endOffset));
       setPageCount(Math.ceil(totalComments.length / itemsPerPage));
       const replyDiv = document.getElementById(parentCommentId + '_reply_comment');
-      if(replyDiv != undefined)
+
+      if(replyDiv !== undefined){
         replyDiv.remove();
+      }
+
+      const modelData = {
+        username: user.username
+      };
+      const notificationObject = Notifications.USER_REPLY_COMMENT;
+      const notificationMessage = parseModelString(notificationObject.message, modelData);
+
+      await notificationSender({userId: ownerId, message: notificationMessage, title: notificationObject.title});
+
     }).catch(err => {
       console.log("error: ", err);
       setIsLoading(false);
@@ -130,10 +158,10 @@ function CommentBox({getCookie, itemId}) {
     console.log("comment: ", comment);
     const commentDiv = document.getElementById(comment.commentId);
     const replyDiv = document.getElementById(comment.commentId + '_reply_comment');
-    if(replyDiv != null && replyDiv != undefined){
+    if(replyDiv != null && replyDiv !== undefined){
       replyDiv.remove();
     }
-    if(commentDiv != null && commentDiv != undefined){
+    if(commentDiv != null && commentDiv !== undefined){
 
       const newReplyDiv = document.createElement('div');
       newReplyDiv.className = 'd-flex col-8 comment-input-div align-items-end justify-content-start';
@@ -224,8 +252,8 @@ function CommentBox({getCookie, itemId}) {
   return (
     <>
     { 
-    isLoading == false ?
-    <div className="mt-5">
+    isLoading === false ?
+    <div dir={currentLanguage === "ar" ? "rtl" : "ltr"} className="mt-5">
         <div className = "d-flex col-12 align-items-end justify-content-start">
             <i className="fa fa-user user-comment-icon-main-comment"></i>
             <div className='d-flex col-8 comment-input-div justify-content-start'>
@@ -242,30 +270,30 @@ function CommentBox({getCookie, itemId}) {
             
               <li key={index} className="m-2 col-12 d-flex flex-column" id={comment.commentId}>
                 <div className='col-12 d-flex align-items-center' key={index}>
-                  <i className="fa fa-user user-comment-icon me-2"></i>
-                  <span className="comment-username me-2">{comment.user.username}</span>
-                  <span className="comment-commentdate">{comment.commentDate}</span>
+                  <i className="fa fa-user user-comment-icon me-2 ms-2"></i>
+                  <span className="comment-username me-2 ms-2">{comment.user.username}</span>
+                  <span className="comment-commentdate me-3 ms-3">{formatDateWithLanguage(comment.commentDate, currentLanguage)}</span>
                 </div>
                 <p className='col-12 m-2 comment-text'>{comment.commentText}</p>
                 <div className='col-12 d-flex flex-column justify-content-start align-items-start'>
                   <div className='col-12 d-flex justify-content-start align-items-start'>
-                    <i className="fa-solid fa-reply me-4 reply-icon" onClick={() => handleReplyHTML(comment)}></i>
+                    <i className="fa-solid fa-reply me-4 ms-4 reply-icon" onClick={() => handleReplyHTML(comment)}></i>
                     {
                       comment.replyComments.length > 0 && 
-                      <i className='link mb-4 comment-text' onClick={async() => await showReplyComments(comment.commentId)} id={"show_reply_comments_link_" + comment.commentId}>show {comment.replyComments.length} replies</i>
+                      <i className='link mb-4 comment-text' onClick={async() => await showReplyComments(comment.commentId)} id={"show_reply_comments_link_" + comment.commentId}>{t("Show")} {formatNumberWithCommas(comment.replyComments.length, currentLanguage)} {t("Replies")}</i>
                     }
-                    <i className='link mb-3 comment-text' hidden onClick={() => hideReplyComments(comment.commentId)} id={"hide_reply_comments_link_" + comment.commentId}>hide replies</i>
+                    <i className='link mb-3 comment-text' hidden onClick={() => hideReplyComments(comment.commentId)} id={"hide_reply_comments_link_" + comment.commentId}>{t("HideReplies")}</i>
                   </div>
                   <ul hidden id={'reply_comments_container_' + comment.commentId}>
                     {
-                      Array.isArray(comment.replyComments) && comment.replyComments != [] && comment.replyComments != null && comment.replyComments != undefined &&
+                      Array.isArray(comment.replyComments) && comment.replyComments !== [] && comment.replyComments != null && comment.replyComments != undefined &&
                       
                         Array.from(comment.replyComments).map((replyComment, i) => 
                             <li key={i} className="m-2 col-12 d-flex flex-column">
                                 <div className='col-12 align-items-center d-flex'>
-                                  <i className="fa fa-user comment-user-icon me-2"></i>
-                                  <span className="comment-username me-2">{replyComment.user.username}</span>
-                                  <span className="comment-commentdate">{replyComment.commentDate}</span>
+                                  <i className="fa fa-user comment-user-icon me-2 ms-2"></i>
+                                  <span className="comment-username me-1 ms-1">{replyComment.user.username}</span>
+                                  <span className="comment-commentdate me-3 ms-3">{formatDateWithLanguage(replyComment.commentDate, currentLanguage)}</span>
                                 </div>
                                 <p className='col-12 m-2 comment-text'>{replyComment.commentText}</p>
                             </li>
@@ -280,7 +308,7 @@ function CommentBox({getCookie, itemId}) {
     </div>
     : <LoadingSpinner />
     }
-    <Pagination handlePageClick={handlePageClick} pageCount={pageCount} maxItems={5}/>
+    <Pagination handlePageClick={handlePageClick} pageCount={pageCount} maxItems={5} currentLanguage={currentLanguage}/>
     </>
   );
 }

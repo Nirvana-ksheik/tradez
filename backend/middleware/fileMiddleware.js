@@ -25,6 +25,27 @@ const fileStorageEngine = multer.diskStorage({
     }
 });
 
+const logoStorageEngine = multer.diskStorage({
+  destination: (req, file, cb) => {
+    console.log("reached file storage engine");
+    if(file != null && file != undefined && file != [] && file != ''){
+        console.log("logo Id in file storage: ", req.body._id);
+        if(req.body._id == null || req.body._id == undefined){
+          req.body._id = new mongoose.Types.ObjectId().toString();
+        }
+        const dir = createDirectory({userId: req.body._id, itemId: "logo"});
+        cb(null, dir);
+    }
+  },
+  filename: (req, file, cb) => {
+    if(file != null && file != undefined && file != [] && file != ''){
+      console.log("file: ", file);
+      cb(null, Date.now() + '--' + file.originalname);
+      console.log("created file...");
+    }
+  }
+});
+
 const createDirectory = ({userId, itemId}) => {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
@@ -48,4 +69,5 @@ function createDirectoryFunc(dir) {
 
 const upload = multer({ storage: fileStorageEngine });
 
+export const logoUpload = multer({ storage: logoStorageEngine });
 export default upload;

@@ -1,0 +1,117 @@
+.post-container {
+    background-color: #ffffff;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .post-description {
+    margin-bottom: 16px;
+  }
+  
+  .post-description p {
+    margin: 0;
+  }
+  
+
+  
+  .post-images img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .like-button {
+    background-color: #ffffff;
+    color: #1877f2;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .like-button:hover {
+    background-color: #edf2ff;
+  }
+  
+  .like-button.liked {
+    background-color: #1877f2;
+    color: #ffffff;
+  }
+  
+  .comment-form {
+    display: flex;
+    margin-top: 16px;
+  }
+
+  .comment-form button {
+    background-color: #ffffff;
+    color: #1877f2;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .comment-form button:hover {
+    background-color: #edf2ff;
+  }
+
+.post-charity-logo{
+  aspect-ratio: 2/2;
+  width: 5em;
+  max-width: 5em;
+  border-radius: 50%;
+  border: 1px solid var(--background-color)
+}  
+
+.charity-post-enter-comment, .charity-post-enter-comment:hover{
+  border: 1px solid #dbe3f6 !important;
+  border-radius: 1em;
+  padding: 1.2%;
+  outline: none;
+}
+
+.like-icon{
+  font-size: 1.3em;
+  color: rgb(61, 61, 253);
+}
+
+.comment-send-icon{
+  font-size: 1.3em;
+  color: whitesmoke
+}
+
+.comment-send-btn{
+  background-color: #1877f2 !important;
+  color:whitesmoke
+}
+
+.comment-send-text{
+  color: whitesmoke;
+  font-size: 0.9em;
+}
+
+.comment-li-none{
+  list-style: none;
+}
+
+.delete-comment-btn-post{
+  color: red;
+}
+
+.delete-comment-btn-post:hover{
+  cursor: pointer;
+}
+
+.clickable:hover{
+  cursor: pointer;
+}
+
+.font-bold{
+  font-weight: bold;
+}

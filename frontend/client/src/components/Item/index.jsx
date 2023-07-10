@@ -1,41 +1,34 @@
-import React, {useState} from "react";
-import Dropdown from "../Dropdown";
+import React from "react";
+import { useTranslation } from "react-i18next";	
 import "./Item.css";
+import { formatNumberWithCommas } from "../../helpers/numberFormatHelper";
 
-const Item = ({data, clickEvent}) => {
+const Item = ({data, clickEvent, currentLanguage}) => {
 
 	console.log("data is: ", data);
-	// const [openDropDown, setOpenDropDown] = useState(false);
+
+	const {t} = useTranslation();
 
 	return (
-	<div className={"container col-xl-3 col-lg-3 col-sm-5 border m-3 shadow-sm item-container " + data.status}>
-		{/* <div className="three-dots mt-1"
-				onClick={() => {setOpenDropDown((prev) => !prev)}}>	
-		</div>
-			{
-				openDropDown && 
-				<div className="col-12">
-					<Dropdown/>
-				</div>
-			} */}
+	<div dir={currentLanguage === "ar" ? "rtl" : "ltr"} className={"col-xl-3 col-lg-3 col-sm-5 border m-3 shadow-sm item-container " + data.status}>
 		<div onClick={clickEvent}>
-			<div className="col-12 align-content-center card-img-div">
+			<div className="col-12">
 				<img
 					src={"http://localhost:3000" + data.imagePaths[0]}
 					alt=""
-					className="card-img product-img mt-2"
+					className="col-12 card-img-div"
 				/>
 			</div>
-			<div className="col-12">
+			<div className="col-12 pe-3 ps-3 mt-3">
 				<p className="product-title">{data.name}</p> 
 			</div>
 
-			<div className="d-flex col-12 justify-content-between">
-				<p className="col-6 product-tradez">Tradez: {data.tradez}</p>
-				<p className="col-6 product-price">~{data.approximateValue} S.P</p>
+			<div className="d-flex col-12 justify-content-between pe-3 ps-3">
+				<p className="col-5 product-tradez">{t("OffersLabel")} {formatNumberWithCommas(data.tradez, currentLanguage)}</p>
+				<p className="col-5 product-price">~{formatNumberWithCommas(data.approximateValue, currentLanguage)} {t("S.P")}</p>
 			</div>
 
-			<div className="col-12 product-description-container">
+			<div className="col-12 product-description-container pe-3 ps-3">
 				<p className="product-description">{data.description}</p>
 			</div>
 		</div>

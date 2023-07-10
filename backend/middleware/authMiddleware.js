@@ -95,4 +95,4 @@ const checkResetPasswordToken = (req, res, next) =>{
     }); 
 }
 
-export { checkUser, checkAdmin, checkToken, checkConfirmationEmailToken, checkResetPasswordToken };
+export { checkUser, checkAdmin, checkToken, checkConfirmationEmailToken, checkResetPasswordToken, checkCharity};

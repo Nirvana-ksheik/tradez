@@ -1,18 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import styles from './styles.module.css';
+import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Ribbon from 'components/Ribbon';
+import { Role } from 'lookups';
+import { useTranslation } from 'react-i18next';
+import styles from './styles.module.css';
 
-function ResetPassword() {
+function ResetPassword({user, currentLanguage}) {
 
 	const [password, setPassword] = useState();
 	const [passwordConfirmation, setPasswordConfirmation] = useState();
 	const [success, setSuccess] = useState(false);
 	const [successText, setSuccessText] = useState('Password Updated Successfully');
 	const [error, setError] = useState(null);
+
 	const {token} = useParams();
-	
+	const {t} = useTranslation();
+
 	const navigate = useNavigate();
 
 	const checkError = () => {
@@ -20,7 +24,7 @@ function ResetPassword() {
 		let passwordConfirmationVal = document.getElementsByName("passwordConfirmation")[0].value;
 
 		if(passwordVal !== passwordConfirmationVal){
-			setError("Passwords Don't match");
+			setError(t("PasswordsDontMatch"));
 		}else{
 			setError(undefined);
 		}
@@ -42,42 +46,48 @@ function ResetPassword() {
 	};
 
 	const resetPassword = (e) => {
-		e.preventDefault();
-		setSuccess(false);
-		if(password != passwordConfirmation){
-			setError("Passwords Don't match");
-			return;
-		}
-		try{
-			console.log("tokennnn: ", token);
-			let reqInstance = axios.create({
-				headers: {
-					Authorization: `Bearer ${token}`
-				}
-			});
-			console.log("password: ", password);
-			const itemUrl = "http://localhost:3000/api/auth/reset/" + token;
-			reqInstance.post(
-				itemUrl,
-				{
-					password: password
-				},
-				{
-					withCredentials: true,
-					baseURL: 'http://localhost:3000'
-				}
-			).then(({data: res}) => {
-				console.log("result: ", res);
-				setSuccess(true);
-				setTimeout(()=>{
-					navigate('/login');
-				}, 10000);
-			}).catch((err)=>{
-				setError("Invalid Token / Token Expired");
-			});
-
-		}catch(err){
-			console.log("error: ", err);
+		if(user){
+			e.preventDefault();
+			setSuccess(false);
+			if(password !== passwordConfirmation){
+				setError(t("PasswordsDontMatch"));
+				return;
+			}
+			try{
+				console.log("tokennnn: ", token);
+				let reqInstance = axios.create({
+					headers: {
+						Authorization: `Bearer ${token}`
+					}
+				});
+				console.log("password: ", password);
+				const itemUrl = user.role !== Role.CHARITY ? "http://localhost:3000/api/auth/reset/" + token : "http://localhost:3000/api/charity/auth/reset/" + token;
+				reqInstance.post(
+					itemUrl,
+					{
+						password: password
+					},
+					{
+						withCredentials: true,
+						baseURL: 'http://localhost:3000'
+					}
+				).then(({data: res}) => {
+					console.log("result: ", res);
+					setSuccess(true);
+					setTimeout(()=>{
+						if(user.role !== Role.CHARITY){
+							navigate('/login');
+						}else{
+							navigate('/charity/login');
+						}
+					}, 5000);
+				}).catch((err)=>{
+					setError(t("InvalidToken"));
+				});
+	
+			}catch(err){
+				console.log("error: ", err);
+			}
 		}
     };
 
@@ -87,14 +97,14 @@ function ResetPassword() {
 
     return(
         <>
-        <div className={styles.login_container}>
+        <div dir={currentLanguage === "ar" ? "rtl" : "ltr"} className={styles.login_container}>
 			<div className={styles.login_form_container}>
 				<div className={styles.left}>
 					<form className={styles.form_container} onSubmit={resetPassword}>
-						<h1>Enter your new Password</h1>
+						<h1>{t("EnterYourNewPassword")}</h1>
 						<input
 							type="password"
-							placeholder="New Password"
+							placeholder={t("NewPassword")}
 							name="password"
 							onChange={handleChange}							
 							required
@@ -102,7 +112,7 @@ function ResetPassword() {
 						/>
 						<input
 							type="password"
-							placeholder="Confirm Password"
+							placeholder={t("ConfrimPassword")}
 							name="passwordConfirmation"
 							onChange={handleChange}
 							required
@@ -110,7 +120,7 @@ function ResetPassword() {
 						/>
 						{error && <div className={styles.error_msg}>{error}</div>}
 						<button type="submit" className={styles.green_btn}>
-							Submit
+							{t("ChangePassword")}
 						</button>
 						{
 							success &&

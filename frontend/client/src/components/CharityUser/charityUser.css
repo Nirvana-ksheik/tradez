@@ -1,0 +1,24 @@
+.charity-user-btn-charity, .charity-user-btn-user{
+    background-color: transparent;
+    border: none;
+    font-size: 1.5em;
+    border-bottom: 3px solid var(--secondary-color);
+}
+
+.charity-user-btn-user{
+    border-right: 1px solid var(--secondary-color);
+}
+
+.charity-user-btn-charity{
+    border-left: 1px solid var(--secondary-color);
+}
+
+.charity-user-btn-charity:hover, .charity-user-btn-user:hover{
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.charity-user-btn-clicked{
+    background-color: var(--secondary-color);
+    color: white;
+}

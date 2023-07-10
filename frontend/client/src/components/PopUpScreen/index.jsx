@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
+import { ItemStatus } from "lookups";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Item from "../../components/Item";
 import SearchBar from "../../components/SearchBar";
 import LoadingSpinner from "../../components/LoadingSpinner";
-import "./popupScreen.css";
 import Pagination from "../../components/Pagination";
-import { ItemStatus } from "lookups";
-import { useNavigate } from "react-router-dom";
 import Ribbon from "components/Ribbon";
+import "./popupScreen.css";
 
 function PopupScreen(props) {
 
@@ -27,6 +27,45 @@ function PopupScreen(props) {
     const navigate = useNavigate();
 
     useEffect(() => {
+        const getMyItems = (controller) => {
+            setIsLoading(true);
+            try {
+                const token = props.getCookie();
+                let reqInstance = axios.create({
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                console.log("token to be sent: ", token);
+                const url = "http://localhost:3000/api/items";
+    
+                reqInstance.get(
+                    url, 
+                    { 
+                        params: { 
+                            isMine: true,
+                            archived: false,
+                            order: orderValue,
+                            orderDirection: orderDirectionValue,
+                            searchText: searchTextValue,
+                            status: ItemStatus.APPROVED
+                        },
+                        signal: controller.signal
+                    },
+                    {
+                        withCredentials: true,
+                        baseURL: 'http://localhost:3000'
+                    }
+                ).then(({data: res}) => { 
+                    setItems(res); 
+                    setIsLoading(false);
+                });
+            
+            } catch (error) { 
+                console.log("error: ", error);
+            }
+        }
+
         const endOffset = itemOffset + itemsPerPage;
         setCurrentItems(items.slice(itemOffset, endOffset));
         setPageCount(Math.ceil(items.length / itemsPerPage));
@@ -36,51 +75,13 @@ function PopupScreen(props) {
             controller.abort();
         };
     }, 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [items.length, orderValue, orderDirectionValue, searchTextValue, itemOffset, itemsPerPage]);
 
     const handlePageClick = (event) => {
         const newOffset = (event.selected * itemsPerPage) % items.length;
         setItemOffset(newOffset);
       };
-
-    const getMyItems = (controller) => {
-        setIsLoading(true);
-        try {
-            const token = props.getCookie();
-            let reqInstance = axios.create({
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            console.log("token to be sent: ", token);
-            const url = "http://localhost:3000/api/items";
-
-            reqInstance.get(
-                url, 
-                { 
-                    params: { 
-                        isMine: true,
-                        archived: false,
-                        order: orderValue,
-                        orderDirection: orderDirectionValue,
-                        searchText: searchTextValue,
-                        status: ItemStatus.APPROVED
-                    },
-                    signal: controller.signal
-                },
-                {
-                    withCredentials: true,
-                    baseURL: 'http://localhost:3000'
-                }
-            ).then(({data: res}) => { 
-                setItems(res); 
-                setIsLoading(false);
-            });
-        
-        } catch (error) { 
-            console.log("error: ", error);
-        }
-    }
 
     const clickEvent = (data) => {
         setTradeRibbon(false);
@@ -127,42 +128,38 @@ function PopupScreen(props) {
     }
 
 	return (
-    <>
-        <div className="pop-up-div d-flex flex-column col-10 offset-1 mt-4">      
+    <div className="col-12 d-flex justify-content-center align-items-center mt-5">
+        <div className="pop-up-div d-flex flex-column col-10 mt-4">      
             {
                 tradeRibbon &&
-                <Ribbon text={tradeText} setShowValue={setTradeRibbon} isSuccess={isSuccess} callbackFunction={isSuccess == true ? callbackFunction : undefined}/>
+                <Ribbon text={tradeText} setShowValue={setTradeRibbon} isSuccess={isSuccess} callbackFunction={isSuccess === true ? callbackFunction : undefined}/>
             }          
             <button className = "btn btn-danger col-1" onClick={() => {props.togglePopup()}}>X</button>
-            <SearchBar setOrderValue={setOrderValue} setOrderDirectionValue={setOrderDirectionValue} setSearchTextValue={setSearchTextValue} />
+            <SearchBar setOrderValue={setOrderValue} setOrderDirectionValue={setOrderDirectionValue} setSearchTextValue={setSearchTextValue} currentLanguage={props.currentLanguage}/>
             {
-                isLoading === false && 
-                <>
-                    <div className="d-flex flex-wrap col-10 offset-2 justify-content-start mt-4">
+                isLoading === false &&         
+                    <div className="d-flex flex-wrap col-10 justify-content-start mt-4">
                         {
                             (() => {
                                 console.log("current items: ", currentItems);
-                                let container = [];
-                                {
-                                    currentItems && currentItems.forEach((data, index) => {
-                                    console.log("single data is: ", data);
-                                    container.push(
-                                        <Item key={index} data={data} clickEvent={() => {clickEvent(data)}}/>
-                                    )
-                                    })
-                                }
+                                let container = [];                       
+                                currentItems && currentItems.forEach((data, index) => {
+                                console.log("single data is: ", data);
+                                container.push(
+                                    <Item key={index} data={data} clickEvent={() => {clickEvent(data)}} currentLanguage={props.currentLanguage}/>
+                                )
+                                })                             
                                 return container;
                             })()
                         }
                     </div>
-                </>
             }   
             {
                 isLoading && <LoadingSpinner />
             }
-            <Pagination handlePageClick={handlePageClick} pageCount={pageCount} maxItems={9}/>
+            <Pagination handlePageClick={handlePageClick} pageCount={pageCount} maxItems={9} currentLanguage={props.currentLanguage}/>
         </div>
-    </>
+    </div>
 	);
 }
 

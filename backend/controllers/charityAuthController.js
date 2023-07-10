@@ -1,14 +1,15 @@
 import * as dotenv from 'dotenv';
-import { login, signup, confirmAndUpdateState, forgotPassword, resetPassword, getById } from '../helpers/charityHelper.js';
+import { login, signup, confirmAndUpdateState, forgotPassword, resetPassword, getById, getAllCharities } from '../helpers/charityHelper.js';
+import { ImageModel } from '../models/Image.js';
 
 dotenv.config();
 
 const _login = async (req, res) => {
 
-    const { username, password } = req.body;
+    const { registrationNb, password } = req.body;
 
     try {
-        const token  = await login({username, password});
+        const token  = await login({registrationNb, password});
         res.status(200).json(token); 
         console.log("logged in");
     } catch (error) {
@@ -22,11 +23,16 @@ const _signup = async (req, res) => {
     
     console.log("reached signup api");
     const data = req.body;
+    console.log("data is: ", data);
+    console.log("file: ", req.file);
 
     try {
+        const images = ImageModel.getLogoImagePath(req.file);
+        data.logo = images;
         await signup(data);
         console.log("finished signup process");
         res.status(200).json("Please await approval from admin");
+
     } catch ({error}) {
         console.log("error: ", error);
         res.status(401).json(error);
@@ -36,7 +42,7 @@ export { _signup as signupController };
 
 const _logout = async (req, res) => {
     try {
-        res.cookie('jwt', '', {maxAge: 1});
+        res.cookie('jwt', '', { maxAge: 1 });
         res.status(200).json("Logged out successfully");
     } catch (err) {
         res.status(401).json({ err });
@@ -47,7 +53,7 @@ export { _logout as logoutController };
 const _confirm = async (req, res) => {
     try{
         const id = req.user.id;
-        await confirmAndUpdateState({ id: id });
+        await confirmAndUpdateState(id);
         console.log("finished confirming email");
         res.status(200).json("email confirmed successfully");
     } catch (err){
@@ -88,10 +94,8 @@ export {_resetPassword as resetPasswordController};
 
 const _getUserProfile = async(req, res) => {
     try{
-        const user = req.user;
-        console.log("user in controller: ", user);
-        const id = user.id;
-        const result = await getById({id});
+        const {id} = req.params;
+        const result = await getById(id);
         console.log("result is: ", result);
         res.status(200).json({result});
     } catch(err){
@@ -99,3 +103,17 @@ const _getUserProfile = async(req, res) => {
     }
 };
 export {_getUserProfile as getUserProfileController};
+
+const _getAllCharities = async(req, res) => {
+    try{
+        const query = req.query;
+        console.log("query params: ", query);
+        const charities = await getAllCharities({query});
+        res.status(200).json(charities);
+        console.log("finished getting all charities");
+    } catch(err){
+        res.status(500).json({err});
+    }
+};
+export {_getAllCharities as getAllCharitiesController};
+

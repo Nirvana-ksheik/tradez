@@ -48,7 +48,7 @@ input:-webkit-autofill {
 	padding: 15px;
 	border-radius: 3px;
 	margin: 5px 0;
-	font-size: 14px;
+	font-size: 1.1em;
 }
 
 .error_msg {
@@ -108,11 +108,15 @@ input:-webkit-autofill {
  }
 
  .main-container{
-	margin-top: 15vh !important;
 	border-radius: 10px	 !important;
 	box-shadow: -10px 10px var(--secondary-color);
 	color: var(--secondary-color)
  }
+
+.form-parent-container{
+	margin-top: 15vh !important;
+	font-size: 1.2em;
+}
 
  @keyframes move-right {
 	0%   {translate: 500%;}

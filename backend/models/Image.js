@@ -30,6 +30,23 @@ export class ImageModel {
         console.log("images: ", imagesArray);
         return imagesArray;
     }
+
+    static getImagesPaths(images){
+        console.log("images in getImages path: ", images);
+        let imagePathArray = [];
+        images.forEach(image => {
+            const path = image.path.split('public')[1];
+            imagePathArray.push(path);
+        });
+        
+        return imagePathArray;
+    }
+
+    static getLogoImagePath(image){
+        console.log("image in getLogoImagePath: ", image);
+        const path = image.path.split('public')[1];
+        return path;
+    }
 }
 
 const model = mongoose.model('Image', imageSchema);

@@ -4,7 +4,7 @@ function Ribbon({text, setShowValue, isSuccess, showTime, callbackFunction}) {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    if(showTime == undefined || showTime == null){
+    if(showTime === undefined || showTime == null){
       showTime = 4000;
     }
     const timeout = setTimeout(() => {
@@ -24,7 +24,7 @@ function Ribbon({text, setShowValue, isSuccess, showTime, callbackFunction}) {
     <div className="w-50 text-center"
       style={{
         display: isVisible ? 'block' : 'none',
-        backgroundColor: isSuccess == false ? 'red' : 'green',
+        backgroundColor: isSuccess === false ? 'red' : 'green',
         color: 'white',
         padding: '10px',
         position: 'fixed',
@@ -35,7 +35,7 @@ function Ribbon({text, setShowValue, isSuccess, showTime, callbackFunction}) {
         alignItems: 'center',
         fontSize: '2rem'
       }}
-    >
+      >
       {text}
     </div>
   );

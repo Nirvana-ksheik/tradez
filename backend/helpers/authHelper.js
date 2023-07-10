@@ -93,4 +93,12 @@ const getById = async ({id}) => {
     return userDTO;
 }
 
-export {login ,signup, getById, confirmAndUpdateState, forgotPassword, resetPassword};
+const getAllAdmins = async () => {
+    const users = await model.find({isAdmin: true});
+    const userIds = users.map(user => user._id);
+    console.log("Admin ids: ", userIds);
+
+    return userIds;
+}
+
+export {login ,signup, getById, confirmAndUpdateState, forgotPassword, resetPassword, getAllAdmins};

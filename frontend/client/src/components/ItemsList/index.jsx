@@ -8,7 +8,7 @@ import NoData from "../../assets/img/no_data_found.png";
 import Pagination from "../../components/Pagination";
 import "./itemsList.css"
 
-const ItemsList = ({clickEvent, getData, items, orderValue, setOrderValue, orderDirectionValue, setOrderDirectionValue, searchTextValue, setSearchTextValue, statusValue, setStatusValue, isLoading, canSeeStatusFilters}) => {
+const ItemsList = ({clickEvent, getData, items, orderValue, setOrderValue, orderDirectionValue, setOrderDirectionValue, searchTextValue, setSearchTextValue, statusValue, setStatusValue, isLoading, canSeeStatusFilters, currentLanguage}) => {
 
     const itemsPerPage = 9;
 
@@ -27,33 +27,32 @@ const ItemsList = ({clickEvent, getData, items, orderValue, setOrderValue, order
         setPageCount(Math.ceil(items.length / itemsPerPage));
         const controller = new AbortController();
         getData(controller);
-        console.log("status filter: ", canSeeStatusFilters);
+        
         return () =>{
             controller.abort();
         };
     }, 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [items.length, orderValue, orderDirectionValue, searchTextValue, statusValue, itemOffset, itemsPerPage]);
 
     return (
-    <div className="d-flex flex-column col-xl-10 offset-xl-1 justify-content-center">
+    <div dir={currentLanguage === "ar" ? "rtl" : "ltr"} className="d-flex flex-column col-xl-10 align-items-center justify-content-center">
 
-        <SearchBar setOrderValue={setOrderValue} setOrderDirectionValue={setOrderDirectionValue} setSearchTextValue={setSearchTextValue} setStatusValue={canSeeStatusFilters === true ? setStatusValue : undefined}/>
+        <SearchBar setOrderValue={setOrderValue} setOrderDirectionValue={setOrderDirectionValue} setSearchTextValue={setSearchTextValue} setStatusValue={canSeeStatusFilters === true ? setStatusValue : undefined} currentLanguage={currentLanguage}/>
         {
-            items != null && items != undefined && currentItems != null && currentItems != undefined && currentItems.length > 0 && isLoading === false && 
+            items != null && items !== undefined && currentItems != null && currentItems !== undefined && currentItems.length > 0 && isLoading === false && 
             <>
                 <div className="d-flex flex-wrap col-12 justify-content-center mt-4">
                     {
                         (() => {
                             console.log("current items: ", currentItems);
-                            let container = [];
-                            {
-                                currentItems && currentItems.forEach((data, index) => {
+                            let container = [];                  
+                            currentItems && currentItems.forEach((data, index) => {
                                 console.log("single data is: ", data);
                                 container.push(
-                                    <Item key={index} data={data} clickEvent={()=> {clickEvent(data._id)}}/>
+                                    <Item currentLanguage={currentLanguage} key={index} data={data} clickEvent={()=> {clickEvent(data._id)}}/>
                                 )
-                                })
-                            }
+                            })
                             return container;
                         })()
                     }
@@ -64,12 +63,12 @@ const ItemsList = ({clickEvent, getData, items, orderValue, setOrderValue, order
             isLoading === true && <LoadingSpinner />
         }
         {
-            isLoading === false && (items == null || items == undefined || currentItems == null || currentItems == undefined || currentItems.length == 0) &&
+            isLoading === false && (items == null || items === undefined || currentItems == null || currentItems === undefined || currentItems.length === 0) &&
             <div className="d-flex col-12 justify-content-center align-items-center">
-                <img src={NoData} className="no-data-img"/>
+                <img src={NoData} className="no-data-img" alt=""/>
             </div>
         }
-        <Pagination handlePageClick={handlePageClick} pageCount={pageCount} maxItems={itemsPerPage}/>
+        <Pagination handlePageClick={handlePageClick} pageCount={pageCount} maxItems={itemsPerPage} currentLanguage={currentLanguage}/>
     </div>
     );
 }

@@ -6,7 +6,7 @@ import ItemsList from "components/ItemsList";
 import { Role } from "lookups";
 import jwt from 'jwt-decode';
 
-const AllItems = ({getCookie, user}) => {
+const AllItems = ({getCookie, user, currentLanguage}) => {
 
     const [items, setItems] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -64,11 +64,15 @@ const AllItems = ({getCookie, user}) => {
     }
 
 	return (
-        <ItemsList 
-            clickEvent={clickEvent} getData={getData} items={items} orderValue={orderValue}
-            setOrderValue={setOrderValue} orderDirectionValue={orderDirectionValue} setOrderDirectionValue={setOrderDirectionValue}
-            searchTextValue={searchTextValue} setSearchTextValue={setSearchTextValue}
-            statusValue={statusValue} setStatusValue={setStatusValue} isLoading={isLoading} canSeeStatusFilters={user != undefined && user != null && user.role == Role.ADMIN}/>
+        <div className="col-12 d-flex justify-content-center align-items-center">
+            <ItemsList 
+                clickEvent={clickEvent} getData={getData} items={items} orderValue={orderValue}
+                setOrderValue={setOrderValue} orderDirectionValue={orderDirectionValue} setOrderDirectionValue={setOrderDirectionValue}
+                searchTextValue={searchTextValue} setSearchTextValue={setSearchTextValue}
+                statusValue={statusValue} setStatusValue={setStatusValue} isLoading={isLoading}
+                canSeeStatusFilters={user !== undefined && user != null && user.role == Role.ADMIN} currentLanguage={currentLanguage}
+            />
+        </div>
 	);
 };
 

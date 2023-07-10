@@ -6,7 +6,7 @@ import { Role } from "lookups";
 import jwt from'jwt-decode';
 import "./myItems.css";
 
-const MyItems = ({getCookie, user}) => {
+const MyItems = ({getCookie, user, currentLanguage}) => {
 
     const [items, setItems] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -71,12 +71,15 @@ const MyItems = ({getCookie, user}) => {
 
 
 	return (
-        <ItemsList 
-            clickEvent={clickEvent} getData={getData} items={items} orderValue={orderValue}
-            setOrderValue={setOrderValue} orderDirectionValue={orderDirectionValue} setOrderDirectionValue={setOrderDirectionValue}
-            searchTextValue={searchTextValue} setSearchTextValue={setSearchTextValue} 
-            statusValue={statusValue} setStatusValue={setStatusValue} isLoading={isLoading} canSeeStatusFilters={user != undefined && user != null && user.role == Role.USER}
-        /> 
+        <div className="col-12 d-flex justify-content-center align-items-center">
+            <ItemsList 
+                clickEvent={clickEvent} getData={getData} items={items} orderValue={orderValue}
+                setOrderValue={setOrderValue} orderDirectionValue={orderDirectionValue} setOrderDirectionValue={setOrderDirectionValue}
+                searchTextValue={searchTextValue} setSearchTextValue={setSearchTextValue} 
+                statusValue={statusValue} setStatusValue={setStatusValue} isLoading={isLoading} 
+                canSeeStatusFilters={user !== undefined && user != null && user.role == Role.USER} currentLanguage={currentLanguage}
+            /> 
+        </div>
 	);
 };
 

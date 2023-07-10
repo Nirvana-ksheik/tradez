@@ -1,5 +1,5 @@
 import * as dotenv from 'dotenv';
-import { login, signup, confirmAndUpdateState, forgotPassword, resetPassword, getById } from '../helpers/authHelper.js';
+import { login, signup, confirmAndUpdateState, forgotPassword, resetPassword, getById, getAllAdmins } from '../helpers/authHelper.js';
 
 dotenv.config();
 
@@ -99,3 +99,14 @@ const _getUserProfile = async(req, res) => {
     }
 };
 export {_getUserProfile as getUserProfileController};
+
+const _getAllAdmins = async(req, res) => {
+    try{
+        const result = await getAllAdmins();
+        console.log("result is: ", result);
+        res.status(200).json({result});
+    } catch(err){
+        res.status(500).json({err});
+    }
+};
+export {_getAllAdmins as getAllAdminsController};

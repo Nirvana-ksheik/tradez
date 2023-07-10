@@ -1,18 +1,24 @@
-import express from 'express';
 import * as database from './database.js';
+import express from 'express';
+import cors from 'cors';
 import authRouter from './routes/authRoutes.js';
 import itemRouter from './routes/itemRoutes.js';
-import tradeRouter from './routes/tradeRoutes.js'
+import tradeRouter from './routes/tradeRoutes.js';
+import subscriptionRouter from './routes/subscriptionRoutes.js';
 import bodyParser from 'body-parser';
-import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import http from 'http';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 import commentRouter from './routes/commentRoute.js';
 import charityRouter from './routes/charityRoutes.js';
+import postRouter from './routes/postRoutes.js';
+import { createServer } from 'http';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import * as dotenv from 'dotenv';
+import notificationRouter from './routes/notificationRoutes.js';
+dotenv.config();
 
 const app = express(); 
+const httpServer = createServer(app);
 
 app.use(express.static('./public'));
 
@@ -25,7 +31,7 @@ app.use(cors({credentials: true, origin: true }));
 app.use('/', (req, res, next) => {
     res.setHeader(
       'Access-Control-Allow-Origin', 'http://localhost:3001'
-      );
+    );
     next();
 });
 
@@ -45,11 +51,12 @@ app.use('/', itemRouter);
 app.use('/', tradeRouter);
 app.use('/', commentRouter);
 app.use('/', charityRouter);
-
-const httpServer = http.createServer(app);
+app.use('/', postRouter);
+app.use('/', subscriptionRouter);
+app.use('/', notificationRouter);
 
 httpServer.listen(3000, () => {
-    console.log("Server started on port : 3000");
+  console.log("Server started on port : 3000");
 });
 
 database.connectDB();

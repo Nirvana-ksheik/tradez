@@ -5,8 +5,10 @@ import { useNavigate } from "react-router-dom";
 import { ItemStatus } from "lookups";
 
 import "./addItem.css";
+import { Notifications, parseModelString } from "notifications";
+import { adminNotificationSender } from "helpers/notificationHelper";
 
-const AddItem = ({getCookie}) => {
+const AddItem = ({getCookie, user}) => {
 
     const navigate = useNavigate();
 
@@ -43,11 +45,21 @@ const AddItem = ({getCookie}) => {
 
 		try {
 			const url = "http://localhost:3000/api/item/create";
+            
 			await reqInstance.post(url, formData, 
 				{
 					withCredentials: true,
 					baseURL: 'http://localhost:3000',
-				});
+				})
+                .then(async({data: res}) =>{
+                    const modelData = {
+                        username: user.organizationName
+                    };
+                    const notificationObject = Notifications.CHARITY_SIGNUP;
+                    const notificationMessage = parseModelString(notificationObject.message, modelData);
+            
+                    await adminNotificationSender({message: notificationMessage, title: notificationObject.title});
+                });
 
 			navigate("/items/mine");
 
