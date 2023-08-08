@@ -1,6 +1,7 @@
 .charity-icon-logo{
     aspect-ratio: 1/1;
     max-width: 15em;
+    border-radius: 10rem;
 }
 
 .text-left{
@@ -9,4 +10,40 @@
 
 .text-right{
     text-align: right;
+}
+
+.charity-profile-text-headers{
+    color: var(--secondary-color);
+    font-weight: 600;
+}
+
+.charity-profile-text{
+    color: var(--black);
+    font-weight: 400;
+}
+
+.categories-reject, .categories-approve, .categories-edit{
+    font-size: 2rem;
+}
+
+.categories-reject:hover, .categories-approve:hover, .categories-edit:hover{
+    cursor: pointer;
+}
+.categories-reject{
+    color: var(--reject)
+}
+
+.categories-approve{
+    color: var(--approve)
+}
+
+.categories-edit{
+    color: var(--primary-variant-color)
+}
+
+.sticky-nav{
+    position: sticky !important;
+    height: 100% !important;
+    top: 0 !important;
+    align-items:flex-start !important;
 }

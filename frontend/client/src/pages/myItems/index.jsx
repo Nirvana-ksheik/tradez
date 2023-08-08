@@ -14,6 +14,8 @@ const MyItems = ({getCookie, user, currentLanguage}) => {
     const [orderDirectionValue, setOrderDirectionValue] = useState(null);
     const [searchTextValue, setSearchTextValue] = useState(null);
     const [statusValue, setStatusValue] = useState(null);
+    const [categoryValue, setCategoryValue] = useState([]);
+    const [locationValue, setLocationValue] = useState(null);
 
     const navigate = useNavigate();
 
@@ -23,24 +25,24 @@ const MyItems = ({getCookie, user, currentLanguage}) => {
     }
 
     const getData = (controller) => {
-        setIsLoading(true);
-        const token = getCookie();
-        let decodedToken = undefined;
-        if(token != null && token != undefined){
-            decodedToken = jwt(token);
-        }
-
-        let reqInstance = decodedToken != undefined && decodedToken.role == Role.USER ?
-        axios.create({
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }) : axios;
-
-        console.log("token to be sent: ", token);
-        const url = "http://localhost:3000/api/items";
-        
         try {
+            setIsLoading(true);
+            const token = getCookie();
+            let decodedToken = undefined;
+            if(token != null && token != undefined){
+                decodedToken = jwt(token);
+            }
+
+            let reqInstance = decodedToken != undefined && decodedToken.role == Role.USER ?
+            axios.create({
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }) : axios;
+
+            console.log("token to be sent: ", token);
+            const url = "http://localhost:3000/api/items";
+        
             reqInstance.get(
                 url, 
                 { 
@@ -50,7 +52,9 @@ const MyItems = ({getCookie, user, currentLanguage}) => {
                         order: orderValue,
                         orderDirection: orderDirectionValue,
                         searchText: searchTextValue,
-                        status: statusValue
+                        status: statusValue,
+                        category: categoryValue,
+                        location: locationValue
                     },
                     signal: controller.signal
                 },
@@ -61,8 +65,11 @@ const MyItems = ({getCookie, user, currentLanguage}) => {
             ).then(({data: res}) => { 
                 setItems(res); 
                 setIsLoading(false);
+            }).catch((err)=> {
+                console.log("Error : ", err);
+                setIsLoading(false);
             });
-        
+
         } catch (error) { 
             console.log("error: ", error);
             setIsLoading(false);
@@ -76,6 +83,8 @@ const MyItems = ({getCookie, user, currentLanguage}) => {
                 clickEvent={clickEvent} getData={getData} items={items} orderValue={orderValue}
                 setOrderValue={setOrderValue} orderDirectionValue={orderDirectionValue} setOrderDirectionValue={setOrderDirectionValue}
                 searchTextValue={searchTextValue} setSearchTextValue={setSearchTextValue} 
+                categoryValue={categoryValue} setCategoryValue={setCategoryValue}
+                locationValue={locationValue} setLocationValue={setLocationValue}
                 statusValue={statusValue} setStatusValue={setStatusValue} isLoading={isLoading} 
                 canSeeStatusFilters={user !== undefined && user != null && user.role == Role.USER} currentLanguage={currentLanguage}
             /> 

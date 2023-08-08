@@ -26,7 +26,7 @@ const Pagination = ({handlePageClick, pageCount, maxItems, currentLanguage}) => 
                 pageLinkClassName="page-link"
                 previousLinkClassName="previous"
                 nextLinkClassName="next"
-                activeLinkClassName="active"
+                activeLinkClassName="page-active"
             />
         </div>
     );

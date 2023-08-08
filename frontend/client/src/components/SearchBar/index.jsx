@@ -2,28 +2,34 @@ import React, {useEffect, useState} from "react";
 import Dropdown from 'react-bootstrap/Dropdown';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
-import { itemOrderByLookups, charityOrderByLookups, itemOrderDirectionLookups, ItemStatusLookups } from "lookups";
+import { itemOrderByLookups, charityOrderByLookups, itemOrderDirectionLookups, ItemStatusLookups, postOrderByLookups } from "lookups";
 import { useTranslation } from "react-i18next";
+import CategoriesDropDown from "../CategoriesDropDown";
+import LocationsDropDown from "../LocationsDropDown";
 import "./searchBar.css";
 
-const SearchBar = ({setOrderValue, setOrderDirectionValue, setSearchTextValue, setStatusValue, isCharity, currentLanguage}) => {
+const SearchBar = ({setOrderValue, setOrderDirectionValue, setSearchTextValue, setStatusValue, setCategoryValue, categoryValue, locationValue, setLocationValue, isCharity, currentLanguage, isPosts}) => {
 
   const {t} = useTranslation();
-  
+  const [hideShowFilters, setHideShowFilters] = useState(false);
+
   return (
     <div className="col-12 d-flex flex-column align-items-center justify-content-center">
       <div className="mt-5 mb-5 d-flex col-12 align-items-center justify-content-center">
-          <div className="d-flex col-lg-6 col-10 justify-content-lg-between justify-content-around align-items-lg-baseline">
-              <input type="text" id ="search_text" className="col-lg-11 col-11 search-input form-control" onChange={(e) => {
+          <div className="d-flex col-lg-8 col-11 justify-content-lg-between justify-content-center align-items-center">
+              <input type="text" id ="search_text" className="col-lg-11 col-10 search-input" onChange={(e) => {
                   setSearchTextValue(e.target.value);
                 }} 
                 placeholder={t("SearchAnything")}/>
+                <i className={!hideShowFilters ? "fa-solid fa-filter-circle-xmark hide-show-filters col-2" : "fa-solid fa-filter hide-show-filters col-2"} onClick={() => { setHideShowFilters(!hideShowFilters) }}></i>
           </div>
       </div>
-      <div className="d-flex col-lg-6 col-12 flex-md-row flex-column justify-content-around">
+      {
+        hideShowFilters && 
+        <div className="d-flex col-lg-8 col-md-10 col-12 flex-md-row flex-column flex-column justify-content-md-around justify-content-center align-items-center">
         {
           setOrderValue !== null && setOrderValue !== undefined &&
-          <DropDownButton btnName={t("OrderBy")} setDropValue={setOrderValue} list={isCharity ? charityOrderByLookups : itemOrderByLookups} currentLanguage={currentLanguage}/>
+          <DropDownButton btnName={t("OrderBy")} setDropValue={setOrderValue} list={isCharity ? charityOrderByLookups : isPosts ? postOrderByLookups : itemOrderByLookups} currentLanguage={currentLanguage}/>
         }
         {
           setOrderDirectionValue !== null && setOrderDirectionValue !== undefined &&
@@ -33,7 +39,17 @@ const SearchBar = ({setOrderValue, setOrderDirectionValue, setSearchTextValue, s
           setStatusValue !== null && setStatusValue !== undefined &&
           <DropDownButton btnName={t("ItemStatus")} setDropValue={setStatusValue} list={ItemStatusLookups} currentLanguage={currentLanguage}/>
         }
-      </div>
+        {
+          setLocationValue !== null && setLocationValue !== undefined &&
+          <LocationsDropDown btnName={t("Location")} setDropValue={setLocationValue} dropValue={locationValue} currentLanguage={currentLanguage}/>
+        }
+        {
+          setCategoryValue !== null && setCategoryValue !== undefined &&
+          <CategoriesDropDown currentLanguage={currentLanguage} btnName={t("Categories")} setDropValue={setCategoryValue} dropValue={categoryValue}/>
+        }
+        </div>
+      }
+
     </div>
   );
 };
@@ -41,7 +57,6 @@ const SearchBar = ({setOrderValue, setOrderDirectionValue, setSearchTextValue, s
 const DropDownButton = ({btnName, setDropValue, list, currentLanguage}) => {
 
   const {t} = useTranslation();
-
   const [buttonName, setButtonName] = useState();
 
   useEffect(()=>{
@@ -52,10 +67,10 @@ const DropDownButton = ({btnName, setDropValue, list, currentLanguage}) => {
   console.log("list is: ", list);
 
   return (
-    <div dir="ltr" className="d-flex col-lg-2 col-md-3 justify-content-lg-center justify-content-around dropdown-container m-0">
-      <Dropdown as={ButtonGroup}>
-            <Button variant="none" className="dropDown-button">{ t(buttonName) }</Button>
-            <Dropdown.Toggle split  id="dropdown-basic-button" className="dropdown-toggle"/>
+    <div dir="ltr" className="d-flex col-lg-3 col-4 justify-content-lg-center justify-content-around dropdown-container m-2">
+      <Dropdown as={ButtonGroup} className="col-12">
+            <Button variant="none" className="dropDown-button col-9">{ t(buttonName) }</Button>
+            <Dropdown.Toggle split  id="dropdown-basic-button" className="dropdown-toggle col-3"/>
 
             <Dropdown.Menu variant="none" className="dropdown-menu" aria-labelledby="dropdown-basic-button">
               <Dropdown.Item 

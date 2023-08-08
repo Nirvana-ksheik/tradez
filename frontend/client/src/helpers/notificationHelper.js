@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const notificationSender = async({userId, message, title}) => {
+const notificationSender = async({userId, message, title, message_ar, title_ar, currentLanguage}) => {
 
     await axios.post('http://localhost:3000/api/send-notification', {
         userId: userId,
-        body: message,
-        title: title
+        body: currentLanguage === "ar" ? message_ar : message,
+        title: currentLanguage === "ar" ? title_ar : title
     },
     {
         baseURL: 'http://localhost:3000',
@@ -26,7 +26,9 @@ const notificationSender = async({userId, message, title}) => {
     await axios.post('http://localhost:3000/api/notifications', {
         userId: userId,
         message: message,
-        title: title
+        title: title,
+        message_ar: message_ar,
+        title_ar: title_ar
     },
     {
         baseURL: 'http://localhost:3000',
@@ -40,12 +42,12 @@ const notificationSender = async({userId, message, title}) => {
     });
 };
 
-const adminNotificationSender = async({message, title}) => {
+const adminNotificationSender = async({message, title, message_ar, title_ar, currentLanguage}) => {
 
     const admins = await axios.get('http://localhost:3000/api/auth/admins');
 
     for(const admin of admins){
-        await notificationSender({userId: admin, message: message, title: title});
+        await notificationSender({userId: admin, message: message, title: title, message_ar: message_ar, title_ar: title_ar, currentLanguage: currentLanguage});
     }
 };
 

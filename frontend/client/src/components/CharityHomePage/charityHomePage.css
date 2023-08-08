@@ -4,3 +4,22 @@
     aspect-ratio: 3/2;
     mix-blend-mode:darken;
 }
+
+.warning-message{
+    background-color: orange;
+    border-radius: 1rem;
+    padding: 1rem;
+    color: whitesmoke;
+    margin: 1rem;
+    font-size: 1.2rem;
+}
+
+.svg-wave{
+    transform: scaleY(-1) scaleX(1);
+}
+
+@media screen and (max-width: 1439px) and (min-width: 1024px){
+    .charity-homepage-main-div{
+        padding-top: 5vh;
+    }
+}

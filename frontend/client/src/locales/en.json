@@ -83,5 +83,38 @@
     "RejectItemSubmit": "Reject",
     "Offers": "Offers",
     "Replies": "replies",
-    "HideReplies": "hide replies"
+    "HideReplies": "hide replies",
+    "AddData": "Add Data",
+    "ItemName": "Item Name",
+    "ApproximateValue": "Approximate Value",
+    "ApproximateValueSubText": "How much do you evaluate your item's price (S.P)",
+    "Location": "Location",
+    "LocationSubText": "Your location for the trade",
+    "ItemDescription": "Item Description",
+    "ItemDescriptionSubText": "Describe your item",
+    "ImageFiles": "Image Files",
+    "ApproximateValuesPlaceholder": "e.g 90,000 (S.P)",
+    "ApplicationIsUnderProcess": "Your application is currently being reviewed, we will notify you when the process is done",
+    "DidntChangePasswordWarning": "You are advised to change your temporary password",
+    "TotalItems": "Total Items ",
+    "NumberOfTradez": " Tradez Completed",
+    "UpdateProfilePictureLink": "Update Profile Picture",
+    "Confirm": "Confrim",
+    "Categories": "Categories",
+    "whatToDonateLabel": "What can you donate to us ?",
+    "ItemCategories": "Categories",
+    "ItemCategoriesSubText": "Choose the categories for your item",
+    "CharityDidntAddCategories": "This Charity hasn't added categories for it's needs yet"
 }
+
+
+
+
+
+
+
+
+
+
+
+

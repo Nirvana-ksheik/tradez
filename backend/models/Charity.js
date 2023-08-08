@@ -78,6 +78,12 @@ const charitySchemma = new Schema({
     logo:{
         type: String
     },
+    categories: [{
+        type: Number
+    }],
+    rejectMessage: {
+        type: String
+    },
     createdDate: {
         type: Date,
         default: new Date().toISOString()
@@ -115,6 +121,8 @@ export class CharityModel {
         this.status = data.status;
         this.didChangePassword = data.didChangePassword;
         this.logo = data.logo;
+        this.categories = data.categories;
+        this.rejectMessage = data.rejectMessage;
         this.createdDate = data.createdDate;
     }
 }
@@ -122,4 +130,5 @@ export class CharityModel {
 const model = mongoose.model('Charity', charitySchemma);
 
 export const schema = model.schema;
+
 export default model;

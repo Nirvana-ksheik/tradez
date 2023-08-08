@@ -1,12 +1,15 @@
 import * as dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
+import moment from 'moment/moment.js';
 import pkg from 'bcryptjs';
-const { compare } = pkg;
-import model, { UserModel } from '../models/User.js';
+import {default as ModelItem} from '../models/Item.js';
 import {sendConfirmationEmail, sendResetPasswordEmail} from '../helpers/emailHelper.js';
 import { Role } from '../models/Statics.js';
-import moment from "moment/moment.js";
+import model, { UserModel } from '../models/User.js';
+import {default as ModelTradez} from '../models/Tradez.js';
+import { ImageModel } from '../models/Image.js';
 
+const { compare } = pkg;
 dotenv.config();
 
 const createToken = ({user, secret, role, expirydate}) =>{
@@ -45,7 +48,11 @@ const login = async ({username, password}) => {
 
 const signup = async({username, email, password, resetToken}) => {
 
-    const user = await model.create({username: username, email: email, password: password, resetToken: resetToken});
+    const user = await model.create({username: username, email: email, password: password, resetToken: resetToken})
+                        .catch((err)=>{
+                            console.log("Error creating user: ", err);
+                        });
+
     const token = createToken({user: {id: user._id, username: user.username, email: user.email}, secret: process.env.EMAIL_TOKEN_SECRET, role: Role.USER, expirydate: process.env.TOKEN_EXPIRY_DATE});
     await sendConfirmationEmail({email, token});
 }
@@ -88,8 +95,22 @@ const resetPassword = async({id, password}) => {
 
 const getById = async ({id}) => {
     const user = await model.findById(id);
+    console.log("user: ", user);
     const userDTO = new UserModel(user);
-    userDTO.createdDate = moment.utc(user.createdDate).format('DD/MM/YYYY');
+    const itemNumbers = await ModelItem.find({ownerId: id});
+    const numberOfTradez = await ModelTradez.find({$and:[
+        {
+            $or:[
+                {primaryUserId: id},
+                {secondaryUserId: id}
+            ],
+        },
+        {accepted: true}
+    ]});
+
+    userDTO.totalItems = itemNumbers.length;
+    userDTO.numberOfTradez = numberOfTradez.length;
+    userDTO.createdDate = user.createdDate;
     return userDTO;
 }
 
@@ -101,4 +122,17 @@ const getAllAdmins = async () => {
     return userIds;
 }
 
-export {login ,signup, getById, confirmAndUpdateState, forgotPassword, resetPassword, getAllAdmins};
+const updateProfilePic = async (image, id) => {
+    const profile = ImageModel.getLogoImagePath(image);
+    await model.findByIdAndUpdate(id, {logo: profile})
+            .then((res) => {
+                console.log("Profile picture updated successfully");
+            })
+            .catch((err) => {
+                console.log("Error saving profile picture to database");
+            });
+
+    return profile;
+}
+
+export {login ,signup, getById, confirmAndUpdateState, forgotPassword, resetPassword, getAllAdmins, updateProfilePic};

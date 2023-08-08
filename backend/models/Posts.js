@@ -51,6 +51,18 @@ const postSchema = new Schema({
     }
 }, { _id: false });
 
+export class PostCommentModel {
+    constructor(data){
+        console.log("data in post comment model: ", data);
+        this._id = data._id;
+        this.userId = data.userId;
+        this.username = data.username;
+        this.commentText = data.commentText;
+        this.commentDate = data.commentDate;
+        this.logo = data.logo;
+    }
+}
+
 export class PostModel {
     constructor(data){
         console.log("data in model constructor: ", data);
@@ -59,9 +71,15 @@ export class PostModel {
         this.charityId = data.charityId;
         this.imagesReferences = data.imagesReferences;
         this.likes = data.likes;
-        this.comments = data.comments;
+        this.comments = [];
         this.createdDate = data.createdDate;
         this.username = data.username;
+        this.publishedDate = data.publishedDate;
+        this.logo = data.logo;
+    }
+
+    setLogo = (logo) => {
+        this.logo = logo;
     }
 }
 

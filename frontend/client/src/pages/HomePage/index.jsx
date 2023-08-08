@@ -10,7 +10,7 @@ const HomePage = (props) => {
         <div>
         {
             props.user !== undefined && props.user !== null && props.user.role === Role.CHARITY ?
-            <CharityHomePage currentLanguage={props.currentLanguage}/> :
+            <CharityHomePage currentLanguage={props.currentLanguage} user={props.user}/> :
             <UserHomePage currentLanguage={props.currentLanguage}/>
         }
         </div>

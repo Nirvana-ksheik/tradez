@@ -8,6 +8,9 @@ import { ItemStatus, Role } from '../models/Statics.js';
 
 const createItem = async ({item}) => {
     console.log("items: ", {...item});
+    const categoriesArray = JSON.parse(item.categories);
+    item.categories = categoriesArray;
+    console.log("item categories: ", item.categories)
     return await model.create({ ...item })
     .catch(err =>{
          console.log("error occured");
@@ -21,20 +24,13 @@ const editItem = async ({item}) => {
         const itemTemp = await model.findById(item._id);
         item.imagesReferences = itemTemp.imagesReferences;
     }
-
+    const categoriesArray = JSON.parse(item.categories);
+    item.categories = categoriesArray;
     return await model.findByIdAndUpdate(item._id, { ...item })
     .catch(err =>{
          console.log("error occured: ", err);
          throw Error(err);
     });
-}
-
-const getItemById = async ({id}) => {
-    console.log("id: ", id);
-    const itemResult = await getItemMetaData({id});
-    const tradezItems = await getTradez(itemResult._id);
-    itemResult.setTradezItems(tradezItems);
-    return itemResult;
 }
 
 const getItemMetaData = async ({id, userId, role}) => {
@@ -60,6 +56,26 @@ const getItemMetaData = async ({id, userId, role}) => {
     return itemResult;
 }
 
+const getItemDetails = async ({id}) => {
+    console.log("id: ", id);
+    const item = await model.findById(id);
+    if(item.approved == false){
+        return null;
+    }
+    const itemOwner = await userModel.findById(item.ownerId);
+    const imagePaths = [];
+    for(const imageRef of item.imagesReferences){
+        const img = await imageModel.findById(imageRef);
+        imagePaths.push(img.path);
+    }
+    const itemResult = new ItemModel(item);
+    itemResult.setImagePaths(imagePaths);
+    itemResult.setItemId(item._id);
+    itemResult.setItemOwner(itemOwner);
+    itemResult.setOwnerId(item.ownerId);
+    return itemResult;
+}
+
 const getAllItems = async ({query}) => {
     const order = [];
     query.order ? order.push(query.order) : order.push("publishedDate");
@@ -68,6 +84,8 @@ const getAllItems = async ({query}) => {
     itemsQuery.getFilter();
     const searchText = query.searchText;
     const statusFilter = query.status;
+    const locationFilter = query.location;
+    const categoriesFilter = query.category;
     console.log("status filter: ", statusFilter);
     console.log("role: ", query.role);
 
@@ -107,6 +125,21 @@ const getAllItems = async ({query}) => {
         itemsQuery.getFilter();
     }
 
+    if(categoriesFilter !== null && categoriesFilter !== undefined && categoriesFilter !== []){
+        console.log("categories filter array: ", categoriesFilter);
+        itemsQuery.find({
+            categories: {$in: categoriesFilter}
+        });
+        itemsQuery.getFilter();
+    }
+
+    if(locationFilter !== null && locationFilter !== undefined){
+        itemsQuery.find({
+            location: locationFilter
+        });
+        itemsQuery.getFilter();
+    }
+
     const items = await itemsQuery.exec();
     const itemsResult = [];
     for(const item of items){
@@ -126,11 +159,11 @@ const getAllItems = async ({query}) => {
 }
 
 const isItemTradeInOrder = async(itemId, userId) => {
-    console.log("itemId: ", itemId);
-    console.log("userId: ", userId);
+    console.log("itemId: ", new mongoose.Types.ObjectId(itemId.toString()));
+    console.log("userId: ", new mongoose.Types.ObjectId(userId.toString()));
     const item = await tradezModel.findOne({
-        secondaryItemId: itemId,
-        primaryUserId: userId,
+        secondaryItemId: new mongoose.Types.ObjectId(itemId.toString()),
+        primaryUserId: new mongoose.Types.ObjectId(userId.toString()),
         accepted: false
     });
     console.log("traaaaaaaaaaaaaaaaaaaaaaaaaaaaaaade in order: ", item);
@@ -150,4 +183,4 @@ const changeItemStatus = async (itemId, status, rejectMessage) => {
     return item;
 }
 
-export { createItem, getItemById, getAllItems, editItem, getItemMetaData, changeItemStatus };
+export { createItem, getAllItems, editItem, getItemMetaData, changeItemStatus, getItemDetails };

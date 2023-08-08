@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Gallery } from "react-grid-gallery";
-import format from "date-fns/format";
 import { notificationSender } from "helpers/notificationHelper";
 import { Notifications, parseModelString } from "notifications";
 import { useTranslation } from "react-i18next";
-import "./post.css";
 import { formatNumberWithCommas } from "../../helpers/numberFormatHelper";
 import { formatDateWithLanguage } from "../../helpers/dateFormatHelper";
+import { Dropdown } from "react-bootstrap";
+import "./post.css";
 
 const Post = ({ getCookie, user, initialData, currentLanguage }) => {
   const [liked, setLiked] = useState();
@@ -20,7 +20,6 @@ const Post = ({ getCookie, user, initialData, currentLanguage }) => {
   const { t } = useTranslation();
 
   useEffect(() => {
-
     if(data){
       console.log('data.comments: ', data.comments);
       console.log("data.likes: ", data.likes);
@@ -75,8 +74,16 @@ const Post = ({ getCookie, user, initialData, currentLanguage }) => {
           };
           const notificationObject = Notifications.USER_LIKE_POST;
           const notificationMessage = parseModelString(notificationObject.message, modelData);
+          const notificationMessageAr = parseModelString(notificationObject.message_ar, modelData);
 
-          await notificationSender({userId: data.charityId, message: notificationMessage, title: notificationObject.title});
+          await notificationSender({
+            userId: data.charityId,
+            message: notificationMessage,
+            title: notificationObject.title,
+            message_ar: notificationMessageAr,
+            title_ar: notificationObject.title,
+            currentLanguage: currentLanguage
+          });
         }
       })
   }
@@ -134,9 +141,16 @@ const Post = ({ getCookie, user, initialData, currentLanguage }) => {
           };
           const notificationObject = Notifications.USER_COMMENTED_POST;
           const notificationMessage = parseModelString(notificationObject.message, modelData);
+          const notificationMessageAr = parseModelString(notificationObject.message_ar, modelData);
 
-          await notificationSender({userId: data.charityId, message: notificationMessage, title: notificationObject.title});
-
+          await notificationSender({
+            userId: data.charityId,
+            message: notificationMessage,
+            title: notificationObject.title,
+            message_ar: notificationMessageAr,
+            title_ar: notificationObject.title,
+            currentLanguage: currentLanguage
+          });
         })
         .catch((err) => {
           console.log("error is: ", err);
@@ -146,13 +160,27 @@ const Post = ({ getCookie, user, initialData, currentLanguage }) => {
     }
   };
 
+  const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+    <a
+      ref={ref}
+      onClick={e => {
+        e.preventDefault();
+        onClick(e);
+      }}
+    >
+      {<i className="fa fa-ellipsis-v delete-comment-btn-post"></i>}
+      {children}
+  
+    </a>
+  ));
+
   return (
     <div dir={currentLanguage === "ar" ? "rtl" : "ltr"} className="col-12 m-4">
     {
       data && 
       <div className="post-container">
       <div className="col-12 d-flex align-items-center mb-4">
-        <img className="post-charity-logo me-4 ms-4" src={"http://localhost:3000/" + user.logo} alt="" />
+        <img className="post-charity-logo me-4 ms-4" src={"http://localhost:3000/" + data.logo} alt="" />
         <div className="d-flex flex-column">
           <label>{data.username}</label>
           <label>{formatDateWithLanguage(data.publishedDate, currentLanguage)}</label>
@@ -180,7 +208,7 @@ const Post = ({ getCookie, user, initialData, currentLanguage }) => {
           </div>
         }
           <div className="d-flex align-items-center">
-            <p>{data.likes ? formatNumberWithCommas(data.comments.length, currentLanguage) : formatNumberWithCommas(0, currentLanguage)} {t("Likes")}  . <span className="clickable" onClick={()=> {setShowAllComments(!showAllComments)}}>{showAllComments ? t("Hide") : t("Show")}&nbsp;{data.comments ? formatNumberWithCommas(data.comments.length, currentLanguage) : formatNumberWithCommas(0, currentLanguage)} {t("Comments")}</span></p>
+            <p>{data.likes ? formatNumberWithCommas(data.likes.length, currentLanguage) : formatNumberWithCommas(0, currentLanguage)} {t("Likes")}  . <span className="clickable" onClick={()=> {setShowAllComments(!showAllComments)}}>{showAllComments ? t("Hide") : t("Show")}&nbsp;{data.comments ? formatNumberWithCommas(data.comments.length, currentLanguage) : formatNumberWithCommas(0, currentLanguage)} {t("Comments")}</span></p>
           </div>
         
         </div>
@@ -193,33 +221,39 @@ const Post = ({ getCookie, user, initialData, currentLanguage }) => {
             className="charity-post-enter-comment col-9"
           />
           <button className="comment-send-btn col-2 d-flex justify-content-around align-items-center p-2" onClick={handleCommentSubmit}>
-            <span className="d-flex align-items-center"><i className="fa-brands fa-telegram comment-send-icon"></i></span>
-            <span className="comment-send-text">{t("Submit")}</span>
+            <span className="d-flex align-items-center me-1 ms-1"><i className="fa-brands fa-telegram comment-send-icon"></i></span>
+            <span className="comment-send-text me-1 ms-1">{t("Submit")}</span>
           </button>
         </form>
       </div>
       <div className="post-comments">
-        <ul>
+        <ul className="p-1">
           {showAllComments && data.comments.map((obj, index) => (
             <div key={index} className="comment-li-none m-0 mt-3 ">
-              <div className="d-flex flex-column m-0 col-12">
-                <div className="d-flex justify-content-between align-items-center col-12 mb-1">
-                  <p className="m-0 font-bold">{obj.username}</p>
-                  <div className="d-flex align-items-center">
-                  <p className="m-0 font-bold">{formatDateWithLanguage(obj.commentDate, currentLanguage)}</p>
-                  {
-                    user && user.id === obj.userId &&
-                    <>
-                     &nbsp;&nbsp;
-                     <i className="fa-solid fa-trash delete-comment-btn-post" onClick={async() => {
-                        await handleDeleteComment(obj._id);
-                        }}>
-                      </i>
-                    </>
-                  }
+              <div className="d-flex flex-row m-0 col-12">
+                <img src={"http://localhost:3000" + obj.logo} alt="" className="comment-image-logo me-1 ms-1"/>
+                <div className="d-flex justify-content-center flex-column align-items-start col-12 mb-1">
+                  <div className="d-flex justify-content-start align-item-center col-12">
+                      <p className="m-0 font-medium font-grey">{obj.username}</p>&nbsp;&nbsp;&nbsp;&nbsp;
+                      <p className="m-0 font-medium font-grey">{formatDateWithLanguage(obj.commentDate, currentLanguage)}</p>
+                      {
+                        user && user.id === obj.userId &&
+                        <>
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          <Dropdown >
+                              <Dropdown.Toggle as={CustomToggle}>
+                              </Dropdown.Toggle>
+                              <Dropdown.Menu size="sm" title=""> 
+                                <Dropdown.Item onClick={() => {
+                                  handleDeleteComment(obj._id);
+                                }}>Delete</Dropdown.Item>
+                              </Dropdown.Menu>
+                          </Dropdown>
+                        </>
+                      }
                   </div>
+                  <p className="col-12 m-0 font-large font-black">{obj.commentText}</p>
                 </div>
-                <p className="col-12 m-0">- {obj.commentText}</p>
               </div>
             </div>
           ))}

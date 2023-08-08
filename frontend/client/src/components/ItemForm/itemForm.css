@@ -1,5 +1,5 @@
 .form-main-container{
-    background-color: var(--secondary-variant-color);
+    /* background-color: var(--primary-variant-color); */
     border-radius: 4px;
 }
 
@@ -7,28 +7,41 @@
     color: whitesmoke
 }
 
+.font-label{
+    color: var(--primary-color)
+}
+
 .sub-text{
-    color: var(--secondary-color);
-    font-size: 12px;
+    color: var(--primary-variant-color) !important;
+    font-size: 1rem;
     font-weight: 400;
     margin-top: 1%;
 }
 
 input{
     border: none !important;
+    background-color: transparent;
+    border-bottom: 1px solid var(--primary-variant-color) !important;
+}
+
+input:focus, input::after, input:active{
+    border: none !important;
+    background-color: transparent;
+    border-bottom: 1px solid var(--primary-variant-color) !important;
+    outline: none !important;
 }
 
 .fileupload-input{
     cursor: pointer;
-    background-color: var(--secondary-variant-color);
-    color: white;
+    background-color: var(--primary-variant-color);
+    color: whitesmoke;
     border-radius: 0.4rem;
 }
 
 .image-files-container{
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    color: #ececec;
+    color: var(--primary-color);
 }
 
 .drag-images-upload-icon{
@@ -41,9 +54,9 @@ input{
 } */
 
 .line-break{
-    color: var(--secondary-color);
-    border: 1px solid var(--secondary-color);
-    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    background-color: var(--primary-color);
     height: 1px !important;
     margin-bottom: 2rem;
     margin-top: 1rem;
@@ -51,22 +64,31 @@ input{
 }
 
 .submit-btn{
-    color: white;
-    background-color: var(--secondary-color);
+    color: whitesmoke;
+    background-color: var(--primary-color);
 }
 
 .submit-btn:hover{
-    color: white;
-    background-color: var(--secondary-variant-color);
+    color: whitesmoke;
+    background-color: var(--primary-variant-color);
 }
 
 .p-font{
-    color: white;
+    color: var(--primary-color);
     font-size: 2rem;
     border: 0;
-    border-bottom: 1px solid var(--secondary-color);
+    border-bottom: 1px solid var(--primary-color);
 }
 
 .text-area-description{
     height: auto;
+}
+
+.subcat-label{
+    color: whitesmoke;
+    background-color: var(--primary-color);
+    border-radius: 0.5rem;
+    width: fit-content;
+    margin: 4px;
+    padding: 3px;
 }

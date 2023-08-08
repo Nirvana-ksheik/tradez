@@ -1,0 +1,1220 @@
+[
+  {
+    "id": 1,
+    "english_description": "Aleppo",
+    "arabic_description": "حلب",
+    "cities": [
+      {
+        "id": 101,
+        "english_description": "Aleppo",
+        "arabic_description": "حلب"
+      },
+      {
+        "id": 102,
+        "english_description": "Manbij",
+        "arabic_description": "منبج"
+      },
+      {
+        "id": 103,
+        "english_description": "Al-Bab",
+        "arabic_description": "الباب"
+      },
+      {
+        "id": 104,
+        "english_description": "Azaz",
+        "arabic_description": "عزة"
+      },
+      {
+        "id": 105,
+        "english_description": "Atarib",
+        "arabic_description": "أتارب"
+      },
+      {
+        "id": 106,
+        "english_description": "Jarabulus",
+        "arabic_description": "جرابلس"
+      },
+      {
+        "id": 107,
+        "english_description": "Afrin",
+        "arabic_description": "عفرين"
+      },
+      {
+        "id": 108,
+        "english_description": "Tal Rifaat",
+        "arabic_description": "تل رفعت"
+      },
+      {
+        "id": 109,
+        "english_description": "Al-Safira",
+        "arabic_description": "السفيرة"
+      },
+      {
+        "id": 110,
+        "english_description": "Al-Bab",
+        "arabic_description": "الباب"
+      },
+      {
+        "id": 111,
+        "english_description": "Jarablus",
+        "arabic_description": "جرابلس"
+      },
+      {
+        "id": 112,
+        "english_description": "Manbij",
+        "arabic_description": "منبج"
+      },
+      {
+        "id": 113,
+        "english_description": "Al-Thawrah",
+        "arabic_description": "الثورة"
+      },
+      {
+        "id": 114,
+        "english_description": "Deir Hafir",
+        "arabic_description": "دير حافر"
+      },
+      {
+        "id": 115,
+        "english_description": "Al-Jarjnah",
+        "arabic_description": "الجرجنة"
+      },
+      {
+        "id": 116,
+        "english_description": "Tell Abyad",
+        "arabic_description": "تل أبيض"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "english_description": "Damascus",
+    "arabic_description": "دمشق",
+    "cities": [
+      {
+        "id": 201,
+        "english_description": "Damascus",
+        "arabic_description": "دمشق"
+      },
+      {
+        "id": 202,
+        "english_description": "Douma",
+        "arabic_description": "دوما"
+      },
+      {
+        "id": 203,
+        "english_description": "Darayya",
+        "arabic_description": "داريا"
+      },
+      {
+        "id": 204,
+        "english_description": "Yarmouk Camp",
+        "arabic_description": "مخيم اليرموك"
+      },
+      {
+        "id": 205,
+        "english_description": "Qatana",
+        "arabic_description": "قطنا"
+      },
+      {
+        "id": 206,
+        "english_description": "Al-Tall",
+        "arabic_description": "التل"
+      },
+      {
+        "id": 207,
+        "english_description": "Al-Zabadani",
+        "arabic_description": "الزبداني"
+      },
+      {
+        "id": 208,
+        "english_description": "Maaloula",
+        "arabic_description": "معلولا"
+      },
+      {
+        "id": 209,
+        "english_description": "Qudsaya",
+        "arabic_description": "قدسيا"
+      },
+      {
+        "id": 210,
+        "english_description": "Al-Hajar al-Aswad",
+        "arabic_description": "الحجر الأسود"
+      },
+      {
+        "id": 211,
+        "english_description": "Bab Sharqi",
+        "arabic_description": "باب شرقي"
+      },
+      {
+        "id": 212,
+        "english_description": "Jaramana",
+        "arabic_description": "جرمانا"
+      },
+      {
+        "id": 213,
+        "english_description": "Al-Qutayfah",
+        "arabic_description": "القطيفة"
+      },
+      {
+        "id": 214,
+        "english_description": "Sahnaya",
+        "arabic_description": "صحنايا"
+      },
+      {
+        "id": 215,
+        "english_description": "Dumayr",
+        "arabic_description": "دمير"
+      },
+      {
+        "id": 216,
+        "english_description": "Al-Dimas",
+        "arabic_description": "الديمس"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "english_description": "Daraa",
+    "arabic_description": "درعا",
+    "cities": [
+      {
+        "id": 301,
+        "english_description": "Daraa",
+        "arabic_description": "درعا"
+      },
+      {
+        "id": 302,
+        "english_description": "Izra",
+        "arabic_description": "إزرع"
+      },
+      {
+        "id": 303,
+        "english_description": "Nawa",
+        "arabic_description": "نوى"
+      },
+      {
+        "id": 304,
+        "english_description": "Al-Sanamayn",
+        "arabic_description": "الصنمين"
+      },
+      {
+        "id": 305,
+        "english_description": "Tafas",
+        "arabic_description": "طفس"
+      },
+      {
+        "id": 306,
+        "english_description": "Ibta",
+        "arabic_description": "إبطا"
+      },
+      {
+        "id": 307,
+        "english_description": "Da'el",
+        "arabic_description": "داعل"
+      },
+      {
+        "id": 308,
+        "english_description": "Jasim",
+        "arabic_description": "جاسم"
+      },
+      {
+        "id": 309,
+        "english_description": "Al-Muzayrib",
+        "arabic_description": "المزيريب"
+      },
+      {
+        "id": 310,
+        "english_description": "Inkhil",
+        "arabic_description": "إنخل"
+      },
+      {
+        "id": 311,
+        "english_description": "Al-Shajara",
+        "arabic_description": "الشجرة"
+      },
+      {
+        "id": 312,
+        "english_description": "Al-Yadudah",
+        "arabic_description": "اليادودة"
+      },
+      {
+        "id": 313,
+        "english_description": "Al-Mataaiyah",
+        "arabic_description": "المطايعة"
+      },
+      {
+        "id": 314,
+        "english_description": "Ghabaghib",
+        "arabic_description": "غباغب"
+      },
+      {
+        "id": 315,
+        "english_description": "Al-Jiza",
+        "arabic_description": "الجيزة"
+      },
+      {
+        "id": 316,
+        "english_description": "Saida",
+        "arabic_description": "صيدا"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "english_description": "Deir ez-Zor",
+    "arabic_description": "دير الزور",
+    "cities": [
+      {
+        "id": 401,
+        "english_description": "Deir ez-Zor",
+        "arabic_description": "دير الزور"
+      },
+      {
+        "id": 402,
+        "english_description": "Al-Mayadin",
+        "arabic_description": "الميادين"
+      },
+      {
+        "id": 403,
+        "english_description": "Al-Bukamal",
+        "arabic_description": "البوكمال"
+      },
+      {
+        "id": 404,
+        "english_description": "Abu Kamal",
+        "arabic_description": "أبو كمال"
+      },
+      {
+        "id": 405,
+        "english_description": "Al-Sur",
+        "arabic_description": "الصور"
+      },
+      {
+        "id": 406,
+        "english_description": "Al-Quriyah",
+        "arabic_description": "القورية"
+      },
+      {
+        "id": 407,
+        "english_description": "Al-Hawaij",
+        "arabic_description": "الحويج"
+      },
+      {
+        "id": 408,
+        "english_description": "Al-Asharah",
+        "arabic_description": "العشارة"
+      },
+      {
+        "id": 409,
+        "english_description": "Al-Tayanah",
+        "arabic_description": "الطيانة"
+      },
+      {
+        "id": 410,
+        "english_description": "Al-Salhiyah",
+        "arabic_description": "الصالحية"
+      },
+      {
+        "id": 411,
+        "english_description": "Al-Sabkhah",
+        "arabic_description": "السبخة"
+      },
+      {
+        "id": 412,
+        "english_description": "Al-Shuhail",
+        "arabic_description": "الشحيل"
+      },
+      {
+        "id": 413,
+        "english_description": "Al-Hari",
+        "arabic_description": "الهري"
+      },
+      {
+        "id": 414,
+        "english_description": "Bakara",
+        "arabic_description": "باكرا"
+      },
+      {
+        "id": 415,
+        "english_description": "Al-Zir",
+        "arabic_description": "الزير"
+      },
+      {
+        "id": 416,
+        "english_description": "Al-Kasrah",
+        "arabic_description": "الكسرة"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "english_description": "Hama",
+    "arabic_description": "حماة",
+    "cities": [
+      {
+        "id": 501,
+        "english_description": "Hama",
+        "arabic_description": "حماة"
+      },
+      {
+        "id": 502,
+        "english_description": "Salamiyah",
+        "arabic_description": "سلمية"
+      },
+      {
+        "id": 503,
+        "english_description": "Mahardah",
+        "arabic_description": "محردة"
+      },
+      {
+        "id": 504,
+        "english_description": "Sqaylabiyeh",
+        "arabic_description": "صقلبية"
+      },
+      {
+        "id": 505,
+        "english_description": "Khirbet al-Hajameh",
+        "arabic_description": "خربة الحجامة"
+      },
+      {
+        "id": 506,
+        "english_description": "Karnaz",
+        "arabic_description": "كرناز"
+      },
+      {
+        "id": 507,
+        "english_description": "Tayzin",
+        "arabic_description": "تيزين"
+      },
+      {
+        "id": 508,
+        "english_description": "Kafr Zita",
+        "arabic_description": "كفر زيتا"
+      },
+      {
+        "id": 509,
+        "english_description": "Al-Suqaylabiyah",
+        "arabic_description": "السقيلبية"
+      },
+      {
+        "id": 510,
+        "english_description": "Halfaya",
+        "arabic_description": "حلفاية"
+      },
+      {
+        "id": 511,
+        "english_description": "Masyaf",
+        "arabic_description": "مصياف"
+      },
+      {
+        "id": 512,
+        "english_description": "Kafar Buhum",
+        "arabic_description": "كفر بهم"
+      },
+      {
+        "id": 513,
+        "english_description": "Mhardeh",
+        "arabic_description": "محردة"
+      },
+      {
+        "id": 514,
+        "english_description": "Al-Ghab Plain",
+        "arabic_description": "سهل الغاب"
+      },
+      {
+        "id": 515,
+        "english_description": "Al-Lataminah",
+        "arabic_description": "اللطامنة"
+      },
+      {
+        "id": 516,
+        "english_description": "Latmin",
+        "arabic_description": "لطمين"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "english_description": "Homs",
+    "arabic_description": "حمص",
+    "cities": [
+      {
+        "id": 601,
+        "english_description": "Homs",
+        "arabic_description": "حمص"
+      },
+      {
+        "id": 602,
+        "english_description": "Hula",
+        "arabic_description": "حولا"
+      },
+      {
+        "id": 603,
+        "english_description": "Al-Qusayr",
+        "arabic_description": "القصير"
+      },
+      {
+        "id": 604,
+        "english_description": "Al-Mukharram",
+        "arabic_description": "المخرم"
+      },
+      {
+        "id": 605,
+        "english_description": "Tadmor (Palmyra)",
+        "arabic_description": "تدمر"
+      },
+      {
+        "id": 606,
+        "english_description": "Al-Rastan",
+        "arabic_description": "الرستن"
+      },
+      {
+        "id": 607,
+        "english_description": "Al-Qaryatayn",
+        "arabic_description": "القريتين"
+      },
+      {
+        "id": 608,
+        "english_description": "Al-Mukharram al-Fawqani",
+        "arabic_description": "المخرم الفوقاني"
+      },
+      {
+        "id": 609,
+        "english_description": "Talkalakh",
+        "arabic_description": "تلكلخ"
+      },
+      {
+        "id": 610,
+        "english_description": "Dar al-Kabirah",
+        "arabic_description": "دار الكبيرة"
+      },
+      {
+        "id": 611,
+        "english_description": "Kafr Laha",
+        "arabic_description": "كفر لاها"
+      },
+      {
+        "id": 612,
+        "english_description": "Al-Dar al-Kabirah",
+        "arabic_description": "الدر الكبيرة"
+      },
+      {
+        "id": 613,
+        "english_description": "Al-Zaafaraniyah",
+        "arabic_description": "الزعفرانية"
+      },
+      {
+        "id": 614,
+        "english_description": "Talbiseh",
+        "arabic_description": "تلبيسة"
+      },
+      {
+        "id": 615,
+        "english_description": "Al-Qastal",
+        "arabic_description": "القسطل"
+      },
+      {
+        "id": 616,
+        "english_description": "Al-Houla",
+        "arabic_description": "الحولة"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "english_description": "Idlib",
+    "arabic_description": "إدلب",
+    "cities": [
+      {
+        "id": 701,
+        "english_description": "Idlib",
+        "arabic_description": "إدلب"
+      },
+      {
+        "id": 702,
+        "english_description": "Maarrat al-Numan",
+        "arabic_description": "معرة النعمان"
+      },
+      {
+        "id": 703,
+        "english_description": "Saraqib",
+        "arabic_description": "سراقب"
+      },
+      {
+        "id": 704,
+        "english_description": "Jisr al-Shughur",
+        "arabic_description": "جسر الشغور"
+      },
+      {
+        "id": 705,
+        "english_description": "Ariha",
+        "arabic_description": "أريحا"
+      },
+      {
+        "id": 706,
+        "english_description": "Maarat Misrin",
+        "arabic_description": "معرة مصرين"
+      },
+      {
+        "id": 707,
+        "english_description": "Areeha",
+        "arabic_description": "أريحا"
+      },
+      {
+        "id": 708,
+        "english_description": "Kafr Nabl",
+        "arabic_description": "كفرنبل"
+      },
+      {
+        "id": 709,
+        "english_description": "Jisr al-Shughur",
+        "arabic_description": "جسر الشغور"
+      },
+      {
+        "id": 710,
+        "english_description": "Sarmada",
+        "arabic_description": "سرمدا"
+      },
+      {
+        "id": 711,
+        "english_description": "Ariha",
+        "arabic_description": "أريحا"
+      },
+      {
+        "id": 712,
+        "english_description": "Maarat al-Numan",
+        "arabic_description": "معرة النعمان"
+      },
+      {
+        "id": 713,
+        "english_description": "Maarat al-Idlib",
+        "arabic_description": "معرة الإذلب"
+      },
+      {
+        "id": 714,
+        "english_description": "Hazano",
+        "arabic_description": "حزانو"
+      },
+      {
+        "id": 715,
+        "english_description": "Binnish",
+        "arabic_description": "بنش"
+      },
+      {
+        "id": 716,
+        "english_description": "Saraqib",
+        "arabic_description": "سراقب"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "english_description": "Latakia",
+    "arabic_description": "اللاذقية",
+    "cities": [
+      {
+        "id": 801,
+        "english_description": "Latakia",
+        "arabic_description": "اللاذقية"
+      },
+      {
+        "id": 802,
+        "english_description": "Jabla",
+        "arabic_description": "جبلة"
+      },
+      {
+        "id": 803,
+        "english_description": "Qardaha",
+        "arabic_description": "قرداحة"
+      },
+      {
+        "id": 804,
+        "english_description": "Al-Haffah",
+        "arabic_description": "الحفة"
+      },
+      {
+        "id": 805,
+        "english_description": "Tartus",
+        "arabic_description": "طرطوس"
+      },
+      {
+        "id": 806,
+        "english_description": "Slinfah",
+        "arabic_description": "صلنفة"
+      },
+      {
+        "id": 807,
+        "english_description": "Bassel al-Assad International Airport",
+        "arabic_description": "مطار بسل الأسد الدولي"
+      },
+      {
+        "id": 808,
+        "english_description": "Qnayeh",
+        "arabic_description": "قنية"
+      },
+      {
+        "id": 809,
+        "english_description": "Baniyas",
+        "arabic_description": "بانياس"
+      },
+      {
+        "id": 810,
+        "english_description": "Al-Qadmus",
+        "arabic_description": "القدموس"
+      },
+      {
+        "id": 811,
+        "english_description": "Al-Shaykh Badr",
+        "arabic_description": "الشيخ بدر"
+      },
+      {
+        "id": 812,
+        "english_description": "Al-Ramlah",
+        "arabic_description": "الرملة"
+      },
+      {
+        "id": 813,
+        "english_description": "Al-Shirdaghah",
+        "arabic_description": "الشيرداغة"
+      },
+      {
+        "id": 814,
+        "english_description": "Burj Islam",
+        "arabic_description": "برج إسلام"
+      },
+      {
+        "id": 815,
+        "english_description": "Al-Qasab",
+        "arabic_description": "القصب"
+      },
+      {
+        "id": 816,
+        "english_description": "Kasab",
+        "arabic_description": "كسب"
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "english_description": "Quneitra",
+    "arabic_description": "القنيطرة",
+    "cities": [
+      {
+        "id": 901,
+        "english_description": "Quneitra",
+        "arabic_description": "القنيطرة"
+      },
+      {
+        "id": 902,
+        "english_description": "Khan Arnabeh",
+        "arabic_description": "خان أرنبة"
+      },
+      {
+        "id": 903,
+        "english_description": "Jaba",
+        "arabic_description": "جبا"
+      },
+      {
+        "id": 904,
+        "english_description": "Al-Hurriyah",
+        "arabic_description": "الحرية"
+      },
+      {
+        "id": 905,
+        "english_description": "Al-Qataniyah",
+        "arabic_description": "القاطعية"
+      },
+      {
+        "id": 906,
+        "english_description": "Majdal Shams",
+        "arabic_description": "مجدل شمس"
+      },
+      {
+        "id": 907,
+        "english_description": "Al-Samdaniyah al-Gharbiyah",
+        "arabic_description": "السمدانية الغربية"
+      },
+      {
+        "id": 908,
+        "english_description": "Hadar",
+        "arabic_description": "حضر"
+      },
+      {
+        "id": 909,
+        "english_description": "Mas'ade",
+        "arabic_description": "مسعدة"
+      },
+      {
+        "id": 910,
+        "english_description": "Kudna",
+        "arabic_description": "كدنا"
+      },
+      {
+        "id": 911,
+        "english_description": "Rafid",
+        "arabic_description": "رافد"
+      },
+      {
+        "id": 912,
+        "english_description": "Ain al-Tina",
+        "arabic_description": "عين التينة"
+      },
+      {
+        "id": 913,
+        "english_description": "Ufaniyah",
+        "arabic_description": "عفانية"
+      },
+      {
+        "id": 914,
+        "english_description": "Al-Koum",
+        "arabic_description": "الكوم"
+      },
+      {
+        "id": 915,
+        "english_description": "Al-Samdaniyah al-Sharqiyah",
+        "arabic_description": "السمدانية الشرقية"
+      },
+      {
+        "id": 916,
+        "english_description": "Mashara",
+        "arabic_description": "مشارع القنيطرة"
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "english_description": "Raqqa",
+    "arabic_description": "الرقة",
+    "cities": [
+      {
+        "id": 1001,
+        "english_description": "Raqqa",
+        "arabic_description": "الرقة"
+      },
+      {
+        "id": 1002,
+        "english_description": "Tabqah",
+        "arabic_description": "الطبقة"
+      },
+      {
+        "id": 1003,
+        "english_description": "Tal Abyad",
+        "arabic_description": "تل أبيض"
+      },
+      {
+        "id": 1004,
+        "english_description": "Al-Thawrah",
+        "arabic_description": "الثورة"
+      },
+      {
+        "id": 1005,
+        "english_description": "Ayn Issa",
+        "arabic_description": "عين عيسى"
+      },
+      {
+        "id": 1006,
+        "english_description": "Tell Tamer",
+        "arabic_description": "تل تمر"
+      },
+      {
+        "id": 1007,
+        "english_description": "Suluk",
+        "arabic_description": "سلوك"
+      },
+      {
+        "id": 1008,
+        "english_description": "Kobanî",
+        "arabic_description": "كوباني"
+      },
+      {
+        "id": 1009,
+        "english_description": "Ein al-Arab",
+        "arabic_description": "عين العرب"
+      },
+      {
+        "id": 1010,
+        "english_description": "Al-Mansurah",
+        "arabic_description": "المنصورة"
+      },
+      {
+        "id": 1011,
+        "english_description": "Tal Rifaat",
+        "arabic_description": "تل رفعت"
+      },
+      {
+        "id": 1012,
+        "english_description": "Tell Abyad",
+        "arabic_description": "تل أبيض"
+      },
+      {
+        "id": 1013,
+        "english_description": "Hawi al-Hawa",
+        "arabic_description": "هوي الحوا"
+      },
+      {
+        "id": 1014,
+        "english_description": "Ein Issa",
+        "arabic_description": "عين عيسى"
+      },
+      {
+        "id": 1015,
+        "english_description": "Ain al-Arous",
+        "arabic_description": "عين العروس"
+      },
+      {
+        "id": 1016,
+        "english_description": "Karamah",
+        "arabic_description": "الكرامة"
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "english_description": "Rif Dimashq",
+    "arabic_description": "ريف دمشق",
+    "cities": [
+      {
+        "id": 1101,
+        "english_description": "Rif Dimashq Governorate",
+        "arabic_description": "محافظة ريف دمشق"
+      },
+      {
+        "id": 1102,
+        "english_description": "Damascus",
+        "arabic_description": "دمشق"
+      },
+      {
+        "id": 1103,
+        "english_description": "Jaramana",
+        "arabic_description": "جرمانا"
+      },
+      {
+        "id": 1104,
+        "english_description": "Douma",
+        "arabic_description": "دوما"
+      },
+      {
+        "id": 1105,
+        "english_description": "Yabrud",
+        "arabic_description": "يبرود"
+      },
+      {
+        "id": 1106,
+        "english_description": "Darayya",
+        "arabic_description": "داريا"
+      },
+      {
+        "id": 1107,
+        "english_description": "Qatana",
+        "arabic_description": "قطنا"
+      },
+      {
+        "id": 1108,
+        "english_description": "Al-Tall",
+        "arabic_description": "التل"
+      },
+      {
+        "id": 1109,
+        "english_description": "Al-Zabadani",
+        "arabic_description": "الزبداني"
+      },
+      {
+        "id": 1110,
+        "english_description": "Maaloula",
+        "arabic_description": "معلولا"
+      },
+      {
+        "id": 1111,
+        "english_description": "Al-Hajjira",
+        "arabic_description": "الحجيرة"
+      },
+      {
+        "id": 1112,
+        "english_description": "Al-Qutayfah",
+        "arabic_description": "القطيفة"
+      },
+      {
+        "id": 1113,
+        "english_description": "Sahnaya",
+        "arabic_description": "صحنايا"
+      },
+      {
+        "id": 1114,
+        "english_description": "Deir al-Asafir",
+        "arabic_description": "دير العصافير"
+      },
+      {
+        "id": 1115,
+        "english_description": "Harasta",
+        "arabic_description": "حرستا"
+      },
+      {
+        "id": 1116,
+        "english_description": "Al-Dumayr",
+        "arabic_description": "الضمير"
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "english_description": "Tartus",
+    "arabic_description": "طرطوس",
+    "cities": [
+      {
+        "id": 1201,
+        "english_description": "Tartus",
+        "arabic_description": "طرطوس"
+      },
+      {
+        "id": 1202,
+        "english_description": "Baniyas",
+        "arabic_description": "بانياس"
+      },
+      {
+        "id": 1203,
+        "english_description": "Safita",
+        "arabic_description": "صافيتا"
+      },
+      {
+        "id": 1204,
+        "english_description": "Tartus Suburbs",
+        "arabic_description": "أطراف طرطوس"
+      },
+      {
+        "id": 1205,
+        "english_description": "Al-Shaykh Badr",
+        "arabic_description": "الشيخ بدر"
+      },
+      {
+        "id": 1206,
+        "english_description": "Maten al-Sahel",
+        "arabic_description": "مطن الساحل"
+      },
+      {
+        "id": 1207,
+        "english_description": "Duraykish",
+        "arabic_description": "الدريكش"
+      },
+      {
+        "id": 1208,
+        "english_description": "Al-Qadmus",
+        "arabic_description": "القدموس"
+      },
+      {
+        "id": 1209,
+        "english_description": "Amrit",
+        "arabic_description": "عمريت"
+      },
+      {
+        "id": 1210,
+        "english_description": "Mashta al-Helu",
+        "arabic_description": "مشتى الحلو"
+      },
+      {
+        "id": 1211,
+        "english_description": "Al-Mashtal al-Helu",
+        "arabic_description": "المشتل الحلو"
+      },
+      {
+        "id": 1212,
+        "english_description": "Al-Aridah",
+        "arabic_description": "العريضة"
+      },
+      {
+        "id": 1213,
+        "english_description": "Al-Kufayr",
+        "arabic_description": "الكفير"
+      },
+      {
+        "id": 1214,
+        "english_description": "Al-Karah",
+        "arabic_description": "الكارة"
+      },
+      {
+        "id": 1215,
+        "english_description": "Al-Qadmous",
+        "arabic_description": "القدموس"
+      },
+      {
+        "id": 1216,
+        "english_description": "Al-Khayyarah",
+        "arabic_description": "الخيارة"
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "english_description": "Al-Hasakah",
+    "arabic_description": "الحسكة",
+    "cities": [
+      {
+        "id": 1301,
+        "english_description": "Al-Hasakah",
+        "arabic_description": "الحسكة"
+      },
+      {
+        "id": 1302,
+        "english_description": "Qamishli",
+        "arabic_description": "القامشلي"
+      },
+      {
+        "id": 1303,
+        "english_description": "Al-Malikiyah",
+        "arabic_description": "المالكية"
+      },
+      {
+        "id": 1304,
+        "english_description": "Ras al-Ayn",
+        "arabic_description": "رأس العين"
+      },
+      {
+        "id": 1305,
+        "english_description": "Al-Qahtaniyah",
+        "arabic_description": "القحطانية"
+      },
+      {
+        "id": 1306,
+        "english_description": "Al-Darbasiyah",
+        "arabic_description": "الدرباسية"
+      },
+      {
+        "id": 1307,
+        "english_description": "Al-Muabbada",
+        "arabic_description": "المعبدة"
+      },
+      {
+        "id": 1308,
+        "english_description": "Amuda",
+        "arabic_description": "عامودا"
+      },
+      {
+        "id": 1309,
+        "english_description": "Al-Yaarubiyah",
+        "arabic_description": "اليعربية"
+      },
+      {
+        "id": 1310,
+        "english_description": "Al-Sina'a",
+        "arabic_description": "السنيعة"
+      },
+      {
+        "id": 1311,
+        "english_description": "Al-Shaddadi",
+        "arabic_description": "الشدادي"
+      },
+      {
+        "id": 1312,
+        "english_description": "Tell Tamer",
+        "arabic_description": "تل تمر"
+      },
+      {
+        "id": 1313,
+        "english_description": "Al-Qamishli",
+        "arabic_description": "القامشلي"
+      },
+      {
+        "id": 1314,
+        "english_description": "Al-Malikiyah",
+        "arabic_description": "المالكية"
+      },
+      {
+        "id": 1315,
+        "english_description": "Dirbêsiyê",
+        "arabic_description": "ديربيسي"
+      },
+      {
+        "id": 1316,
+        "english_description": "Al-Hawl",
+        "arabic_description": "الهول"
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "english_description": "As-Suwayda",
+    "arabic_description": "السويداء",
+    "cities": [
+      {
+        "id": 1401,
+        "english_description": "As-Suwayda",
+        "arabic_description": "السويداء"
+      },
+      {
+        "id": 1402,
+        "english_description": "Salkhad",
+        "arabic_description": "صلخد"
+      },
+      {
+        "id": 1403,
+        "english_description": "Shahba",
+        "arabic_description": "شهبا"
+      },
+      {
+        "id": 1404,
+        "english_description": "Shoubak",
+        "arabic_description": "شبك"
+      },
+      {
+        "id": 1405,
+        "english_description": "Qanawat",
+        "arabic_description": "قنوات"
+      },
+      {
+        "id": 1406,
+        "english_description": "Al-Mazraa",
+        "arabic_description": "المزرعة"
+      },
+      {
+        "id": 1407,
+        "english_description": "Ara",
+        "arabic_description": "عرى"
+      },
+      {
+        "id": 1408,
+        "english_description": "Sahwat Al-Khudr",
+        "arabic_description": "صحوة الخضر"
+      },
+      {
+        "id": 1409,
+        "english_description": "As-Suwayda Suburbs",
+        "arabic_description": "أطراف السويداء"
+      },
+      {
+        "id": 1410,
+        "english_description": "Al-Qurayya",
+        "arabic_description": "القريا"
+      },
+      {
+        "id": 1411,
+        "english_description": "Ara",
+        "arabic_description": "عرى"
+      },
+      {
+        "id": 1412,
+        "english_description": "Al-Musmeih",
+        "arabic_description": "المصمع"
+      },
+      {
+        "id": 1413,
+        "english_description": "Rim",
+        "arabic_description": "ريم"
+      },
+      {
+        "id": 1414,
+        "english_description": "Qarfa",
+        "arabic_description": "قرفة"
+      },
+      {
+        "id": 1415,
+        "english_description": "Shaqqa",
+        "arabic_description": "شقاق"
+      },
+      {
+        "id": 1416,
+        "english_description": "Al-Kafr",
+        "arabic_description": "الكفر"
+      }
+    ]
+  }
+]

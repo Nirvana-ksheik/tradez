@@ -3,7 +3,7 @@
     border-color: transparent !important;
     width: fit-content;
     height:3rem;
-    background-color: var(--primary-variant-color);
+    background-color: var(--primary-color);
     color: var(--primary-color)
 }
 
@@ -20,7 +20,7 @@
 }
 
 .text{
-    color: white;
+    color: whitesmoke;
     font-size: 1.3rem;
     margin-left: 15px;
     margin-right: 15px;
@@ -28,13 +28,9 @@
 
 .button-icon{
     font-size: 1.2rem;
-    border: 1px solid white;
+    border: 1px solid whitesmoke;
     border-radius: 1.5rem;
     padding: 4px;
-    background-color: white;
+    background-color: whitesmoke;
     margin: 0px;
-}
-
-.comment-icon-btn{
-    background-color: blue;
 }

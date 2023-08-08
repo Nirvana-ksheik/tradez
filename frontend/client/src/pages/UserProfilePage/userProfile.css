@@ -1,21 +1,22 @@
 .icon{
     font-size: 8em !important;
-    color: var(--secondary-color);
+    color: var(--primary-color);
 }
 
 .btnn:hover{
     background-color: var(--secondary-color);
-    color: white;
+    color: whitesmoke;
     border: none;
     border-radius: 0.7em;
 }
 
 .btnn{
-    background-color: white;
-    color: var(--secondary-color);
-    border: 1px solid var(--secondary-color);
+    background-color: var(--primary-variant-color);
+    color: whitesmoke;
+    border: none;
     border-radius: 0.7em;
 }
+
 .email, .date{
     color: var(--secondary-color);
 }
@@ -23,8 +24,51 @@
 .date-weight{
     font-weight: 700;
 }
+
 .username{
     color: white;
-    background-color: var(--secondary-color);
+    background-color: var(--primary-variant-color);
     border-radius: 5px;
+}
+
+.update-profile-pic-link{
+    color: var(--secodnary-color);
+}
+
+.btn-confirm-profile-picture{
+    background-color: var(--primary-variant-color);
+    color: whitesmoke;
+}
+
+.btn-confirm-profile-picture:hover{
+    background-color: var(--secondary-color);
+    color: whitesmoke;
+}
+
+.edit-profile-picture-button{
+    position: absolute;
+    top: 2%;
+    right: 2%;
+    background-color: whitesmoke;
+    color: var(--primary-variant-color);
+    font-size: 16px;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    z-index: 100;
+}
+
+@media screen and (max-width: 425px){
+    .profile-picture-placeholder{
+        width: 100%;
+        aspect-ratio: 2/2;
+    }
+}
+
+@media screen and (max-width: 796px){
+    .profile-picture-placeholder{
+        width: 100%;
+        aspect-ratio: 4/2;
+    }
 }

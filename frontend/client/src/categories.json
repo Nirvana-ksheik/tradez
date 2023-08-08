@@ -1,0 +1,642 @@
+[
+    {
+      "id": 1,
+      "english_description": "Electronics",
+      "arabic_description": "الإلكترونيات",
+      "subcategories": [
+        {
+          "id": 101,
+          "english_description": "Phones & Accessories",
+          "arabic_description": "الهواتف والإكسسوارات"
+        },
+        {
+          "id": 102,
+          "english_description": "Computers & Laptops",
+          "arabic_description": "الحواسيب واللابتوبات"
+        },
+        {
+          "id": 103,
+          "english_description": "Cameras & Photography",
+          "arabic_description": "الكاميرات والتصوير"
+        },
+        {
+          "id": 104,
+          "english_description": "Audio & Headphones",
+          "arabic_description": "الصوتيات وسماعات الرأس"
+        },
+        {
+          "id": 105,
+          "english_description": "Video Games & Consoles",
+          "arabic_description": "ألعاب الفيديو والأجهزة"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "english_description": "Clothing & Fashion",
+      "arabic_description": "الملابس والأزياء",
+      "subcategories": [
+        {
+          "id": 201,
+          "english_description": "Men's Clothing",
+          "arabic_description": "ملابس رجالية"
+        },
+        {
+          "id": 202,
+          "english_description": "Women's Clothing",
+          "arabic_description": "ملابس نسائية"
+        },
+        {
+          "id": 203,
+          "english_description": "Shoes & Footwear",
+          "arabic_description": "أحذية وأحذية نسائية"
+        },
+        {
+          "id": 204,
+          "english_description": "Bags & Accessories",
+          "arabic_description": "حقائب وإكسسوارات"
+        },
+        {
+          "id": 205,
+          "english_description": "Jewelry & Watches",
+          "arabic_description": "المجوهرات والساعات"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "english_description": "Home & Garden",
+      "arabic_description": "المنزل والحديقة",
+      "subcategories": [
+        {
+          "id": 301,
+          "english_description": "Furniture",
+          "arabic_description": "الأثاث"
+        },
+        {
+          "id": 302,
+          "english_description": "Appliances",
+          "arabic_description": "الأجهزة"
+        },
+        {
+          "id": 303,
+          "english_description": "Home Decor",
+          "arabic_description": "ديكور المنزل"
+        },
+        {
+          "id": 304,
+          "english_description": "Kitchenware",
+          "arabic_description": "أدوات المطبخ"
+        },
+        {
+          "id": 305,
+          "english_description": "Gardening & Outdoor",
+          "arabic_description": "الزراعة والهواء الطلق"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "english_description": "Books & Literature",
+      "arabic_description": "الكتب والأدب",
+      "subcategories": [
+        {
+          "id": 401,
+          "english_description": "Fiction",
+          "arabic_description": "الروايات"
+        },
+        {
+          "id": 402,
+          "english_description": "Non-Fiction",
+          "arabic_description": "غير خيالي"
+        },
+        {
+          "id": 403,
+          "english_description": "Textbooks & Educational",
+          "arabic_description": "الكتب الدراسية والتعليمية"
+        },
+        {
+          "id": 404,
+          "english_description": "Magazines & Comics",
+          "arabic_description": "المجلات والكوميكس"
+        },
+        {
+          "id": 405,
+          "english_description": "Religious Books",
+          "arabic_description": "الكتب الدينية"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "english_description": "Sports & Outdoor",
+      "arabic_description": "الرياضة والهواء الطلق",
+      "subcategories": [
+        {
+          "id": 501,
+          "english_description": "Exercise & Fitness",
+          "arabic_description": "التمارين واللياقة البدنية"
+        },
+        {
+          "id": 502,
+          "english_description": "Sports Equipment",
+          "arabic_description": "المعدات الرياضية"
+        },
+        {
+          "id": 503,
+          "english_description": "Camping & Hiking",
+          "arabic_description": "التخييم والمشي لمسافات طويلة"
+        },
+        {
+          "id": 504,
+          "english_description": "Cycling",
+          "arabic_description": "ركوب الدراجات"
+        },
+        {
+          "id": 505,
+          "english_description": "Water Sports",
+          "arabic_description": "الرياضات المائية"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "english_description": "Toys & Games",
+      "arabic_description": "الألعاب والألعاب",
+      "subcategories": [
+        {
+          "id": 601,
+          "english_description": "Action Figures",
+          "arabic_description": "تماثيل العمل"
+        },
+        {
+          "id": 602,
+          "english_description": "Board Games",
+          "arabic_description": "ألعاب اللوحة"
+        },
+        {
+          "id": 603,
+          "english_description": "Outdoor Play",
+          "arabic_description": "اللعب في الهواء الطلق"
+        },
+        {
+          "id": 604,
+          "english_description": "Dolls & Accessories",
+          "arabic_description": "الدمى والاكسسوارات"
+        },
+        {
+          "id": 605,
+          "english_description": "Educational Toys",
+          "arabic_description": "الألعاب التعليمية"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "english_description": "Antiques & Collectibles",
+      "arabic_description": "التحف والمقتنيات",
+      "subcategories": [
+        {
+          "id": 701,
+          "english_description": "Coins & Currency",
+          "arabic_description": "العملات والعملات"
+        },
+        {
+          "id": 702,
+          "english_description": "Vintage Collectibles",
+          "arabic_description": "مقتنيات عتيقة"
+        },
+        {
+          "id": 703,
+          "english_description": "Antique Furniture",
+          "arabic_description": "أثاث عتيق"
+        },
+        {
+          "id": 704,
+          "english_description": "Stamps",
+          "arabic_description": "الطوابع"
+        },
+        {
+          "id": 705,
+          "english_description": "Postcards",
+          "arabic_description": "بطاقات بريدية"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "english_description": "Beauty & Personal Care",
+      "arabic_description": "الجمال والعناية الشخصية",
+      "subcategories": [
+        {
+          "id": 801,
+          "english_description": "Skincare",
+          "arabic_description": "العناية بالبشرة"
+        },
+        {
+          "id": 802,
+          "english_description": "Makeup",
+          "arabic_description": "المكياج"
+        },
+        {
+          "id": 803,
+          "english_description": "Haircare",
+          "arabic_description": "العناية بالشعر"
+        },
+        {
+          "id": 804,
+          "english_description": "Fragrances",
+          "arabic_description": "العطور"
+        },
+        {
+          "id": 805,
+          "english_description": "Personal Care Appliances",
+          "arabic_description": "أجهزة العناية الشخصية"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "english_description": "Art & Crafts",
+      "arabic_description": "الفنون والحرف اليدوية",
+      "subcategories": [
+        {
+          "id": 901,
+          "english_description": "Painting",
+          "arabic_description": "الرسم"
+        },
+        {
+          "id": 902,
+          "english_description": "Sewing & Knitting",
+          "arabic_description": "الخياطة والحياكة"
+        },
+        {
+          "id": 903,
+          "english_description": "Pottery",
+          "arabic_description": "الفخار"
+        },
+        {
+          "id": 904,
+          "english_description": "Scrapbooking & Stamping",
+          "arabic_description": "السكرابوكينغ والتختيم"
+        },
+        {
+          "id": 905,
+          "english_description": "Woodworking",
+          "arabic_description": "النجارة"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "english_description": "Music & Instruments",
+      "arabic_description": "الموسيقى والآلات الموسيقية",
+      "subcategories": [
+        {
+          "id": 1001,
+          "english_description": "Guitars",
+          "arabic_description": "الجيتارات"
+        },
+        {
+          "id": 1002,
+          "english_description": "Pianos & Keyboards",
+          "arabic_description": "البيانو والأجهزة الكهربائية"
+        },
+        {
+          "id": 1003,
+          "english_description": "Drums & Percussion",
+          "arabic_description": "الطبول والإيقاعات"
+        },
+        {
+          "id": 1004,
+          "english_description": "String Instruments",
+          "arabic_description": "الآلات الوترية"
+        },
+        {
+          "id": 1005,
+          "english_description": "Wind Instruments",
+          "arabic_description": "الآلات الموسيقية الهوائية"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "english_description": "Furniture & Decor",
+      "arabic_description": "الأثاث والديكور",
+      "subcategories": [
+        {
+          "id": 1101,
+          "english_description": "Living Room Furniture",
+          "arabic_description": "أثاث غرفة المعيشة"
+        },
+        {
+          "id": 1102,
+          "english_description": "Bedroom Furniture",
+          "arabic_description": "أثاث غرفة النوم"
+        },
+        {
+          "id": 1103,
+          "english_description": "Dining Room Furniture",
+          "arabic_description": "أثاث غرفة الطعام"
+        },
+        {
+          "id": 1104,
+          "english_description": "Home Decor",
+          "arabic_description": "ديكور المنزل"
+        },
+        {
+          "id": 1105,
+          "english_description": "Home Organization",
+          "arabic_description": "تنظيم المنزل"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "english_description": "Health & Wellness",
+      "arabic_description": "الصحة والعافية",
+      "subcategories": [
+        {
+          "id": 1201,
+          "english_description": "Vitamins & Supplements",
+          "arabic_description": "الفيتامينات والمكملات الغذائية"
+        },
+        {
+          "id": 1202,
+          "english_description": "Sports Nutrition",
+          "arabic_description": "التغذية الرياضية"
+        },
+        {
+          "id": 1203,
+          "english_description": "Personal Care & Hygiene",
+          "arabic_description": "العناية الشخصية والنظافة"
+        },
+        {
+          "id": 1204,
+          "english_description": "Medical Equipment",
+          "arabic_description": "المعدات الطبية"
+        },
+        {
+          "id": 1205,
+          "english_description": "Wellness & Relaxation",
+          "arabic_description": "العافية والاسترخاء"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "english_description": "Automotive & Tools",
+      "arabic_description": "السيارات والأدوات",
+      "subcategories": [
+        {
+          "id": 1301,
+          "english_description": "Car Accessories",
+          "arabic_description": "ملحقات السيارات"
+        },
+        {
+          "id": 1302,
+          "english_description": "Car Parts",
+          "arabic_description": "قطع غيار السيارات"
+        },
+        {
+          "id": 1303,
+          "english_description": "Tools & Equipment",
+          "arabic_description": "الأدوات والمعدات"
+        },
+        {
+          "id": 1304,
+          "english_description": "Motorcycle Accessories",
+          "arabic_description": "ملحقات الدراجات النارية"
+        },
+        {
+          "id": 1305,
+          "english_description": "Automotive Repair & Maintenance",
+          "arabic_description": "إصلاح وصيانة السيارات"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "english_description": "Baby & Kids",
+      "arabic_description": "الأطفال والأطفال",
+      "subcategories": [
+        {
+          "id": 1401,
+          "english_description": "Baby Gear",
+          "arabic_description": "معدات الأطفال"
+        },
+        {
+          "id": 1402,
+          "english_description": "Kids Clothing",
+          "arabic_description": "ملابس الأطفال"
+        },
+        {
+          "id": 1403,
+          "english_description": "Toys & Games",
+          "arabic_description": "الألعاب والألعاب"
+        },
+        {
+          "id": 1404,
+          "english_description": "Baby Care",
+          "arabic_description": "رعاية الطفل"
+        },
+        {
+          "id": 1405,
+          "english_description": "Kids Furniture",
+          "arabic_description": "أثاث الأطفال"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "english_description": "Pet Supplies",
+      "arabic_description": "لوازم الحيوانات الأليفة",
+      "subcategories": [
+        {
+          "id": 1501,
+          "english_description": "Dog Supplies",
+          "arabic_description": "لوازم الكلاب"
+        },
+        {
+          "id": 1502,
+          "english_description": "Cat Supplies",
+          "arabic_description": "لوازم القطط"
+        },
+        {
+          "id": 1503,
+          "english_description": "Fish & Aquariums",
+          "arabic_description": "الأسماك والأحواض"
+        },
+        {
+          "id": 1504,
+          "english_description": "Bird Supplies",
+          "arabic_description": "لوازم الطيور"
+        },
+        {
+          "id": 1505,
+          "english_description": "Small Animal Supplies",
+          "arabic_description": "لوازم الحيوانات الصغيرة"
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "english_description": "Electronics & Gadgets",
+      "arabic_description": "الإلكترونيات والأجهزة",
+      "subcategories": [
+        {
+          "id": 1601,
+          "english_description": "Mobile Phones",
+          "arabic_description": "الهواتف المحمولة"
+        },
+        {
+          "id": 1602,
+          "english_description": "Laptops & Tablets",
+          "arabic_description": "أجهزة الكمبيوتر المحمولة والأجهزة اللوحية"
+        },
+        {
+          "id": 1603,
+          "english_description": "Cameras & Camcorders",
+          "arabic_description": "الكاميرات والكاميرات"
+        },
+        {
+          "id": 1604,
+          "english_description": "Audio & Headphones",
+          "arabic_description": "الصوتيات وسماعات الرأس"
+        },
+        {
+          "id": 1605,
+          "english_description": "Video Games & Consoles",
+          "arabic_description": "ألعاب الفيديو والأجهزة"
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "english_description": "Appliances & Kitchenware",
+      "arabic_description": "الأجهزة الكهربائية وأدوات المطبخ",
+      "subcategories": [
+        {
+          "id": 1701,
+          "english_description": "Large Appliances",
+          "arabic_description": "الأجهزة الكبيرة"
+        },
+        {
+          "id": 1702,
+          "english_description": "Small Appliances",
+          "arabic_description": "الأجهزة الصغيرة"
+        },
+        {
+          "id": 1703,
+          "english_description": "Cookware & Bakeware",
+          "arabic_description": "أدوات الطهي وأدوات الخبز"
+        },
+        {
+          "id": 1704,
+          "english_description": "Kitchen Utensils",
+          "arabic_description": "أواني المطبخ"
+        },
+        {
+          "id": 1705,
+          "english_description": "Food Storage",
+          "arabic_description": "تخزين الطعام"
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "english_description": "Jewelry & Watches",
+      "arabic_description": "المجوهرات والساعات",
+      "subcategories": [
+        {
+          "id": 1801,
+          "english_description": "Necklaces & Pendants",
+          "arabic_description": "القلائد والقلادات"
+        },
+        {
+          "id": 1802,
+          "english_description": "Rings",
+          "arabic_description": "الخواتم"
+        },
+        {
+          "id": 1803,
+          "english_description": "Bracelets & Bangles",
+          "arabic_description": "الأساور والأساور"
+        },
+        {
+          "id": 1804,
+          "english_description": "Earrings",
+          "arabic_description": "الأقراط"
+        },
+        {
+          "id": 1805,
+          "english_description": "Watches",
+          "arabic_description": "الساعات"
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "english_description": "Office & School Supplies",
+      "arabic_description": "لوازم المكتب والمدرسة",
+      "subcategories": [
+        {
+          "id": 1901,
+          "english_description": "Writing & Correction",
+          "arabic_description": "الكتابة والتصحيح"
+        },
+        {
+          "id": 1902,
+          "english_description": "Paper & Notebooks",
+          "arabic_description": "الورق والمفكرة"
+        },
+        {
+          "id": 1903,
+          "english_description": "Desk Accessories",
+          "arabic_description": "مستلزمات المكتب"
+        },
+        {
+          "id": 1904,
+          "english_description": "School & Art Supplies",
+          "arabic_description": "لوازم المدرسة والفن"
+        },
+        {
+          "id": 1905,
+          "english_description": "Filing & Organization",
+          "arabic_description": "التصنيف والتنظيم"
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "english_description": "Sporting Goods",
+      "arabic_description": "السلع الرياضية",
+      "subcategories": [
+        {
+          "id": 2001,
+          "english_description": "Exercise & Fitness",
+          "arabic_description": "التمارين واللياقة البدنية"
+        },
+        {
+          "id": 2002,
+          "english_description": "Outdoor Sports",
+          "arabic_description": "الرياضات الخارجية"
+        },
+        {
+          "id": 2003,
+          "english_description": "Team Sports",
+          "arabic_description": "الرياضات الجماعية"
+        },
+        {
+          "id": 2004,
+          "english_description": "Water Sports",
+          "arabic_description": "الرياضات المائية"
+        },
+        {
+          "id": 2005,
+          "english_description": "Winter Sports",
+          "arabic_description": "الرياضات الشتوية"
+        }
+      ]
+    }
+  ]

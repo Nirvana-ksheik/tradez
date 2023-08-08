@@ -5,15 +5,26 @@ body {
 }
 
 :root{
-    --primary-color: #8c5b97;
-    --secondary-color: #60b0ba;
-    --primary-variant-color: #8b479a;
-    --secondary-variant-color: #187e8c;
-    --background-color: #ede4f4;
+    --primary-color: #0094C3;
+    --secondary-color: #004068;
+    --primary-variant-color: #0077A4;
+    --secondary-variant-color: #00274D;
+
+    /* --secondary-color: #eeff00; */
+    
+    /* --primary-color: #73c0ff;
+    --secondary-color: #0073ff;
+    --primary-variant-color: #0077A4;
+    --secondary-variant-color: #00274D; */
+
+    --background-color: whitesmoke;
+    /* --background-color: #ede4f4; */
 
     --approve: rgb(40, 177, 40);
     --reject: rgb(230, 61, 61);
     --pending: rgb(254, 188, 144);
+
+    --black: #001335;
 }
 
 /* ALI

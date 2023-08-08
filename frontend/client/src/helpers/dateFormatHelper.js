@@ -2,7 +2,7 @@ import moment from 'moment';
 import 'moment/locale/ar';
 
 const formatDateWithLanguage = (date, language) => {
-    const format = language === "en" ? "y MMM do hh:mm" : "y MMM do الساعة  hh:mm"
+    const format = language === "en" ? "y MMM DD - hh:mm" : "y MMM DD الساعة  hh:mm"
     console.log("date: ", date);
     console.log("language: ", language)
     var publishedDate = new Date(date);

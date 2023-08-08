@@ -27,6 +27,7 @@ function PopupScreen(props) {
     const navigate = useNavigate();
 
     useEffect(() => {
+        console.log("props: ", props)
         const getMyItems = (controller) => {
             setIsLoading(true);
             try {
@@ -129,35 +130,38 @@ function PopupScreen(props) {
 
 	return (
     <div className="col-12 d-flex justify-content-center align-items-center mt-5">
-        <div className="pop-up-div d-flex flex-column col-10 mt-4">      
+        <div className="pop-up-div d-flex flex-column col-md-12 justify-content-center align-items-start col-12 mt-4">      
             {
                 tradeRibbon &&
                 <Ribbon text={tradeText} setShowValue={setTradeRibbon} isSuccess={isSuccess} callbackFunction={isSuccess === true ? callbackFunction : undefined}/>
             }          
-            <button className = "btn btn-danger col-1" onClick={() => {props.togglePopup()}}>X</button>
-            <SearchBar setOrderValue={setOrderValue} setOrderDirectionValue={setOrderDirectionValue} setSearchTextValue={setSearchTextValue} currentLanguage={props.currentLanguage}/>
-            {
-                isLoading === false &&         
-                    <div className="d-flex flex-wrap col-10 justify-content-start mt-4">
-                        {
-                            (() => {
-                                console.log("current items: ", currentItems);
-                                let container = [];                       
-                                currentItems && currentItems.forEach((data, index) => {
-                                console.log("single data is: ", data);
-                                container.push(
-                                    <Item key={index} data={data} clickEvent={() => {clickEvent(data)}} currentLanguage={props.currentLanguage}/>
-                                )
-                                })                             
-                                return container;
-                            })()
-                        }
-                    </div>
-            }   
-            {
-                isLoading && <LoadingSpinner />
-            }
-            <Pagination handlePageClick={handlePageClick} pageCount={pageCount} maxItems={9} currentLanguage={props.currentLanguage}/>
+            <button className = "btn btn-danger col-1 ms-2 me-2" onClick={() => {props.togglePopup()}}>X</button>
+            <div className="col-12 d-flex align-items-center flex-column justify-content-center">
+                <SearchBar setOrderValue={setOrderValue} setOrderDirectionValue={setOrderDirectionValue} setSearchTextValue={setSearchTextValue} currentLanguage={props.currentLanguage}/>
+                {
+                    isLoading === false &&         
+                        <div className="d-flex flex-wrap col-12 justify-content-center align-items-center mt-4">
+                            {
+                                (() => {
+                                    console.log("current items: ", currentItems);
+                                    let container = [];                       
+                                    currentItems && currentItems.forEach((data, index) => {
+                                    console.log("single data is: ", data);
+                                    container.push(
+                                        <Item key={index} data={data} clickEvent={() => {clickEvent(data)}} currentLanguage={props.currentLanguage}/>
+                                    )
+                                    })                             
+                                    return container;
+                                })()
+                            }
+                        </div>
+                }   
+                {
+                    isLoading && <LoadingSpinner />
+                }
+                <Pagination handlePageClick={handlePageClick} pageCount={pageCount} maxItems={9} currentLanguage={props.currentLanguage}/>
+            </div>
+
         </div>
     </div>
 	);

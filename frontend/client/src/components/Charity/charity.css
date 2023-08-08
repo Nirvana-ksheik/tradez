@@ -1,79 +1,6 @@
 
-.product-description{
-    font-size: 1em;
-  }
-
-  .three-dots:after {
-    cursor: pointer;
-    color: #444;
-    content: '\2807';
-    font-size: 20px;
-    padding: 0 5px;
-  }
-
-  .product-title{
-    font-size: 1.2rem;
-    color: var(--secondary-variant-color);
-    text-align: start;
-    text-size-adjust: auto;
-  }
-
-  .product-price{
-    color: var(--secondary-variant-color);;
-    font-weight: bold;
-    font-size: 0.8rem;
-    justify-content: flex-end;
-    display: flex;
-    margin-right: 5%;
-  }
-
-  .product-tradez{
-    color: var(--secondary-variant-color);
-    font-size: 0.8rem;
-  }
-
-  .product-description{
-    color: var(--secondary-variant-color);;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    font-size: 0.9rem;
-  }
-
-  .product-description-container{
-    max-height: 3rem;
-    margin-bottom: 3px;
-    text-overflow: ellipsis;
-  }
-
-  .product-img{
-    position: relative;
-    max-width:12rem;
-    max-height:12rem;
-  }
-
-  .item-container, .pending, .approved, .rejected{
-    border: 1px solid var(--secondary-color) !important;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .item-container::before, .pending::before, .approved::before, .rejected::before{
-    position: absolute;
-    top: 1rem;
-    right: -2rem;
-    width: 8rem;
-    text-align: center;
-    transform: rotate(45deg);
-    padding: 2px;
-    color: white;
-    font-size: 1rem;
-    font-weight: 600;
-    z-index: 100;
-  }
   
-  .pending::before{
+  .charity-pending::before{
     background: var(--pending);
     content: "Pending";
   }
@@ -82,41 +9,48 @@
     aspect-ratio: 2/2;
   }
   
-  .approved::before{
+  .charity-approved::before{
     background: var(--approve);
     content: "Approved";
   }
 
-  .rejected::before{
+  .charity-rejected::before{
     background: var(--reject);
     content: "Rejecetd";
   }
 
-  .item-container:hover{
-    cursor: pointer;
-  }
-
-  .item-container{
-    background-color: white;
-  }
-
   .charity-list-main-container{
-    border: 1px solid var(--secondary-color) !important;
-    box-shadow: 0.5em 0.5em var(--secondary-color) !important;
+    box-shadow: var(--primary-variant-color) 0px 20px 30px -10px;
   }
 
   .charity-ceo, .charity-turnover, .email-charity{
-    color: var(--secondary-variant-color);
+    color: var(--black);
     font-size: 0.9em;
   }
 
   .email-charity-logo{
-    color: var(--secondary-variant-color);
+    color: var(--primary-color);
   }
 
   .charity-organization-name{
-    color: var(--secondary-variant-color);
+    color: var(--black);
     font-size: 1.4em;
     margin: 0;
     margin-bottom: 0.8em;
+    text-size-adjust: auto;
+  }
+
+  .product-charity-description{
+    color: var(--black);
+    overflow: hidden;
+    display: -webkit-box;
+    font-size: 1rem;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  
+  .product--charity-description-container{
+    max-height: 3rem;
+    margin-bottom: 3px;
+    text-overflow: ellipsis;
   }

@@ -1,5 +1,6 @@
 import * as dotenv from 'dotenv';
-import { login, signup, confirmAndUpdateState, forgotPassword, resetPassword, getById, getAllAdmins } from '../helpers/authHelper.js';
+import { login, signup, confirmAndUpdateState, forgotPassword, resetPassword, getById, getAllAdmins, updateProfilePic } from '../helpers/authHelper.js';
+import { deleteProfilePicWithUserId } from '../helpers/fileHelper.js';
 
 dotenv.config();
 
@@ -110,3 +111,17 @@ const _getAllAdmins = async(req, res) => {
     }
 };
 export {_getAllAdmins as getAllAdminsController};
+
+const _updateProfilePicture = async(req, res) => {
+    try{
+        const image = req.file;
+        const id = req.user.id;
+        await deleteProfilePicWithUserId(id);
+        const result = await updateProfilePic(image, id);
+        console.log("result is: ", result);
+        res.status(200).json({result});
+    } catch(err){
+        res.status(500).json({err});
+    }
+};
+export {_updateProfilePicture as updateProfilePictureController};

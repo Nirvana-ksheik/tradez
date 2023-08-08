@@ -1,6 +1,6 @@
 .login_form_container {
 	border-radius: 10px;
-	background-color: white;
+	background-color: whitesmoke;
 }
 
 .left {
@@ -62,7 +62,7 @@ input:-webkit-autofill {
 }
 
 .right {
-	background-color: var(--primary-color);
+	background-color: var(--secondary-color);
 	border-radius: 10px;
 	animation-name: move-left;
 	animation-duration: 0.2s;
@@ -83,18 +83,9 @@ input:-webkit-autofill {
 }
 
 .green_btn {
-	background-color: var(--secondary-color);
+	background-color: var(--primary-color);
 	color: white;
 	margin: 10px;
-}
-
-.white_btn:hover{
-	background-color: var(--secondary-color);
-	color: white;
-}
-
-.green_btn:hover {
-	background-color: var(--secondary-variant-color);
 }
 
 .login_box button.clicked{
@@ -109,7 +100,6 @@ input:-webkit-autofill {
 
  .main-container{
 	border-radius: 10px	 !important;
-	box-shadow: -10px 10px var(--secondary-color);
 	color: var(--secondary-color)
  }
 
@@ -139,5 +129,5 @@ input:-webkit-autofill {
 }
 
 .form-link a{
-	color: var(--primary-variant-color) !important;
+	color: var(--secondary-color) !important;
 }

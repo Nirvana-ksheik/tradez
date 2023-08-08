@@ -74,8 +74,16 @@ function CommentBox({getCookie, itemId, ownerId, user, currentLanguage}) {
       };
       const notificationObject = Notifications.USER_COMMENTED_ITEM;
       const notificationMessage = parseModelString(notificationObject.message, modelData);
+      const notificationMessageAr = parseModelString(notificationObject.message_ar, modelData);
 
-      await notificationSender({userId: ownerId, message: notificationMessage, title: notificationObject.title});
+      await notificationSender({
+        userId: ownerId,
+        message: notificationMessage,
+        title: notificationObject.title,
+        message_ar: notificationMessageAr,
+        title_ar: notificationObject.title,
+        currentLanguage: currentLanguage
+      });
     });
   }
 
@@ -145,9 +153,16 @@ function CommentBox({getCookie, itemId, ownerId, user, currentLanguage}) {
       };
       const notificationObject = Notifications.USER_REPLY_COMMENT;
       const notificationMessage = parseModelString(notificationObject.message, modelData);
+      const notificationMessageAr = parseModelString(notificationObject.message_ar, modelData);
 
-      await notificationSender({userId: ownerId, message: notificationMessage, title: notificationObject.title});
-
+      await notificationSender({
+        userId: ownerId,
+        message: notificationMessage,
+        title: notificationObject.title,
+        message_ar: notificationMessageAr,
+        title_ar: notificationObject.title,
+        currentLanguage: currentLanguage
+      });
     }).catch(err => {
       console.log("error: ", err);
       setIsLoading(false);
@@ -174,7 +189,7 @@ function CommentBox({getCookie, itemId, ownerId, user, currentLanguage}) {
       inputReply.id = comment.commentId + '_reply_comment_input';
       
       const icon = document.createElement('i');
-      icon.className = 'fa-solid fa-paper-plane send-message-icon';
+      icon.className = 'fa-solid fa-paper-plane send-message-icon me-3 ms-3';
       icon.onclick = () => {
         console.log("submitting reply comment: ", comment.commentId);
         submitReplyComment(comment.commentId);
@@ -254,21 +269,20 @@ function CommentBox({getCookie, itemId, ownerId, user, currentLanguage}) {
     { 
     isLoading === false ?
     <div dir={currentLanguage === "ar" ? "rtl" : "ltr"} className="mt-5">
-        <div className = "d-flex col-12 align-items-end justify-content-start">
-            <i className="fa fa-user user-comment-icon-main-comment"></i>
-            <div className='d-flex col-8 comment-input-div justify-content-start'>
-              <input type="text" value={comment} className='comment-input-text col-10' placeholder='Leave a comment' onChange={handleChange} />
-              <i className="fa-solid fa-paper-plane send-message-icon" onClick={handleSubmit}/>
+        <div className = "d-flex col-12 align-items-end ms-5 me-5">
+            <i className="fa fa-user user-comment-icon-main-comment me-3 ms-3"></i>
+            <div className='d-flex col-8 comment-input-div align-items-end'>
+              <input type="text" value={comment} className='comment-input-text col-10 p-2' placeholder={t("WriteACommentPlaceholder")} onChange={handleChange} />
+              <i className="fa-solid fa-paper-plane send-message-icon me-3 ms-3" onClick={handleSubmit}/>
             </div>
         </div>
-        <hr/> 
-        <ul className="d-flex col-12 flex-column">
+        <ul className="d-flex col-12 m-5 flex-column">
         {
           currentItems.length > 0 &&
 
           currentItems.map((comment, index) =>         
             
-              <li key={index} className="m-2 col-12 d-flex flex-column" id={comment.commentId}>
+              <li key={index} className="me-3 ms-3 col-12 d-flex flex-column" id={comment.commentId}>
                 <div className='col-12 d-flex align-items-center' key={index}>
                   <i className="fa fa-user user-comment-icon me-2 ms-2"></i>
                   <span className="comment-username me-2 ms-2">{comment.user.username}</span>

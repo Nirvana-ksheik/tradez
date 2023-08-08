@@ -1,5 +1,5 @@
 import * as dotenv from 'dotenv';
-import { login, signup, confirmAndUpdateState, forgotPassword, resetPassword, getById, getAllCharities } from '../helpers/charityHelper.js';
+import { login, signup, confirmAndUpdateState, forgotPassword, resetPassword, getById, getAllCharities, updateCharityCategories, changeCharityStatus } from '../helpers/charityHelper.js';
 import { ImageModel } from '../models/Image.js';
 
 dotenv.config();
@@ -32,7 +32,6 @@ const _signup = async (req, res) => {
         await signup(data);
         console.log("finished signup process");
         res.status(200).json("Please await approval from admin");
-
     } catch ({error}) {
         console.log("error: ", error);
         res.status(401).json(error);
@@ -116,4 +115,36 @@ const _getAllCharities = async(req, res) => {
     }
 };
 export {_getAllCharities as getAllCharitiesController};
+
+const _updateCharityCategories = async (req, res) => {
+
+    try{
+        const id = req.user.id;
+        const categories = req.body.categories;
+        console.log("charity id: ", id);
+        console.log("charity categories: ", categories);
+        await updateCharityCategories(id, categories);
+        res.status(200).json("updated categories successfully");
+        console.log("Finished updating categories");
+    } catch(err){
+        res.status(500).json({err});
+    }
+}
+export {_updateCharityCategories as updateCharityCategoriesController};
+
+const _changeCharityStatusController = async (req, res) => {
+
+    console.log("reached approve item controller");
+    try{
+        const {id} = req.params;
+        const data = req.body;
+        const charity = await changeCharityStatus(id, data.status, data.rejectMessage);
+        console.log("finished approving charity : ", id);
+        res.status(200).json(charity);
+    } catch(err){
+        console.log("error: ", err);    
+        res.status(500).json(err.message);
+    }
+};
+export { _changeCharityStatusController as changeCharityStatusController };
 

@@ -21,16 +21,9 @@ const itemSchema = new Schema({
         ref: 'User', //reference
         required: true
     },
-    // categoryId:{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'Category',
-    //     required: true
-    // },
-    locationName:{
-        type:String,
-        required: true,
-        minlength: [5, 'Minimum location name length is 5 characters'],
-        maxlength: [500, 'Maximum location name length is 500 characters']
+    location:{
+        type:Number,
+        require: true
     },
     imagesReferences:[{
         type: mongoose.Schema.Types.ObjectId,
@@ -48,7 +41,8 @@ const itemSchema = new Schema({
         default: 0
     },
     publishedDate:{
-        type: Date
+        type: Date,
+        default: Date.now()
     },
     archived:{
         type: Boolean,
@@ -58,6 +52,9 @@ const itemSchema = new Schema({
         type: String,
         default: ItemStatus.PENDING
     },
+    categories: [{
+        type: Number
+    }],
     rejectMessage:{
         type: String
     }
@@ -79,7 +76,9 @@ export class ItemModel {
         this.itemTradeInOrder = false;
         this.archived = data.archived != null && data.archived != undefined ? data.archived : false;
         this.status = data.status;
+        this.categories = data.categories;
         this.rejectMessage = data.rejectMessage;
+        this.location = data.location;
     }
 
     setOwnerId = (id) => { this.ownerId = id; }

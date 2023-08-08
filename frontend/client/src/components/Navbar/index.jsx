@@ -7,12 +7,20 @@ import { ListGroup, OverlayTrigger, Tooltip } from "react-bootstrap";
 import NotificationList from "../NotificationsList";
 import { useTranslation } from "react-i18next";
 import "./navBar.css";
+import WarningList from "../WarningList";
+import { CharityStatus } from "../../lookups";
 
 function NavBar({user, getCookie, changeLanguage, currentLanguage}) {
 
 	const [click, setClick] = useState(false);
 	const [screenWidth, setScreenWidth] = useState();
 	const { t } = useTranslation();
+
+	const [showNavbar, setShowNavbar] = useState(false)
+
+	const handleShowNavbar = () => {
+	  setShowNavbar(!showNavbar)
+	}
 
 	const handleClick = () => setClick(!click);
 
@@ -47,106 +55,186 @@ function NavBar({user, getCookie, changeLanguage, currentLanguage}) {
 
 	return (
 	<>
-		<nav className="navbar d-flex col-12 main-navbar">
-		<div className="col-12 d-flex justify-content-between">
-			<img src="http://localhost:3000/logo.png" className="logo-icon" alt="logo icon"/>
-			<ul className={click ? "nav-menu active col-10" : "nav-menu"}>
-				{
-					user != null && user.role !== Role.CHARITY &&
-					<li className="nav-item">
-						<NavLink
-						to="/allitems"
-						className="nav-links"
-						onClick={handleClick}
-						>
-						{t("AllItems")}
-						</NavLink>
-					</li>		
-				}	
-				{
-					user != null && user.role == Role.USER && screenWidth < 992 &&
-					<li className="nav-item">
-						<NavLink
-						to="/items/mine"
-						className="nav-links"
-						onClick={handleClick}
-						>
-						{t("MyItemsLink")}
-						</NavLink>
-					</li>
-				}
-				{
-					user != null && user.role == Role.USER && screenWidth < 992 &&
-					<li className="nav-item">
-						<NavLink
-						to="/items/create"
-						className="nav-links"
-						onClick={handleClick}
-						>
-						{t("AddItemLink")}
-						</NavLink>
-					</li>
-				}
-				{
-					user != null && screenWidth < 992 && user.role != Role.CHARITY &&
-					<li className="nav-item">
-						<NavLink
-						to="/items/archived"
-						className="nav-links"
-						onClick={handleClick}
-						>
-						{t("Archived")}
-						</NavLink>
-					</li>
-				}
-				{
-					<NotificationList user={user} getCookie={getCookie}/>
-				}
-				{
-					user == null &&
-					<li className="nav-item-btn">
-						<button type="button" onClick={handleLogin} className="white_btn">
-							{t("Login")}
-						</button>
-					</li>	
-				}
-				<li className="nav-item-btn">
+		<nav className="navbar d-flex col-12">
+			<div className="col-12 d-flex justify-content-between align-items-center">
+				<img src="http://localhost:3000/logo.png" className="logo-icon" alt="logo icon"/>
+				<div className="d-flex pe-2 ps-2 align-items-center justify-content-center">
 					{
-						currentLanguage === "en" ?
-						<button type="button" onClick={() => {
-							changeLanguage("ar");
-						}} className="white_btn">
-							AR
-						</button>
-						:
-						<button type="button" onClick={() => {
-							changeLanguage("en");
-						}} className="white_btn">
-							EN
-						</button>
-					}
+						user != null && user.role !== Role.CHARITY  && screenWidth >= 600 &&
+						<div className="">
+							<NavLink
+							to="/allitems"
+							className="nav-links"
+							onClick={handleClick}
+							>
+							{t("AllItems")}
+							</NavLink>
+						</div>		
+					}	
+					<div className="me-2 ms-2">
+						{
+							currentLanguage === "en" ?
+							<label type="button" onClick={() => {
+								changeLanguage("ar");
+							}} className="font-white me-2 ms-2">
+								AR
+							</label>
+							:
+							<label type="button" onClick={() => {
+								changeLanguage("en");
+							}} className="font-white me-2 ms-2">
+								EN
+							</label>
+						}
 
-				</li>	
-				{
-					user != null && user.role == Role.USER && screenWidth < 992 &&
-					<li className="nav-item">
-						<NavLink
-						to="/items/archived"
-						className="nav-links"
-						onClick={handleLogout}
-						>
-						{t("LogOutLink")}
-						</NavLink>
-					</li>
-				}
-				{
-					user != null && screenWidth >= 992 &&
-					<li className="nav-item-btn">
-						<PopupList user={user} handleLogout={handleLogout}/>
-					</li>
-				}
-			</ul>
-		</div>
+					</div>
+					{
+						<NotificationList user={user} getCookie={getCookie} currentLanguage={currentLanguage}/>
+					}
+					{
+						user && user.role === Role.CHARITY &&
+						<WarningList user={user} currentLanguage={currentLanguage}/>
+					}
+					<div className="menu-icon" onClick={handleShowNavbar}>
+					<i className="fa-solid fa-bars font-white"></i>
+					</div>
+					{
+						user == null && screenWidth >= 600 &&
+						<li className="list-decoration-none">
+							<button type="button" onClick={handleLogin} className="white_btn">
+								{t("Login")}
+							</button>
+						</li>	
+					}
+					<div className={`nav-elements  ${showNavbar && 'active'}`}>
+						<ul className="uniform-list-navbar">
+						{
+							user != null && screenWidth < 600 &&
+							<li className="nav-item-btn col-10">
+								<div className="d-flex align-items-center justify-content-center col-12">
+									<button type="button" className="white_btn" onClick={() => {
+										if(user.role == Role.CHARITY){
+											const url = "/charity/profile/" + user.id;
+											navigate(url)
+										}
+										else{
+											navigate("/profile");
+										}
+									}}>
+										<div className="d-flex justify-content-around align-items-center">
+											<span>{user.username}</span>
+										</div>
+									</button>
+								</div>
+							</li>
+						}
+						{
+							user != null && user.role == Role.USER && screenWidth < 600 &&
+							<li className="">
+								<NavLink
+								to="/items/mine"
+								className="nav-links"
+								onClick={handleClick}
+								>
+								{t("MyItemsLink")}
+								</NavLink>
+							</li>
+						}
+						{
+							user != null && user.role == Role.USER && screenWidth < 600 &&
+							<li className="">
+								<NavLink
+								to="/items/create"
+								className="nav-links"
+								onClick={handleClick}
+								>
+								{t("AddItemLink")}
+								</NavLink>
+							</li>
+						}
+						{
+							user != null && screenWidth < 600 && user.role != Role.CHARITY &&
+							<li className="">
+								<NavLink
+								to="/items/archived"
+								className="nav-links"
+								onClick={handleClick}
+								>
+								{t("Archived")}
+								</NavLink>
+							</li>
+						}
+						{
+							user != null && user.role !== Role.CHARITY  && screenWidth < 600 &&
+							<li className="">
+								<NavLink
+								to="/allitems"
+								className="nav-links"
+								onClick={handleClick}
+								>
+								{t("AllItems")}
+								</NavLink>
+							</li>		
+						}
+						{
+							screenWidth < 600 && 
+							<li className="nav-item">
+							<NavLink
+							to="/charities"
+							className="nav-links"
+							onClick={()=> {navigate("/charities")}}
+							>
+							{t("CharitiesLink")}
+							</NavLink>
+							</li>
+						}
+						{
+							screenWidth < 600 &&
+							<li className="nav-item">
+							<NavLink
+							to="/charity/posts"
+							className="nav-links"
+							onClick={()=> {navigate("/charity/posts")}}
+							>
+							{t("DonationsLink")}
+							</NavLink>
+							</li>							
+						}
+						{
+							user != null && screenWidth < 600 &&
+							<li className="nav-item mt-2 mb-1">
+								<NavLink
+								to="/"
+								className="nav-links"
+								onClick={handleLogout}
+								>
+								{t("LogOutLink")}
+								</NavLink>
+							</li>
+						}
+						{
+							user != null && screenWidth >= 600 &&
+							<li style={{backgroundColor: "#004068"}}>
+								<PopupList user={user} handleLogout={handleLogout}/>
+							</li>
+						}
+						{
+							user == null && screenWidth < 600 &&
+							<li className="nav-item-btn">
+								<NavLink
+								to="/login"
+								className={"nav-links"}
+								onClick={handleLogin}
+								>
+									{t("Login")}
+
+								</NavLink>
+							</li>
+						}
+						</ul>
+					</div>
+				</div>
+			</div>
 		</nav>
 	</>
 	);
@@ -224,8 +312,8 @@ function PopupList({user, handleLogout}) {
 						</ListGroup.Item>	
 					}
 					{
-						user.role == Role.CHARITY && 
-						<ListGroup.Item action onClick={()=> {navigate("/charity/posts/create")}} className="popup-list-button">
+						user.role === Role.CHARITY &&
+						<ListGroup.Item action onClick={()=> {navigate("/charity/posts/create")}} className="popup-list-button" disabled={user.status !== CharityStatus.APPROVED}>
 							<div className="d-flex align-items-center justify-content-between col-12">
 								<i className="col-3 fa fa-file-archive nav-bar-icon"></i>
 								<span className="col-8 offset-1 d-flex justify-content-start align-items-center">
@@ -259,10 +347,11 @@ function PopupList({user, handleLogout}) {
 			  </Tooltip>
 			}
 		  >
-			<div className="d-flex align-items-center">
+			<div className="d-flex align-items-center justify-content-center">
 				<button type="button" onClick={handleShowList} className="white_btn">
-					<div className="d-flex justify-content-center align-items-center">
+					<div className="d-flex justify-content-around align-items-center">
 						<span>{user.username}</span>
+						<i className="fa-solid fa-caret-down log-icon"></i>	
 					</div>
 				</button>
 			</div>

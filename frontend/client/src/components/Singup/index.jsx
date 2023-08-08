@@ -44,21 +44,19 @@ const Signup = ({currentLanguage}) => {
 					withCredentials: true,
 					baseURL: 'http://localhost:3000'
 				});
+			setError("");
 			setIsLoading(false);
 			setSignupRibbon(true);
 			setSignupText("A link was sent to your email, please verify to continue");
-			console.log(res.message);
 		} catch (error) {
 			setIsLoading(false);
 			setSignupRibbon(true);
 			setSignupText("Error occured");
-			if (
-				error.response &&
-				error.response.status >= 400 &&
-				error.response.status <= 500
-			) {
+			console.log("error response: ", error.response);
+			if(error.response.status !== 500){
 				setError(error.response.data.message);
 			}
+			
 		}
 	};
 
@@ -67,7 +65,7 @@ const Signup = ({currentLanguage}) => {
 		{isLoading === true && <LoadingSpinner />}
 		{signupRibbon === true && <Ribbon text={signupText} setShowValue={setSignupRibbon} isSuccess={error === ""} showTime={10000}/>}
 		{
-			isLoading === false && 
+			isLoading === false && data &&
 			<div dir={currentLanguage === "ar" ? "rtl" : "ltr"} className="d-flex flex-column justify-content-center align-items-center col-12 col-md-10 offset-md-1 col-xl-6 offset-xl-3 mt-5 form-parent-container">
 				<CharityUser />
 				<div className="signup_form_container main-container mt-5 d-flex col-12">

@@ -68,7 +68,8 @@ const _getAllPostsController = async (req, res) => {
 
     console.log("reached get all user posts controller");
     try{
-        const posts = await helper.getAllPosts();
+        const query = req.query;
+        const posts = await helper.getAllPosts({query});
         res.status(200).json(posts);
         console.log("finished getting posts for user");
     } catch(err){

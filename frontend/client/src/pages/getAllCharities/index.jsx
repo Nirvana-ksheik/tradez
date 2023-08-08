@@ -1,11 +1,13 @@
 import { useEffect, useState, useReducer } from "react";
 import axios from "axios";
-import "./getAllCharities.css";
 import { useNavigate } from "react-router-dom";
 import SearchBar from "components/SearchBar";
 import LoadingSpinner from "components/LoadingSpinner";
 import Pagination from "components/Pagination";
 import Charity from "components/Charity";
+import {Role} from "../../lookups";
+import NoData from "../../assets/img/no_data_found.png";
+import "./getAllCharities.css";
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -31,13 +33,14 @@ const AllCharities = ({getCookie, user, currentLanguage}) => {
     const [orderValue, setOrderValue ] = useState(null);
     const [orderDirectionValue, setOrderDirectionValue] = useState(null);
     const [searchTextValue, setSearchTextValue] = useState(null);
-
+    const [statusValue, setStatusValue] = useState(null);
     const itemsPerPage = 9;
 
     const [charitiesOffset, setCharitiesOffset] = useState(0);
     const [currentCharities, setCurrentCharities] = useState([]);
     const [pageCount, setPageCount] = useState(0);
-    
+    const [categoryValue, setCategoryValue] = useState([]);
+
     const handlePageClick = (event) => {
         const newOffset = (event.selected * itemsPerPage) % charities.length;
         setCharitiesOffset(newOffset);
@@ -63,7 +66,9 @@ const AllCharities = ({getCookie, user, currentLanguage}) => {
                         params: {
                             order: orderValue,
                             orderDirection: orderDirectionValue,
-                            searchText: searchTextValue
+                            searchText: searchTextValue,
+                            status: statusValue,
+                            category: categoryValue
                         },
                         signal: controller.signal
                     }
@@ -83,7 +88,7 @@ const AllCharities = ({getCookie, user, currentLanguage}) => {
             controller.abort();
         };
 
-    }, [orderDirectionValue, orderValue, searchTextValue]);
+    }, [orderDirectionValue, orderValue, searchTextValue, statusValue, categoryValue]);
 
     useEffect(() => {
         const endOffset = charitiesOffset + itemsPerPage;
@@ -94,7 +99,11 @@ const AllCharities = ({getCookie, user, currentLanguage}) => {
 	return (
         <div dir={currentLanguage === "ar" ? "rtl" : "ltr"} className="d-flex flex-column col-xl-10 offset-xl-1 justify-content-center">
 
-        <SearchBar setOrderValue={setOrderValue} setOrderDirectionValue={setOrderDirectionValue} setSearchTextValue={setSearchTextValue} isCharity={true} currentLanguage={currentLanguage}/>
+        <SearchBar 
+                setOrderValue={setOrderValue} setOrderDirectionValue={setOrderDirectionValue} 
+                setSearchTextValue={setSearchTextValue} isCharity={true}
+                setStatusValue={user && user.role === Role.ADMIN ? setStatusValue : null} currentLanguage={currentLanguage}
+                setCategoryValue={!user || user.role !== Role.ADMIN ? setCategoryValue : null} categoryValue={!user || user.role !== Role.ADMIN ? categoryValue : []}/>
         {
             charities != null && charities !== undefined && currentCharities != null && currentCharities !== undefined && currentCharities.length > 0 && isLoading === false && 
             <>
@@ -121,9 +130,10 @@ const AllCharities = ({getCookie, user, currentLanguage}) => {
         {
             isLoading === false && (charities == null || charities === undefined || currentCharities == null || currentCharities === undefined || currentCharities.length === 0) &&
             <div className="d-flex col-12 justify-content-center align-items-center">
-                No Data
+                <img src={NoData} className="no-data-img" alt=""/>
             </div>
         }
+
         <Pagination handlePageClick={handlePageClick} pageCount={pageCount} maxItems={itemsPerPage} currentLanguage={currentLanguage}/>
         </div>
 	);

@@ -44,11 +44,15 @@ function App() {
 	};
 
 	const setCookie = (token) =>{
-		const decodedToken = jwt(token);
-		cookiesObject.set("jwt", token, {expires: new Date(decodedToken.exp * 1000)});
-		setCookiesObject(cookiesObject);
-		console.log("decoded token: ", decodedToken);
-		setUser(decodedToken);
+		const previousToken = getCookie();
+		if(previousToken == null || previousToken == undefined){
+			console.log("ENTERED SET COOOOOOOOOKIE");
+			const decodedToken = jwt(token);
+			cookiesObject.set("jwt", token, {expires: new Date(decodedToken.exp * 1000)});
+			setCookiesObject(cookiesObject);
+			console.log("decoded token: ", decodedToken);
+			setUser(decodedToken);
+		}
 	}
 
 	const getCookie = () => {
@@ -94,13 +98,13 @@ function App() {
 		  .then((subscription) => {
 			console.log("Subscribtion: ", subscription);
 			// Send the subscription object to the backend server
-			const userId = '649ffdb5987f483c234ce2de'; // Replace with the actual user ID
+			const userId = user.id; // Replace with the actual user ID
 			saveSubscription(userId, subscription);
 		  })
 		  .catch((error) => {
 			console.error('Error requesting permission:', error);
 		  });
-	  }, []);
+	  }, [user]);
 
 
 	const saveSubscription = async (userId, subscription) => {
@@ -132,12 +136,12 @@ function App() {
 				<Route path="/" element={<HomePage getCookie={getCookie} user={user} currentLanguage={currentLanguage}/>} />
 				<Route path="/signup" element={<Signup currentLanguage={currentLanguage}/>} />
 				<Route path="/login" element={<Login setCookie={setCookie} currentLanguage={currentLanguage}/>} />
-				<Route path="/items/mine" element={ user ? <MyItems getCookie={getCookie} user={user} currentLanguage={currentLanguage}/> : <Login setCookie={setCookie}/>} />
+				<Route path="/items/mine" element={ user ? <MyItems getCookie={getCookie} user={user} currentLanguage={currentLanguage}/> : <Login setCookie={setCookie}/>} currentLanguage={currentLanguage}/>
 				<Route path="/allitems" element={<AllItems getCookie={getCookie} user={user} currentLanguage={currentLanguage}/>} />
 				<Route path="/items/:id" element={ user ? <ItemDetails getCookie={getCookie} enableTrade={false} user={user} currentLanguage={currentLanguage} /> : <Login setCookie={setCookie} currentLanguage={currentLanguage}/>} />
-				<Route path="/items/create" element={ user ? <AddItem getCookie={getCookie} user={user} /> : <Login setCookie={setCookie} currentLanguage={currentLanguage}/>} /> 
-				<Route path="/items/edit/:id" element={ user ? <EditItem getCookie={getCookie} /> : <Login setCookie={setCookie} currentLanguage={currentLanguage}/>} />
-				<Route path="/items/:primaryId/tradez/:id" element={ user ? <ItemDetails getCookie={getCookie} enableTrade={true}/> : <Login setCookie={setCookie} currentLanguage={currentLanguage}/>} />
+				<Route path="/items/create" element={ user ? <AddItem getCookie={getCookie} user={user} currentLanguage={currentLanguage}/> : <Login setCookie={setCookie} currentLanguage={currentLanguage}/>} /> 
+				<Route path="/items/edit/:id" element={ user ? <EditItem getCookie={getCookie} currentLanguage={currentLanguage}/> : <Login setCookie={setCookie} currentLanguage={currentLanguage}/>} />
+				<Route path="/items/:primaryId/tradez/:id" element={ user ? <ItemDetails getCookie={getCookie} enableTrade={true} currentLanguage={currentLanguage} user={user}/> : <Login setCookie={setCookie} currentLanguage={currentLanguage}/>} />
 				<Route path="/items/archived" element={ user ? <ArchivedItems getCookie={getCookie} currentLanguage={currentLanguage}/> : <Login setCookie={setCookie} currentLanguage={currentLanguage}/>} />
 				<Route path="/profile" element={ user ? <UserProfilePage getCookie={getCookie} user={user} currentLanguage={currentLanguage} /> : <Login setCookie={setCookie} currentLanguage={currentLanguage}/>} />
 				<Route path="/auth/reset/:token" element={<ResetPassword user={user} currentLanguage={currentLanguage}/>} />

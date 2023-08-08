@@ -41,7 +41,9 @@ const Login = ({setCookie, currentLanguage}) => {
 
 		} catch (error) { 
 			console.log("error: ", error);
-			setError(JSON.parse(error.response.data).message);
+			if(error.response.data != null || error.response.data !== undefined){
+				setError(JSON.parse(error.response.data).message);
+			}
 		}
 	};
 

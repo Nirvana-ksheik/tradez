@@ -3,7 +3,7 @@ import { ListGroup, OverlayTrigger, Tooltip } from "react-bootstrap";
 import axios from "axios";
 import "./notificationsList.css"
 
-const NotificationList = ({user, getCookie}) => {
+const NotificationList = ({user, getCookie, currentLanguage}) => {
 
     const [notifications, setNotifications] = useState([]);
     const [showNotifications, setShowNotifications] = useState(false);
@@ -42,38 +42,44 @@ const NotificationList = ({user, getCookie}) => {
 			placement="bottom"
 			rootClose
 			overlay={
-                notifications && notifications.length > 0 && showNotifications ?
-                <Tooltip id="notification-popup-list">
-                    <ListGroup classsName="col-12">
-                        {
-                            notifications.map((notification, i) => {
-                                return(
-                                    <ListGroup.Item className="col-12" key={i}>
-                                        <div className="d-flex flex-column">
-                                            <label style={{textAlign: 'left', fontWeight: 700}}>{notification.title}</label>
-                                            <p className="m-0">{notification.message}</p>
-                                        </div>
-                                    </ListGroup.Item>
-                                )
-                            })
-                        }
+                notifications && notifications.length > 0 ?
+                    <Tooltip id="notification-popup-list">
+                        <ListGroup style={{paddingTop: 5, paddingBottom: 5}}>
+                            {
+                                notifications.map((notification, i) => {
+                                    return(
+                                        <ListGroup.Item className="col-12 mt-1 mb-1" key={i}>
+                                            <div className="d-flex flex-column">
+                                                <label className={currentLanguage === "ar" ? "text-right notification-title" : "text-left notification-title"} style={{fontWeight: 700}}>{
+                                                    currentLanguage === "ar" ? notification.title_ar : notification.title
+                                                }</label>
+                                                <p className={currentLanguage === "ar" ? "text-right notification-text" : "text-left notification-text m-0"}>{
+                                                    currentLanguage === "ar" ? notification.message_ar : notification.message
+                                                }</p>
+                                            </div>
+                                        </ListGroup.Item>
+                                    )
+                                })
+                            }
 
-                    </ListGroup>
-                </Tooltip> 
+                        </ListGroup>
+                    </Tooltip> 
                 :
-                 <></>
+                <></>
 			}
 		  >
-        <div className="me-4">
-            <span id="group">
-                <i className="fa-solid fa-bell notification-icon" style={{color: '#60b0ba'}} onClick={
-                    () => {
-                        setShowNotifications(!showNotifications);
-                    }
-                }></i>
-                <span className="badge">{notifications ? notifications.length : 0}</span>
-            </span>
-        </div>
+            <div className="ms-2 notification-bell-div" onClick={
+                () => {
+                    console.log("showNotification: ", showNotifications);
+                    console.log("notiifications: " ,notifications)
+                    setShowNotifications(!showNotifications);
+                }
+            }>
+                <span id="group">
+                    <i className="fa-solid fa-bell notification-icon" style={{color: '#60b0ba'}}></i>
+                    <span className="badge">{notifications ? notifications.length : 0}</span>
+                </span>
+            </div>
 
 		  </OverlayTrigger>
 	  );

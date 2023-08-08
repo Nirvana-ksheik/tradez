@@ -1,34 +1,39 @@
 import ItemForm from "components/ItemForm";
-import { useState } from "react";
 import axios from "axios";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ItemStatus } from "lookups";
-
-import "./addItem.css";
 import { Notifications, parseModelString } from "notifications";
 import { adminNotificationSender } from "helpers/notificationHelper";
+import "./addItem.css";
 
-const AddItem = ({getCookie, user}) => {
+const AddItem = ({getCookie, user, currentLanguage}) => {
 
     const navigate = useNavigate();
 
     const [data, setData] = useState({
 		name: "",
 		approximateValue: "",
-		locationName: "",
         description: ""
 	});
 
+    const [categories, setCategories] = useState([]);
+    const [location, setLocation] = useState(null);
     const [selectedFile, setSelectedFile] = useState("");
 
     const submitForm = async (e) => {
         e.preventDefault();
+        console.log("categories to submit: ", categories)
+        const categoriesString = JSON.stringify(categories);
+
         const formData = new FormData();
+        
         formData.append("name",  data.name);
         formData.append("approximateValue",  data.approximateValue);
-        formData.append("locationName",  data.locationName);
         formData.append("description",  data.description);
         formData.append("status", ItemStatus.PENDING);
+        formData.append("categories", categoriesString);
+        formData.append("location", location);
 
         for (let i = 0; i < selectedFile.length; i++) {
             formData.append('imagesReferences', selectedFile[i]);
@@ -57,8 +62,15 @@ const AddItem = ({getCookie, user}) => {
                     };
                     const notificationObject = Notifications.CHARITY_SIGNUP;
                     const notificationMessage = parseModelString(notificationObject.message, modelData);
-            
-                    await adminNotificationSender({message: notificationMessage, title: notificationObject.title});
+                    const notificationMessageAr = parseModelString(notificationObject.message_ar, modelData);
+
+                    await adminNotificationSender({
+                      message: notificationMessage,
+                      title: notificationObject.title,
+                      message_ar: notificationMessageAr,
+                      title_ar: notificationObject.title,
+                      currentLanguage: currentLanguage
+                    });
                 });
 
 			navigate("/items/mine");
@@ -70,7 +82,10 @@ const AddItem = ({getCookie, user}) => {
 
 	return (
         <>
-            <ItemForm data={data} setData={setData} setSelectedFile={setSelectedFile} submitForm={submitForm} />
+            <ItemForm data={data} setData={setData} setSelectedFile={setSelectedFile} 
+                        submitForm={submitForm} currentLanguage={currentLanguage}
+                        categories={categories} setCategories={setCategories}
+                        location={location} setLocation={setLocation}/>
         </>
 	);
 };

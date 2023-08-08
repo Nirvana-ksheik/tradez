@@ -28,6 +28,9 @@ const userSchema = new Schema({
         type: Boolean,
         default: false
     },
+    logo:{
+        type: String
+    },
     createdDate: {
         type: Date,
         default: new Date().toISOString()
@@ -56,6 +59,9 @@ export class UserModel {
         this.username = data.username;
         this.email = data.email;
         this.role = data.role;
+        this.numberOfTradez = data.numberOfTradez;
+        this.totalItems = data.totalItems;
+        this.logo = data.logo;
         this.createdDate = data.createdDate;
     }
 }

@@ -2,6 +2,8 @@
     border: none !important;
     border-bottom: 1px solid black !important;
     border-radius: 0.2em;
+    align-items: baseline;
+    align-self: flex-end;
 }
 
 .comment-input-text:focus, .comment-input-text::after, .comment-input-text::before{
@@ -15,8 +17,9 @@
 }
 
 .send-message-icon{
-    color: var(--approve);
-    margin-left: 1em;
+    color: var(--primary-variant-color);
+    margin: 0;
+    font-size: 1.2rem;
 }
 
 .send-message-icon:hover{
@@ -26,23 +29,23 @@
 .comment-username{
     font-size: 1.2em;
     font-weight: bold;
-    color: var(--secondary-variant-color)
+    color: var(--primary-variant-color)
 }
 
 .comment-commentdate{
     font-size: 1.1em;
     font-weight: light;
-    color: var(--secondary-variant-color)
+    color: var(--primary-color)
 }
 
 .comment-user-icon{
     width: 1.3rem !important;
-    color: var(--secondary-variant-color);
+    color: var(--primary-variant-color);
 }
 
 .delete-reply-comment-icon{
     color: var(--reject);
-    margin-left: 1em;
+    font-size: 1.3rem;
 }
 
 .delete-reply-comment-icon:hover{
@@ -60,7 +63,7 @@
 }
 
 .reply-icon{
-    color: var(--secondary-color);
+    color: var(--primary-variant-color);
 }
 
 .reply-icon:hover{
@@ -68,11 +71,11 @@
 }
 
 .user-comment-icon-main-comment{
-    color: var(--secondary-variant-color);
+    color: var(--primary-variant-color);
     font-size: 2rem;
 }
 
 .user-comment-icon{
-    color: var(--secondary-variant-color);
+    color: var(--primary-variant-color);
     font-size: 1.2rem;
 }

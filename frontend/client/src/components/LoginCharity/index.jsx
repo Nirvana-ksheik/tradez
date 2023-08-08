@@ -1,16 +1,16 @@
 import { useState, useLayoutEffect } from "react";
-import axios from "axios";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import "./loginCharity.css"
 import {useNavigate} from 'react-router-dom';
 import CharityUser from "components/CharityUser";
-import { useTranslation } from "react-i18next";
+import axios from "axios";
+import "./loginCharity.css"
 
 const LoginCharity = ({setCookie, currentLanguage}) => {
 	const [data, setData] = useState({ username: "", password: "" });
 	const [error, setError] = useState("");
-	const navigate = useNavigate();
 	const [screenWidth, setScreenWidth] = useState();
+	const navigate = useNavigate();
 
 	const { t } = useTranslation();
 

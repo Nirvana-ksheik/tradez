@@ -1,6 +1,8 @@
 import {default as imageModel} from '../models/Image.js'
 import {default as itemModel} from '../models/Item.js'
 import {default as postModel} from '../models/Posts.js'
+import {default as UserModel} from '../models/User.js'
+
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -49,4 +51,21 @@ const deleteFilesWithPostId = async(id) => {
     }
 }
 
-export { deleteFilesWithItemId, deleteFilesWithPostId }
+const deleteProfilePicWithUserId = async (id) => {
+
+    const user = await UserModel.findById(id);
+
+    const __filename = fileURLToPath(import.meta.url);
+    console.log("filename: ", __filename);
+    const __dirname = path.dirname(__filename);
+    console.log("dirname: ", __dirname);
+    const public_dir = path.resolve(path.join(__dirname, '..', 'public'));
+
+    let full_directory = public_dir + user.logo;
+    if(fs.existsSync(full_directory)){
+        console.log("started deleting directory: ", full_directory);
+        fs.rmSync(full_directory, {recursive: true});
+        console.log("finished.....");
+    }
+}
+export { deleteFilesWithItemId, deleteFilesWithPostId, deleteProfilePicWithUserId }

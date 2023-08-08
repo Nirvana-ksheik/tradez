@@ -11,3 +11,22 @@
 	border-top: 1px solid var(--secondary-color) !important;
 	border-bottom-color: #f7f7f7;
 }
+
+.notification-bell-div:hover{
+	cursor: pointer;
+}
+
+.notification-bell-div{
+	text-align: center;
+	align-items: center;
+	align-content: center;
+	align-self: center;
+}
+
+.notification-title{
+	color: var(--primary-variant-color)
+}
+
+.notification-text{
+	color: var(--secondary-color)
+}

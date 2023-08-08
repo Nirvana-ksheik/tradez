@@ -18,6 +18,11 @@ export const charityOrderByLookups = [
     new Lookups("annualTurnover", "Annual Turnover","الإيرادات السنوية", 2)
 ]
 
+export const postOrderByLookups = [
+    new Lookups("publishedDate", "Published Date", "تاريخ النشر", 1),
+    new Lookups("likes", "Likes", "الإعجابات", 2),
+]
+
 export const itemOrderDirectionLookups = [
     new Lookups(1, "Ascending", "تصاعدياً", 1),
     new Lookups(-1, "Descending", "تنازلياً",  2)
@@ -35,8 +40,15 @@ export const ItemStatus = {
     REJECTED: 'rejected'
 }
 
+export const CharityStatus = {
+    PENDING: 'pending',
+    APPROVED: 'approved',
+    REJECTED: 'rejected'
+}
+
 export const ItemStatusLookups = [
     new Lookups(ItemStatus.APPROVED, "Approved", "موافق", 1),
     new Lookups(ItemStatus.PENDING, "Pending", "قيد الإنتظار", 2),
     new Lookups(ItemStatus.REJECTED, "Rejected", "مرفوض", 3)
 ]
+

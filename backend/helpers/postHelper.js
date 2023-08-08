@@ -1,6 +1,9 @@
 import mongoose from 'mongoose';
-import model, { GetPostMetadataModel } from '../models/Posts.js';
+import model, { GetPostMetadataModel, PostCommentModel, PostModel } from '../models/Posts.js';
+import { default as modelCharity } from '../models/Charity.js';
+import { default as modelUser } from '../models/User.js';
 import { convertUtcToClientDate } from './dateHelper.js';
+import { map } from 'modern-async'
 
 const createPost = async ({post}) => {
     console.log("post: ", {...post});
@@ -26,20 +29,68 @@ const editPost = async ({post}) => {
     });
 }
 
-const getAllPosts = async () => {
+const getAllPosts = async ({query}) => {
+    console.log("query in get all posts: ", query)
+    const postsQuery = query.charityId ? 
+        model.find({charityId: query.charityId}).sort([['publishedDate', -1]]) :
+        model.find({}).sort([['publishedDate', -1]]);
 
-    const posts = await model.find({}).sort([['publishedDate', -1]]);
+        postsQuery.getFilter();
+
+    const order = [];
+    query.order ? order.push(query.order) : order.push("publishedDate");
+    query.orderDirection ? order.push(query.orderDirection) : order.push(-1);
+
+    postsQuery.sort([order]);
+    postsQuery.getFilter();
+
+    if(query.searchText){
+        postsQuery.find({
+            $or:[
+                {description: { $regex: '.*' + query.searchText + '.*' }},
+                {username: { $regex: '.*' + query.searchText + '.*' }}
+            ]
+        });
+        postsQuery.getFilter();
+    }
+
+    const posts = await postsQuery.exec();
+
+    const postsModels = [];
+    
     if(posts && posts.length > 0){
-        posts.forEach((post) => {
+        await map(posts, async (post) => {
+            console.log("post before becoming postmodel: ", post);
+            const postModel = new PostModel(post);
+            const charity = await modelCharity.findById(post.charityId);
+            if(charity){
+                postModel.setLogo(charity.logo);
+            }
             if(post.comments && post.comments.length > 0){
-                post.comments.forEach((comment) => {
-                    comment.commentDate = convertUtcToClientDate({utcDate: comment.commentDate});                    
+                await map(post.comments, async (comment) => {
+                    const commentModel = new PostCommentModel(comment);
+                    console.log("comment user id: ", commentModel.userId);
+                    console.log("comment user id string: ", commentModel.userId.toString());
+                    
+                    const user = await modelUser.findById({_id: commentModel.userId.toString()})
+                                    .catch((err) => {
+                                        console.log("Error getting user from comment: ", err);
+                                    }) ??
+                                 await modelCharity.findById({_id: commentModel.userId.toString()})
+                                    .catch((err) => {
+                                        console.log("Error getting user from comment: ", err);
+                                    });
+                                    
+                    commentModel.logo = user.logo;
+                    commentModel.commentDate = convertUtcToClientDate({utcDate: comment.commentDate});   
+                    postModel.comments.push(commentModel);
                 })
             }
-        })
+            postsModels.push(postModel);
+        });
     }
     console.log("Posts: ", posts);
-    return posts;
+    return postsModels;
 }
 
 const addPostComment = async ({postId, commentText, userId, username}) => {

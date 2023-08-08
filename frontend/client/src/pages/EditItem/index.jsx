@@ -1,15 +1,17 @@
-import ItemForm from "components/ItemForm";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import ItemForm from "components/ItemForm";
+import axios from "axios";
 
-const EditItem = ({ getCookie }) => {
+const EditItem = ({ getCookie, currentLanguage }) => {
 
     const navigate = useNavigate();
     const {id} = useParams();
 
     const [data, setData] = useState("");
+    const [location, setLocation] = useState(null);
     const [selectedFile, setSelectedFile] = useState([]);
+    const [categories, setCategories] = useState([]);
 
     useEffect(() => {   
         getItemDetails();
@@ -38,18 +40,23 @@ const EditItem = ({ getCookie }) => {
         ).then(async ({data}) => {
             console.log("data: ", data);
             setData(data);
+            setLocation(data.location);
+            setCategories(data.categories)
         });
     };
 
     const submitForm = async (e) => {
         e.preventDefault();
         const formData = new FormData();
+        const categoriesString = JSON.stringify(categories);
 
         formData.append("_id", data._id);
         formData.append("name",  data.name);
         formData.append("approximateValue",  data.approximateValue);
         formData.append("locationName",  data.locationName);
         formData.append("description",  data.description);
+        formData.append("categories", categoriesString);
+        formData.append("location", location);
         
         for (let i = 0; i < selectedFile.length; i++) {
             formData.append('imagesReferences', selectedFile[i]);
@@ -85,7 +92,10 @@ const EditItem = ({ getCookie }) => {
         <>
             {   
                 data &&
-                <ItemForm data={data} setData={setData} setSelectedFile={setSelectedFile} submitForm={submitForm} />
+                <ItemForm data={data} setData={setData} setSelectedFile={setSelectedFile} 
+                            submitForm={submitForm} currentLanguage={currentLanguage} 
+                            categories={categories} setCategories={setCategories}
+                            location={location} setLocation={setLocation}/>
             }
         </>
 	);

@@ -8,7 +8,7 @@ import NoData from "../../assets/img/no_data_found.png";
 import Pagination from "../../components/Pagination";
 import "./itemsList.css"
 
-const ItemsList = ({clickEvent, getData, items, orderValue, setOrderValue, orderDirectionValue, setOrderDirectionValue, searchTextValue, setSearchTextValue, statusValue, setStatusValue, isLoading, canSeeStatusFilters, currentLanguage}) => {
+const ItemsList = ({clickEvent, getData, items, orderValue, setOrderValue, orderDirectionValue, setOrderDirectionValue, searchTextValue, setSearchTextValue, statusValue, setStatusValue, categoryValue, setCategoryValue, locationValue, setLocationValue, isLoading, canSeeStatusFilters, currentLanguage}) => {
 
     const itemsPerPage = 9;
 
@@ -22,23 +22,32 @@ const ItemsList = ({clickEvent, getData, items, orderValue, setOrderValue, order
     };
     
     useEffect(() => {
-        const endOffset = itemOffset + itemsPerPage;
-        setCurrentItems(items.slice(itemOffset, endOffset));
-        setPageCount(Math.ceil(items.length / itemsPerPage));
+        
         const controller = new AbortController();
         getData(controller);
         
         return () =>{
             controller.abort();
         };
-    }, 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [items.length, orderValue, orderDirectionValue, searchTextValue, statusValue, itemOffset, itemsPerPage]);
+    }, [orderDirectionValue, orderValue, searchTextValue, statusValue, categoryValue]);
+
+    useEffect(()=>{
+        const endOffset = itemOffset + itemsPerPage;
+        setCurrentItems(items.slice(itemOffset, endOffset));
+        setPageCount(Math.ceil(items.length / itemsPerPage));
+    }, [itemOffset, items]);
 
     return (
     <div dir={currentLanguage === "ar" ? "rtl" : "ltr"} className="d-flex flex-column col-xl-10 align-items-center justify-content-center">
 
-        <SearchBar setOrderValue={setOrderValue} setOrderDirectionValue={setOrderDirectionValue} setSearchTextValue={setSearchTextValue} setStatusValue={canSeeStatusFilters === true ? setStatusValue : undefined} currentLanguage={currentLanguage}/>
+        <SearchBar setOrderValue={setOrderValue} setOrderDirectionValue={setOrderDirectionValue}
+                   setSearchTextValue={setSearchTextValue}
+                   setStatusValue={canSeeStatusFilters === true ? setStatusValue : undefined}
+                   setCategoryValue={setCategoryValue} categoryValue={categoryValue}
+                   currentLanguage={currentLanguage}
+                   locationValue={locationValue} setLocationValue={setLocationValue}
+        />
         {
             items != null && items !== undefined && currentItems != null && currentItems !== undefined && currentItems.length > 0 && isLoading === false && 
             <>

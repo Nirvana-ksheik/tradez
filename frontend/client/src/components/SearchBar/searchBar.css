@@ -1,7 +1,9 @@
 .search-input{
     border: none;
-    border-bottom: 1px solid var(--primary-variant-color) !important;
+    border-bottom: 1px solid var(--secondary-color) !important;
     text-decoration: none;
+    border-radius: 0.2rem;
+    padding: 0.2rem;
 }
 
 .search-icon{
@@ -13,8 +15,26 @@
     align-items: start;
     background-color: none !important;
     border: 1px solid var(--primary-variant-color) !important;
-    width: 10vw !important;
-    color: var(--primary-variant-color)
+    color: var(--primary-variant-color);
+    width: 10vw;
+}
+
+@media screen and (max-width: 769px) and (min-width: 426px) {
+    .dropDown-button{
+        width: 20vw;
+    }
+}
+
+@media screen and (max-width: 1025px) and (min-width: 769px){
+    .dropDown-button{
+        width: 15vw;
+    }
+}
+
+@media screen and (max-width: 426px) {
+    .dropDown-button{
+        width: 40vw;
+    }
 }
 
 .dropdown-toggle{
@@ -36,9 +56,21 @@
 }
 
 .dropDown-button{
-    background-color: white;
+    background-color: whitesmoke;
+}
+
+.dropDown-button:hover{
+    background-color: whitesmoke;
 }
 
 .dropdown{
-    width: max-content !important;
+    width: max-content;
+}
+
+.hide-show-filters{
+    color: var(--primary-variant-color);
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

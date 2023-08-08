@@ -1,6 +1,6 @@
 import model from "../models/Tradez.js";
 import {default as ItemModel} from "../models/Item.js";
-import { getItemMetaData } from "./itemHelper.js";
+import { getItemDetails, getItemMetaData } from "./itemHelper.js";
 import mongoose from "mongoose";
 
 const createTrade = async (trade) => {
@@ -36,7 +36,7 @@ const getTradez = async (itemId) => {
     let items = [];
     await Promise.all(tradez.map(async (trade, i) => {
         const id = trade.secondaryItemId;
-        const item = await getItemMetaData({id});
+        const item = await getItemDetails({id});
         console.log("Trade item: ", item);
         items.push(item);
     }));

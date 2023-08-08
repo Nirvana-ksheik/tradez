@@ -83,11 +83,20 @@ const SignupCharity = ({currentLanguage}) => {
             };
             const notificationObject = Notifications.CHARITY_SIGNUP;
             const notificationMessage = parseModelString(notificationObject.message, modelData);
-    
-            await adminNotificationSender({message: notificationMessage, title: notificationObject.title});
+            const notificationMessageAr = parseModelString(notificationObject.message_ar, modelData);
+
+            await adminNotificationSender({
+              message: notificationMessage,
+              title: notificationObject.title,
+              message_ar: notificationMessageAr,
+              title_ar: notificationObject.title,
+              currentLanguage: currentLanguage
+            });
 
 			console.log(res.message);
+            
 		} catch (error) {
+            console.log("Error: ", error);
 			setIsLoading(false);
 			setSignupRibbon(true);
 			setSignupText("Error occured");

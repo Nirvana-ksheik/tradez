@@ -2,12 +2,17 @@
     font-size: 2.4em;
 }
 
+@media screen and (max-width: 769px){
+  .title{
+    font-size: 1.4rem !important;
+  }
+
+  .item-details-date{
+    font-size: 0.8rem;
+  }
+}
 .outer-box{
     margin-top: 8%;
-}
-
-.approximate-price{
-    text-align: end;
 }
 
 .small-image:hover{
@@ -17,7 +22,7 @@
 }
 
 .user-icon, .location-icon{
-    color: var(--secondary-variant-color) !important;
+    color: var(--primary-color) !important;
 }
 
 .faded-div{
@@ -25,13 +30,15 @@
 }
 
 .item-details-container{
-    box-shadow: 8px 8px var(--primary-color);
-    border: 1px solid var(--secondary-color);
     border-radius: 5px;
 }
 
 .item-details-text{
-    color: var(--secondary-variant-color)
+    color: var(--black);
+}
+
+.approximate-price{
+  text-align: center;
 }
 
 .line-break{
@@ -44,18 +51,16 @@
     border-radius: 2px;
 }
 
- .item-details-container, .pending, .approved, .rejected{
+ .item-details-container{
     border: 1px solid var(--primary-color) !important;
     box-shadow: 4px 4px var(--primary-color) !important;
+  }
+
+  .approved-details, .rejected-details, .pending-details{
     position: relative;
     overflow: hidden;
   }
-
-  .item-details-container{
-    background-color: white;
-  }
-
-  .item-details-container::before, .pending::before, .approved::before, .rejected::before{
+  .item-details-container::before, .pending-details::before, .approved-details::before, .rejected-details::before{
     position: absolute;
     top: 1rem;
     right: -2rem;
@@ -64,21 +69,21 @@
     transform: rotate(45deg);
     padding: 2px;
     color: white;
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 600;
   }
   
-  .pending::before{
+  .pending-details::before{
     background: var(--pending);
     content: "Pending";
   }
 
-  .approved::before{
+  .approved-details::before{
     background: var(--approve);
     content: "Approved";
   }
 
-  .rejected::before{
+  .rejected-details::before{
     background: var(--reject);
     content: "Rejecetd";
   }
@@ -91,19 +96,15 @@
   }
 
   .confirmation-dialogue{
-    border: 1px solid var(--secondary-variant-color);
-    background-color: var(--secondary-color);
+    /* border: 1px solid var(--primary-color); */
+    /* background-color: var(--primary-color); */
     border-radius: 1rem;
   }
 
   .submit-btn-confirm-dialogue{
     color: white;
-    background-color: var(--primary-color);
-    border-radius: 1rem;
-  }
-
-  .submit-btn-confirm-dialogue:hover{
     background-color: var(--primary-variant-color);
+    border-radius: 1rem;
   }
 
   .rejected-message-container{

@@ -5,7 +5,7 @@
 
 .page-icon:hover{
     font-size: 1.5rem;
-    background-color: white !important;
+    background-color: whitesmoke !important;
 }
 
 .page-link{
@@ -15,10 +15,10 @@
     color: white !important;
 }
 
-.active{
+.page-active{
     background-color: var(--primary-variant-color) !important;
 }
 
-.page-link:hover, .active :hover{
+.page-link:hover, .page-active :hover{
     background-color: var(--primary-variant-color) !important;
 }

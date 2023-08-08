@@ -18,6 +18,7 @@ function Tabs(props) {
   const [orderValue, setOrderValue ] = useState(null);
   const [orderDirectionValue, setOrderDirectionValue] = useState(null);
   const [searchTextValue, setSearchTextValue] = useState(null);
+  const [showOffers, setShowOffers] = useState(false);
 
   const {t} = useTranslation();
 
@@ -82,19 +83,35 @@ function Tabs(props) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(()=> {
+    const token = props.getCookie();
+    const decodedToken = jwt(token);
+    if(decodedToken && decodedToken.id == props.ownerId){
+      setShowOffers(true);
+    }else{
+      setShowOffers(false);
+      setActiveTab('comments');
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setShowOffers, props.ownerId, props.getCookie]);
+
   return (
-    <div dir={props.currentLanguage === "ar" ? "rtl" : "ltr"} className="container mt-5 col-12">
-      <div className="row justify-content-center col-12">
+    <div dir={props.currentLanguage === "ar" ? "rtl" : "ltr"} className="main_wrapper d-flex justify-content-center align-items-center mt-5 col-12">
+      <div className="row justify-content-center align-items-center col-12">
         <div className="col-12">
           <div className="d-flex col-12 justify-content-between">
+            {
+              showOffers &&
+              <button
+                className={`col-6 btn-tabs-custom  ${activeTab === 'products' ? 'active-tab' : ''}`}
+                onClick={() => handleTabClick('products')}
+              >
+                {t("Offers")}
+              </button>
+            }
+
             <button
-              className={`col-5 btn-tabs-custom border-bottom-2 ${activeTab === 'products' ? 'active-tab' : ''}`}
-              onClick={() => handleTabClick('products')}
-            >
-              {t("Offers")}
-            </button>
-            <button
-              className={`col-5 btn-tabs-custom border-bottom-2 ${activeTab === 'comments' ? 'active-tab' : ''}`}
+              className={`col-6 btn-tabs-custom ${activeTab === 'comments' ? 'active-tab' : ''}`}
               onClick={() => handleTabClick('comments')}
             >
               {t("Comments")}
@@ -107,7 +124,7 @@ function Tabs(props) {
               </div>
             ) : (
                 items != null && items !== [] && items !== undefined && items !== '' &&
-                <div className='col-12 d-flex align-items-center justify-content-center items-list'>
+                <div className='col-12 d-flex align-items-center justify-content-center'>
                     <ItemsList 
                         clickEvent={clickEvent} getData={getData} items={items} orderValue={orderValue}
                         setOrderValue={setOrderValue} orderDirectionValue={orderDirectionValue} setOrderDirectionValue={setOrderDirectionValue}
