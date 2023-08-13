@@ -2,19 +2,21 @@ import axios from 'axios';
 import Ribbon from 'components/Ribbon';
 import CategoriesDropDown from 'components/CategoriesDropDown'
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next'; 
 import { formatNumberWithCommas } from '../../helpers/numberFormatHelper';
 import { formatDateWithLanguage } from '../../helpers/dateFormatHelper';
 import LoadingSpinner from 'components/LoadingSpinner';
 import { useLayoutEffect } from 'react';
 import { findCategoryDescription } from '../../helpers/categoriesHelper';
-import "./charityProilePage.css"
 import AllPosts from '../AllPosts';
 import ChangeStatusDialogue from '../../components/ChangeStatusDialogue';
 import { CharityStatus, Role } from '../../lookups';
 import IconTextButton from 'components/IconTextButton'
 import { useRef } from 'react';
+import { Notifications, parseModelString } from '../../notifications';
+import { followersNotificationSender } from '../../helpers/notificationHelper';
+import "./charityProilePage.css"
 
 const CharityProfilePage = ({getCookie, user, currentLanguage}) => {
 
@@ -29,9 +31,10 @@ const CharityProfilePage = ({getCookie, user, currentLanguage}) => {
     const [itemStatus, setItemStatus] = useState();
     const [profilePictureUrl, setProfilePictureUrl] = useState();
     const [profilePicture, setProfilePicture] = useState();
+    const [isFollower, setIsFollower] = useState([]);
 
     const inputFile = useRef(null);
-
+    const navigate = useNavigate();
     const {id} = useParams();
 
     const {t} = useTranslation();
@@ -94,6 +97,7 @@ const CharityProfilePage = ({getCookie, user, currentLanguage}) => {
                         setUserData(res);
                         console.log("data returned from charity profile: ", res)
                         setCategories(res.result.categories);
+                        setIsFollower(res.result.followers.find(({userId: val}) => val.toString() === user.id.toString()));
                         setIsLoading(false);
                         console.log("userr: ", userData);
                     })
@@ -114,7 +118,7 @@ const CharityProfilePage = ({getCookie, user, currentLanguage}) => {
             controller.abort();
         };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [getCookie, setUserData, id, setCategories, profilePictureUrl])
+    }, [getCookie, setUserData, id, setCategories, profilePictureUrl, setIsFollower])
 
     useEffect(() => {
         // Clean up the object URL when the component unmounts
@@ -199,8 +203,56 @@ const CharityProfilePage = ({getCookie, user, currentLanguage}) => {
                 categories: categories
             })
             .then(({data: res}) => {
-                setIsLoading(false);
                 editCategories(false);
+                setIsLoading(false);
+            })
+            .catch((err) => {
+                console.log("Error updatin categories profile: ", err);
+                setIsLoading(false);
+            });
+
+        const modelData = {
+            username: user.username
+        };
+
+        const notificationObject = Notifications.CHARITY_UPDATED_NEEDS;
+        const notificationMessage = parseModelString(notificationObject.message, modelData);
+        const notificationMessageAr = parseModelString(notificationObject.message_ar, modelData);
+
+        await followersNotificationSender({
+            charityId: user.id,
+            message: notificationMessage,
+            title: notificationObject.title,
+            message_ar: notificationMessageAr,
+            title_ar: notificationObject.title_ar,
+            currentLanguage: currentLanguage
+        });
+
+    }
+
+    const editSubscription = async () => {
+
+        setIsLoading(true);
+        const token = getCookie();
+        console.log("current user id: ", user.id);
+        console.log("chartiy user id: ", userData.result._id);
+        const url = 'http://localhost:3000/api/charity/subscription/' + userData.result._id;
+
+        let reqInstance = axios.create({
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        await reqInstance.put(url, 
+            {
+                categories: categories
+            })
+            .then(({data: res}) => {
+                console.log("isFollower: ", res);
+                setIsLoading(false);
+                setUserData((prevData) => ({ ...prevData, ...res }));
+                setIsFollower(!isFollower);
             })
             .catch((err) => {
                 console.log("Error updatin categories profile: ", err);
@@ -259,7 +311,12 @@ const CharityProfilePage = ({getCookie, user, currentLanguage}) => {
                             {
                                 screenWidth > 768 && 
                                 <div className="col-3 col-md-4 col-lg-12 col-11 mt-5 mt-md-0 mt-lg-5">
-                                    <h2 className="username col-md-12 pe-1 ps-1 col-8">{userData.result.organizationName}</h2>
+                                    <h2 className="username col-md-12 pe-1 ps-1 col-8" onClick={() => {
+                                        navigate("/charity/profile/" + userData.result._id);
+                                        window.location.reload();
+                                    }
+                                    }>{userData.result.organizationName}
+                                    </h2>
                                     <div className="col-12 d-flex align-items-center justify-content-between pe-3 ps-3">
                                         <i className="col-1 fa-solid fa-envelope align-items-center email-charity-logo align-items-center m-0"></i>
                                         &nbsp;&nbsp;&nbsp;
@@ -341,7 +398,16 @@ const CharityProfilePage = ({getCookie, user, currentLanguage}) => {
                             </div>
                         </div>
                     }
-                <div className='col-lg-8 col-12 d-flex flex-column justify-content-lg-center align-items-center p-lg-5'>
+                <div className='col-lg-8 col-12 d-flex flex-column justify-content-lg-center align-items-start p-lg-5'>
+                    {
+                        user && user.id !== userData.result._id &&
+                        <div className='col-md-3 col-5 d-flex flex-column justify-content-center align-items-center mt-5 mt-lg-2'>
+                            <button className={isFollower ? 'unfollow-btn col-11 ms-2' : 'follow-btn col-11 ms-2'} onClick={editSubscription}>
+                                {isFollower ? t("UnFollow") : t("Follow")}
+                            </button>
+                        </div>
+                    }
+
                     <div className='col-md-10 col-12 d-flex flex-column justify-content-center align-items-center mt-5 mt-lg-2'>
                         <div className='col-11 d-flex flex-column'>
                         {
@@ -365,7 +431,7 @@ const CharityProfilePage = ({getCookie, user, currentLanguage}) => {
                             showConfirmationDialogue &&
                             <ChangeStatusDialogue id={userData.result._id} status={itemStatus} getCookie={getCookie} setShowDialogue={setShowConfirmationDialogue} ownerId={userData.result._id} currentLanguage={currentLanguage} isCharity={true}/>
                         }
-                            <div className='col-12 d-flex flex-md-row flex-column'>
+                            <div className='col-12 d-flex flex-md-row flex-column mt-lg-3'>
                                 <h3 className={currentLanguage === "ar" ? 'text-right charity-profile-text-headers ms-4' : 'text-left charity-profile-text-headers me-4'}>{t("whatToDonateLabel")} </h3>
                                 {
                                     editCategories && userData.result._id === user.id &&
@@ -414,14 +480,14 @@ const CharityProfilePage = ({getCookie, user, currentLanguage}) => {
                             </div>
                         </div>
                     </div>
-                    <div className='col-md-10 col-12 d-flex flex-column justify-content-center align-items-center mt-5 mt-lg-2'>
+                    <div className='col-md-10 col-12 d-flex flex-column justify-content-center align-items-center mt-5 mt-lg-3'>
                         <div className='col-11 d-flex flex-column'>
                             <h3 className={currentLanguage === "ar" ? 'text-right charity-profile-text-headers' : 'text-left charity-profile-text-headers'}>{t("Vision&MissionLabel")} </h3>
                             <h6 className={currentLanguage === "ar" ? 'text-right charity-profile-text' : 'text-left charity-profile-text'}>{userData.result.mission}</h6>
                         </div>
                     </div>
                 
-                    <div className='col-md-10 col-12 d-flex flex-column justify-content-center align-items-center mt-5 mt-lg-2'>
+                    <div className='col-md-10 col-12 d-flex flex-column justify-content-center align-items-center mt-5 mt-lg-3'>
                         <div className='col-11 d-flex flex-column'>
                             <h3 className={currentLanguage === "ar" ? 'text-right charity-profile-text-headers' : 'text-left charity-profile-text-headers'}>{t("AdditionalInformationLabel")} </h3>
                             <h6 className={currentLanguage === "ar" ? 'text-right charity-profile-text' : 'text-left charity-profile-text'}>{userData.result.additionalInfo}</h6>

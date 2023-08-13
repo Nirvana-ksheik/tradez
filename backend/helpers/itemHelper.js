@@ -89,7 +89,7 @@ const getAllItems = async ({query}) => {
     console.log("status filter: ", statusFilter);
     console.log("role: ", query.role);
 
-    if(query.role === Role.USER){
+    if(query.role === Role.USER || query.isUserProfile){
         const isMine = query.isMine;
         let userId = new mongoose.Types.ObjectId(query.userId);
         if(isMine == true || isMine == 'true'){

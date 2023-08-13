@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import PostForm from "components/PostForm";
+import { followersNotificationSender } from "../../helpers/notificationHelper";
+import { Notifications, parseModelString } from "notifications";
 
-const AddPost = ({getCookie, currentLanguage}) => {
-
+const AddPost = ({user, getCookie, currentLanguage}) => {  
+     
     const [description, setDescription] = useState();
     const [selectedFile, setSelectedFile] = useState();
     const navigate = useNavigate();
@@ -27,14 +29,31 @@ const AddPost = ({getCookie, currentLanguage}) => {
         });
 
 		try {
-			const url = "http://localhost:3000/api/charity/posts/create";
-			await reqInstance.post(url, formData, 
-				{
-					withCredentials: true,
-					baseURL: 'http://localhost:3000',
-				});
+			    const url = "http://localhost:3000/api/charity/posts/create";
 
-			navigate("/charity/posts");
+			    await reqInstance.post(url, formData, {
+                    withCredentials: true,
+                    baseURL: 'http://localhost:3000',
+                });
+
+                const modelData = {
+                    username: user.username
+                };
+
+                const notificationObject = Notifications.CHARITY_UPLOADED_POST;
+                const notificationMessage = parseModelString(notificationObject.message, modelData);
+                const notificationMessageAr = parseModelString(notificationObject.message_ar, modelData);
+        
+                await followersNotificationSender({
+                    charityId: user.id,
+                    message: notificationMessage,
+                    title: notificationObject.title,
+                    message_ar: notificationMessageAr,
+                    title_ar: notificationObject.title_ar,
+                    currentLanguage: currentLanguage
+                });
+
+			    navigate("/charity/posts");
 
 		} catch (error) { 
 			console.log("error: ", error);

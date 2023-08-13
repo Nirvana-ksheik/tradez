@@ -89,7 +89,7 @@ const SignupCharity = ({currentLanguage}) => {
               message: notificationMessage,
               title: notificationObject.title,
               message_ar: notificationMessageAr,
-              title_ar: notificationObject.title,
+              title_ar: notificationObject.title_ar,
               currentLanguage: currentLanguage
             });
 

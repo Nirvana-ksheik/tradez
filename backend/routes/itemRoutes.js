@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createItemController, getItemController, getAllItemsController, getAllPublicItemsController, editItemController, changeItemStatusController } from '../controllers/itemController.js';
+import { createItemController, getItemController, getAllItemsController, getAllPublicItemsController, editItemController, changeItemStatusController, getAllUserItemsController } from '../controllers/itemController.js';
 import { checkAdmin, checkToken, checkUser } from '../middleware/authMiddleware.js';
 import { _editItemValidator } from '../validators/items/editItemValidator.js';
 import { _changeItemStatusValidator } from '../validators/items/changeItemStatusValidator.js'
@@ -12,6 +12,8 @@ itemRouter.put('/api/item/edit/:id', checkUser, _editItemValidator, upload.array
 itemRouter.get('/api/item/:id', checkToken, getItemController);
 itemRouter.get('/api/items', checkToken, getAllItemsController);
 itemRouter.get('/api/public/items', getAllPublicItemsController);
+itemRouter.get('/api/items/:id', getAllUserItemsController);
+
 
 itemRouter.put('/api/admin/item/:id', checkAdmin, _changeItemStatusValidator, changeItemStatusController);
 

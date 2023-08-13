@@ -14,6 +14,7 @@ import { formatDateWithLanguage } from "../../helpers/dateFormatHelper";
 import ChangeStatusDialogue from "../../components/ChangeStatusDialogue";
 import { findLocationDescription } from "../../helpers/locationsHelper";
 import "./itemDetails.css";
+import { findCategoryDescription } from "../../helpers/categoriesHelper";
 
 const ItemDetails = ({getCookie, enableTrade, user, currentLanguage}) => {
 
@@ -219,13 +220,35 @@ const ItemDetails = ({getCookie, enableTrade, user, currentLanguage}) => {
                                     <div className="col-12 item-details-text item-details-date pe-2 ps-2 ">{formatDateWithLanguage(item.publishedDate, currentLanguage)}</div>
                                     <div className="col-12 mt-4 d-flex align-items-center">
                                         <FontAwesomeIcon icon={"user"} className="user-icon pe-2 ps-2"/>
-                                        <span className="item-details-text pe-2 ps-2">{item.itemOwner.username}</span>
+                                        <span className="item-details-text pe-2 ps-2 username background-color-none" onClick={()=> {
+                                            navigate("/profile/" + item.itemOwner.id);
+                                            window.location.reload();
+                                        }}>{item.itemOwner.username}</span>
                                     </div>
                                     <div className="col-12 d-flex align-items-center">
                                         <FontAwesomeIcon icon={"map-marker-alt"} className="location-icon pe-2 ps-2"/>
                                         <span className="item-details-text pe-2 ps-2">{findLocationDescription(item.location, currentLanguage)}</span>
                                     </div>
-                                    <h4 className="pe-2 ps-2 mt-4 item-details-text">{t("DescriptionLabel") }</h4>
+                                    <div className="col-12 d-flex align-items-center mt-3">
+                                    {
+                                        ( () => {
+                                            let container = [];
+
+                                            item.categories.forEach((cat, j) => {
+                                                container.push(
+                                                    <div key={j} className="subcat-label">
+                                                        <span>
+                                                            {findCategoryDescription(cat, currentLanguage)}
+                                                        </span>
+                                                    </div>
+                                                )
+                                            })
+                                            return container;
+                                        })()
+                                    }
+                                    </div>
+                                    <h4 className="pe-2 ps-2 mt-3 item-details-text">{t("DescriptionLabel") }</h4>
+
                                     <div className="col-12 item-details-text p-2">{item.description}</div>
                                     {
                                         screenWidth >= 769 &&

@@ -31,7 +31,8 @@ const _getTradezController = async (req, res) => {
         console.log("entered tradez controller");
         const itemId = new mongoose.Types.ObjectId(req.params);
         console.log("item id: ", itemId);
-        const result = await getTradez(itemId);
+        const query = req.query;
+        const result = await getTradez(itemId, query);
         console.log("res is: ", result);
         res.status(200).json(result);
     } catch (err) {

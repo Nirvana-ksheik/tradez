@@ -212,4 +212,41 @@ const changeCharityStatus = async (charityId, status, rejectMessage) => {
     return charity;
 }
 
-export {login ,signup, getById, confirmAndUpdateState, forgotPassword, resetPassword, getAllCharities, updateCharityCategories, changeCharityStatus};
+const editCharitySubscription = async (_id, charityId) => {
+
+    const charity = await model.findById(charityId);
+    let newCharity = undefined;
+
+    if(charity){
+        if(charity.followers.find(({userId: val}) => val.toString() === _id.toString())){
+            await model.findByIdAndUpdate(mongoose.Types.ObjectId(charityId.toString()),
+                { $pull: { 'followers': { userId: mongoose.Types.ObjectId(_id.toString()) }}},
+                { new: true }
+            )
+            .then((res) => {
+                console.log("new Charity after removing subscription: ", res);
+                newCharity = res;
+            })
+            .catch((err) => {
+                console.log("Error removing subscription: ", err);
+            });
+        }
+        else{
+            await model.findByIdAndUpdate(mongoose.Types.ObjectId(charityId.toString()),
+                { $push: { 'followers': { userId: mongoose.Types.ObjectId(_id.toString()) }}},
+                { safe: true, upsert: true, new: true}
+            )
+            .then((res) => {
+                console.log("new Charity after adding subscription: ", res);
+                newCharity = res;
+            })
+            .catch((err) => {
+                console.log("Error adding subscription: ", err);
+            });
+        }
+    }
+
+    return newCharity;
+}
+
+export {login ,signup, getById, confirmAndUpdateState, forgotPassword, resetPassword, getAllCharities, updateCharityCategories, changeCharityStatus, editCharitySubscription};

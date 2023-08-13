@@ -89,9 +89,8 @@ export {_resetPassword as resetPasswordController};
 
 const _getUserProfile = async(req, res) => {
     try{
-        const user = req.user;
-        console.log("user in controller: ", user);
-        const id = user.id;
+        const id =  req.params.id;
+        console.log("user id in controller: ", id);
         const result = await getById({id});
         console.log("result is: ", result);
         res.status(200).json({result});

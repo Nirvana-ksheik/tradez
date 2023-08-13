@@ -4,12 +4,13 @@ import Ribbon from 'components/Ribbon';
 import { useEffect, useRef } from 'react';
 import { useState } from 'react';
 import { Role } from 'lookups';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useLayoutEffect } from 'react';
 import { formatDateWithLanguage } from '../../helpers/dateFormatHelper';
 import { formatNumberWithCommas } from '../../helpers/numberFormatHelper';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import UserItems from '../../components/UserItems';
 import './userProfile.css';
 
 const UserProfilePage = ({getCookie, user, currentLanguage}) => {
@@ -21,6 +22,8 @@ const UserProfilePage = ({getCookie, user, currentLanguage}) => {
     const [profilePicture, setProfilePicture] = useState();
     const [isLoading, setIsLoading] = useState();
     const [profilePictureUrl, setProfilePictureUrl] = useState();
+
+    const {id} = useParams();
 
     const inputFile = useRef(null) 
 
@@ -75,7 +78,7 @@ const UserProfilePage = ({getCookie, user, currentLanguage}) => {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                const url = "http://localhost:3000/api/auth/profile";
+                const url = "http://localhost:3000/api/auth/profile/" + id;
                 await reqInstance.get(url, 
                 { signal: controller.signal },
                 {
@@ -102,7 +105,7 @@ const UserProfilePage = ({getCookie, user, currentLanguage}) => {
         return ()=>{
             controller.abort();
         };
-    }, [getCookie, setUserData, user, navigation, profilePictureUrl]);
+    }, [getCookie, setUserData, user, navigation, profilePictureUrl, id]);
 
     useEffect(() => {
         // Clean up the object URL when the component unmounts
@@ -177,14 +180,14 @@ const UserProfilePage = ({getCookie, user, currentLanguage}) => {
                 <LoadingSpinner /> :
 
                 userData != null && user != null && user !== undefined && 
-                <div dir={currentLanguage === "ar" ? "rtl" : "ltr"} className="mt-lg-5 mt-3 d-flex col-12 flex-column justify-content-center">
-                    <div className="col-12 d-flex justify-content-lg-around align-items-lg-start align-items-center flex-lg-row flex-column">
-                        <div className={ screenWidth < 992 ? "col-lg-4 col-lg-5 d-flex flex-column align-items-center" : "col-lg-4 col-lg-5 d-flex flex-column"}>
+                <div dir={currentLanguage === "ar" ? "rtl" : "ltr"} className="mt-md-5 mt-3 d-flex col-12 flex-lg-row flex-column justify-content-md-center align-items-md-center align-items-lg-start">
+                    <div className={screenWidth <= 768 ? "col-12 d-flex justify-content-md-around align-items-center flex-md-row" : "col-12 col-lg-4 d-flex p-5 sticky-nav"}>
+                        <div className={ screenWidth < 600 ? "col-md-5 d-flex flex-column align-items-center" : "col-lg-12 col-md-5 d-flex flex-column align"}>
                             {
                                 (userData && userData.result && userData.result.logo) || (profilePictureUrl && profilePictureUrl != null) ?
                                 <>
                                     <div style={{position: "relative"}}>
-                                        <img className="col-12 icon profile-picture-placeholder" src={
+                                        <img className="charity-icon-logo col-12" src={
                                                 profilePictureUrl && profilePictureUrl != null ? 
                                                 profilePictureUrl :
                                                 "http://localhost:3000" + userData.result.logo
@@ -213,16 +216,43 @@ const UserProfilePage = ({getCookie, user, currentLanguage}) => {
                                 <input type='file' id='file' ref={inputFile} style={{display: 'none'}} onChange={imageChange}/>
                             </div>
                             {
-                                screenWidth >= 992 &&
+                                screenWidth >= 600 &&
                                 <>
                                     <button className="mt-3 btnn">{t("LogOutLink")}</button>
                                     <button className="mt-3 btnn" onClick={changePassword}>{t("ChangePasswordLink")}</button>
                                 </>
                             }
-
+                            {
+                                screenWidth > 768 && 
+                                <div className="col-3 col-md-4 col-lg-12 col-11 mt-5 mt-md-0 mt-lg-5">
+                                    <h2 className="username pe-1 ps-1 col-md-5 col-7 col-lg-12">{userData.result.username}</h2>
+                                    <div className="col-12 d-flex align-items-center justify-content-between pe-3 ps-3">
+                                        <i className="col-1 fa-solid fa-envelope align-items-center email-charity-logo align-items-center m-0"></i>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <p className="col-11 email align-items-center font-bold m-0">{userData.result.email}</p>
+                                    </div>
+                                    <div className="col-12 d-flex align-items-center justify-content-between pe-3 ps-3">
+                                        <i className="col-1 fa-solid fa-cubes align-items-center email-charity-logo align-items-center m-0"></i>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <p className="col-11 email align-items-center font-bold m-0">{formatNumberWithCommas(userData.result.numberOfTradez, currentLanguage) + t("NumberOfTradez")}</p>
+                                    </div>
+                                    <div className="col-12 d-flex align-items-center justify-content-between pe-3 ps-3">
+                                        <i className="col-1 fa-solid fa-cube align-items-center email-charity-logo align-items-center m-0"></i>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <p className="col-11 email align-items-center font-bold m-0">{t("TotalItems") + formatNumberWithCommas(userData.result.totalItems, currentLanguage)}</p>
+                                    </div>                           
+                                    <div className='col-12 d-flex align-items-center justify-content-between mt-2 pe-3 ps-3'>
+                                        <p className='date charity-profile-text-headers'>{t("JoinedOn")} </p><p className="date date-weight">{formatDateWithLanguage(userData.result.createdDate, currentLanguage)}</p>
+                                    </div>
+                                </div>
+                            }
                         </div>
-                        <div className="col-lg-3 col-11 mt-4 mt-lg-0">
-                            <h2 className="username pe-1 ps-1 col-md-5 col-7 col-lg-12">{userData.result.username}</h2>
+
+                    </div>
+                    {
+                        screenWidth <= 768 &&
+                        <div className="col-md-4 col-11 mt-4 mt-md-0 p-3 p-lg-0">
+                            <h2 className="username col-md-12 pe-1 ps-1 col-8">{userData.result.username}</h2>
                             <div className="col-12 d-flex align-items-center justify-content-between pe-3 ps-3">
                                 <i className="col-1 fa-solid fa-envelope align-items-center email-charity-logo align-items-center m-0"></i>
                                 &nbsp;&nbsp;&nbsp;
@@ -242,14 +272,21 @@ const UserProfilePage = ({getCookie, user, currentLanguage}) => {
                                 <p className='date charity-profile-text-headers'>{t("JoinedOn")} </p><p className="date date-weight">{formatDateWithLanguage(userData.result.createdDate, currentLanguage)}</p>
                             </div>
                         </div>
-                        {
-                            screenWidth < 992 &&
-                            <div className='d-flex col-10 flex-column mt-5 align-items-center'>
-                                <button className="mt-3 btnn col-12">{t("LogOutLink")}</button>
-                                <button className="mt-3 btnn col-12" onClick={changePassword}>{t("ChangePasswordLink")}</button>
+                    }
+                    <div className='col-lg-8 col-12 d-flex flex-column justify-content-lg-center align-items-center p-lg-5'>
+                        <div className='col-md-10 col-12 d-flex flex-column justify-content-center align-items-center mt-5 mt-lg-2'>
+                            <div className='col-11 d-flex flex-column'>
+                                <UserItems userId={userData.result.id} currentLanguage={currentLanguage} />
                             </div>
-                        }
+                        </div>
                     </div>
+                    {
+                        screenWidth < 600 &&
+                        <div className='d-flex col-10 flex-column mt-5 align-items-center'>
+                            <button className="mt-3 btnn col-12">{t("LogOutLink")}</button>
+                            <button className="mt-3 btnn col-12" onClick={changePassword}>{t("ChangePasswordLink")}</button>
+                        </div>
+                    }
                 </div>
             }
             {

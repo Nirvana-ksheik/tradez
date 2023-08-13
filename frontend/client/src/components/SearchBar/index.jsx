@@ -8,7 +8,7 @@ import CategoriesDropDown from "../CategoriesDropDown";
 import LocationsDropDown from "../LocationsDropDown";
 import "./searchBar.css";
 
-const SearchBar = ({setOrderValue, setOrderDirectionValue, setSearchTextValue, setStatusValue, setCategoryValue, categoryValue, locationValue, setLocationValue, isCharity, currentLanguage, isPosts}) => {
+const SearchBar = ({setOrderValue, setOrderDirectionValue, setSearchTextValue, setStatusValue, setCategoryValue, categoryValue, locationValue, setLocationValue, isCharity, currentLanguage, isPosts, isUserProfile}) => {
 
   const {t} = useTranslation();
   const [hideShowFilters, setHideShowFilters] = useState(false);
@@ -26,7 +26,9 @@ const SearchBar = ({setOrderValue, setOrderDirectionValue, setSearchTextValue, s
       </div>
       {
         hideShowFilters && 
-        <div className="d-flex col-lg-8 col-md-10 col-12 flex-md-row flex-column flex-column justify-content-md-around justify-content-center align-items-center">
+        <div className={isUserProfile ? 
+            "d-flex col-12 flex-md-row flex-column flex-column justify-content-md-around justify-content-center align-items-center" :
+            "d-flex col-lg-8 col-md-10 col-12 flex-md-row flex-column flex-column justify-content-md-around justify-content-center align-items-center"}>
         {
           setOrderValue !== null && setOrderValue !== undefined &&
           <DropDownButton btnName={t("OrderBy")} setDropValue={setOrderValue} list={isCharity ? charityOrderByLookups : isPosts ? postOrderByLookups : itemOrderByLookups} currentLanguage={currentLanguage}/>

@@ -73,6 +73,27 @@ const _getItemController = async (req, res) => {
 };
 export { _getItemController as getItemController };
 
+const _getAllUserItemsController = async(req, res) => {
+    console.log("reached get all user items controller");
+    try{
+        const id = req.params.id;
+        const query = req.query;
+        query.userId = id;
+        query.isUserProfile = true;
+        query.isMine = true;
+        query.archived = false;
+        console.log("query params: ", query);
+        const items = await getAllItems({query});
+        res.status(200).json(items);
+        console.log("finished getting items for user");
+    } catch(err){
+        console.log("error: ", err);    
+        res.status(500).json(err.message);
+    }
+}
+export { _getAllUserItemsController as getAllUserItemsController };
+
+
 const _getAllItemsController = async (req, res) => {
 
     console.log("reached get all user items controller");

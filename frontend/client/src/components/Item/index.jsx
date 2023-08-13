@@ -2,17 +2,18 @@ import React from "react";
 import { useTranslation } from "react-i18next";	
 import { formatNumberWithCommas } from "../../helpers/numberFormatHelper";
 import { findCategoryDescription } from "../../helpers/categoriesHelper";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Item.css";
 
-const Item = ({data, clickEvent, currentLanguage}) => {
+const Item = ({data, clickEvent, currentLanguage, isUserProfile}) => {
 
 	console.log("data is: ", data);
 
 	const {t} = useTranslation();
 
 	return (
-	<div dir={currentLanguage === "ar" ? "rtl" : "ltr"} className={"col-xl-3 col-lg-3 col-sm-5 m-3 item-container " + data.status}>
+	<div dir={currentLanguage === "ar" ? "rtl" : "ltr"} className={isUserProfile ? 
+			"col-lg-4 col-sm-5 m-3 item-container " + data.status : 
+			"col-xl-3 col-lg-3 col-sm-5 m-3 item-container " + data.status}>
 		<div onClick={clickEvent}>
 			<div className="col-12">
 				<img

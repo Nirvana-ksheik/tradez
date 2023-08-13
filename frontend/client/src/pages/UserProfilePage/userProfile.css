@@ -29,8 +29,17 @@
     color: white;
     background-color: var(--primary-variant-color);
     border-radius: 5px;
+    text-decoration: none;
 }
 
+.username:hover{
+    color: white;
+    cursor: pointer;
+}
+
+.background-color-none{
+    background-color: transparent !important;
+}
 .update-profile-pic-link{
     color: var(--secodnary-color);
 }

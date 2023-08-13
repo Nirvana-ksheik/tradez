@@ -47,3 +47,20 @@
     top: 0 !important;
     align-items:flex-start !important;
 }
+
+.follow-btn{
+    border-radius: 5rem;
+    border-color: var(--primary-variant-color);
+    color: var(--primary-variant-color);
+    font-size: 1.5rem;
+    padding: 0.4rem;
+}
+
+.unfollow-btn{
+    border-radius: 5rem;
+    border-color: var(--primary-variant-color);
+    background-color: var(--primary-variant-color);
+    color: whitesmoke;
+    font-size: 1.5rem;
+    padding: 0.4rem;
+}

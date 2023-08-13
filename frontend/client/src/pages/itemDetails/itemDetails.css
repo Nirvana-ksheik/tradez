@@ -34,7 +34,7 @@
 }
 
 .item-details-text{
-    color: var(--black);
+    color: var(--black) !important;
 }
 
 .approximate-price{

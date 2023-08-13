@@ -58,9 +58,9 @@ const AddItem = ({getCookie, user, currentLanguage}) => {
 				})
                 .then(async({data: res}) =>{
                     const modelData = {
-                        username: user.organizationName
+                        username: user.username
                     };
-                    const notificationObject = Notifications.CHARITY_SIGNUP;
+                    const notificationObject = Notifications.ITEM_UPLOADED;
                     const notificationMessage = parseModelString(notificationObject.message, modelData);
                     const notificationMessageAr = parseModelString(notificationObject.message_ar, modelData);
 
@@ -68,7 +68,7 @@ const AddItem = ({getCookie, user, currentLanguage}) => {
                       message: notificationMessage,
                       title: notificationObject.title,
                       message_ar: notificationMessageAr,
-                      title_ar: notificationObject.title,
+                      title_ar: notificationObject.title_ar,
                       currentLanguage: currentLanguage
                     });
                 });

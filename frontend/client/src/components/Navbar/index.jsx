@@ -118,7 +118,8 @@ function NavBar({user, getCookie, changeLanguage, currentLanguage}) {
 											navigate(url)
 										}
 										else{
-											navigate("/profile");
+											const url = "/profile/" + user.id;
+											navigate(url);
 										}
 									}}>
 										<div className="d-flex justify-content-around align-items-center">
@@ -266,7 +267,7 @@ function PopupList({user, handleLogout}) {
 								if(user.role === Role.CHARITY){
 									navigate(`/charity/profile/${user.id}`);
 								}else{
-									navigate("/profile");
+									navigate(`/profile/${user.id}`);
 								}
 							}
 						}} className="popup-list-button">

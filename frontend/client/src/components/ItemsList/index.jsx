@@ -8,7 +8,7 @@ import NoData from "../../assets/img/no_data_found.png";
 import Pagination from "../../components/Pagination";
 import "./itemsList.css"
 
-const ItemsList = ({clickEvent, getData, items, orderValue, setOrderValue, orderDirectionValue, setOrderDirectionValue, searchTextValue, setSearchTextValue, statusValue, setStatusValue, categoryValue, setCategoryValue, locationValue, setLocationValue, isLoading, canSeeStatusFilters, currentLanguage}) => {
+const ItemsList = ({clickEvent, getData, items, orderValue, setOrderValue, orderDirectionValue, setOrderDirectionValue, searchTextValue, setSearchTextValue, statusValue, setStatusValue, categoryValue, setCategoryValue, locationValue, setLocationValue, isLoading, canSeeStatusFilters, currentLanguage, isUserProfile}) => {
 
     const itemsPerPage = 9;
 
@@ -39,14 +39,14 @@ const ItemsList = ({clickEvent, getData, items, orderValue, setOrderValue, order
     }, [itemOffset, items]);
 
     return (
-    <div dir={currentLanguage === "ar" ? "rtl" : "ltr"} className="d-flex flex-column col-xl-10 align-items-center justify-content-center">
+    <div dir={currentLanguage === "ar" ? "rtl" : "ltr"} className={isUserProfile ? "d-flex flex-column col-12 align-items-center justify-content-center" : "d-flex flex-column col-xl-10 align-items-center justify-content-center"}>
 
         <SearchBar setOrderValue={setOrderValue} setOrderDirectionValue={setOrderDirectionValue}
                    setSearchTextValue={setSearchTextValue}
                    setStatusValue={canSeeStatusFilters === true ? setStatusValue : undefined}
                    setCategoryValue={setCategoryValue} categoryValue={categoryValue}
                    currentLanguage={currentLanguage}
-                   locationValue={locationValue} setLocationValue={setLocationValue}
+                   locationValue={locationValue} setLocationValue={setLocationValue} isUserProfile={isUserProfile}
         />
         {
             items != null && items !== undefined && currentItems != null && currentItems !== undefined && currentItems.length > 0 && isLoading === false && 
@@ -59,7 +59,7 @@ const ItemsList = ({clickEvent, getData, items, orderValue, setOrderValue, order
                             currentItems && currentItems.forEach((data, index) => {
                                 console.log("single data is: ", data);
                                 container.push(
-                                    <Item currentLanguage={currentLanguage} key={index} data={data} clickEvent={()=> {clickEvent(data._id)}}/>
+                                    <Item isUserProfile={isUserProfile} currentLanguage={currentLanguage} key={index} data={data} clickEvent={()=> {clickEvent(data._id)}}/>
                                 )
                             })
                             return container;

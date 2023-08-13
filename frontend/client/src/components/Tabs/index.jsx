@@ -19,6 +19,8 @@ function Tabs(props) {
   const [orderDirectionValue, setOrderDirectionValue] = useState(null);
   const [searchTextValue, setSearchTextValue] = useState(null);
   const [showOffers, setShowOffers] = useState(false);
+  const [categoryValue, setCategoryValue] = useState([]);
+  const [locationValue, setLocationValue] = useState(null);
 
   const {t} = useTranslation();
 
@@ -58,7 +60,13 @@ function Tabs(props) {
 
         reqInstance.get(
             url, 
-            { 
+            {
+                params:{
+                  orderDirection: orderDirectionValue,
+                  searchText: searchTextValue,
+                  category: categoryValue,
+                  location: locationValue
+                },
                 signal: controller.signal
             },
             {
@@ -69,19 +77,24 @@ function Tabs(props) {
             setItems(res); 
             console.log("itemsssss: ", items);
             setIsLoading(false);
-        });
+        }).catch((err)=> {
+          console.log("error: ", err);
+        })
     
     } catch (error) { 
         console.log("error: ", error);
     }
-  }, [items, props])
+  }, [items, props, orderDirectionValue, searchTextValue, categoryValue, locationValue])
 
   useEffect(() => {
     const controller = new AbortController();
     getData(controller);
 
+    return () => {
+      controller.abort();
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [locationValue]);
 
   useEffect(()=> {
     const token = props.getCookie();
@@ -128,7 +141,11 @@ function Tabs(props) {
                     <ItemsList 
                         clickEvent={clickEvent} getData={getData} items={items} orderValue={orderValue}
                         setOrderValue={setOrderValue} orderDirectionValue={orderDirectionValue} setOrderDirectionValue={setOrderDirectionValue}
-                        searchTextValue={searchTextValue} setSearchTextValue={setSearchTextValue} isLoading={isLoading} currentLanguage={props.currentLanguage}/>            
+                        searchTextValue={searchTextValue} setSearchTextValue={setSearchTextValue}
+                        isLoading={isLoading} currentLanguage={props.currentLanguage}
+                        categoryValue={categoryValue} setCategoryValue={setCategoryValue}
+                        locationValue={locationValue} setLocationValue={setLocationValue}
+                        />            
                 </div>
             )}
           </div>

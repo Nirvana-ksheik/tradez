@@ -103,5 +103,6 @@
     "whatToDonateLabel": "بماذا يمكنك التبرع لنا ؟",
     "ItemCategories": "الأصناف",
     "ItemCategoriesSubText": "اختر الأصناف لتحديد العنصر",
-    "CharityDidntAddCategories": "هذه الجمعية لم تقم بإضافة تصنيفات وفقاً لإحتياجاتها بعد"
+    "CharityDidntAddCategories": "هذه الجمعية لم تقم بإضافة تصنيفات وفقاً لإحتياجاتها بعد",
+    "Delete": "حذف"
 }

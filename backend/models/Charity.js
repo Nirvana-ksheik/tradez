@@ -84,6 +84,11 @@ const charitySchemma = new Schema({
     rejectMessage: {
         type: String
     },
+    followers: [{
+        userId: {
+            type: mongoose.Schema.Types.ObjectId
+        }
+    }],
     createdDate: {
         type: Date,
         default: new Date().toISOString()
@@ -123,6 +128,7 @@ export class CharityModel {
         this.logo = data.logo;
         this.categories = data.categories;
         this.rejectMessage = data.rejectMessage;
+        this.followers = data.followers;
         this.createdDate = data.createdDate;
     }
 }

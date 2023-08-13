@@ -13,7 +13,7 @@ authRouter.post('/api/auth/confirm/:token', checkConfirmationEmailToken, confirm
 authRouter.post('/api/auth/forgot', forgotPasswordController);
 authRouter.post('/api/auth/logout', logoutController);
 authRouter.post('/api/auth/reset/:token', checkResetPasswordToken, resetPasswordController);
-authRouter.get('/api/auth/profile', checkToken, getUserProfileController);
+authRouter.get('/api/auth/profile/:id', getUserProfileController);
 authRouter.get('/api/auth/admins', getAllAdminsController);
 authRouter.put('/api/auth/update-logo', checkToken, userProfileUpload.single('logo'), updateProfilePictureController);
 

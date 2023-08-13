@@ -95,11 +95,13 @@ function App() {
 			  throw new Error('Permission denied for push notifications');
 			}
 		  })
-		  .then((subscription) => {
+		  .then(async(subscription) => {
 			console.log("Subscribtion: ", subscription);
 			// Send the subscription object to the backend server
-			const userId = user.id; // Replace with the actual user ID
-			saveSubscription(userId, subscription);
+			if(user){
+				const userId = user.id; // Replace with the actual user ID
+				await saveSubscription(userId, subscription);
+			}
 		  })
 		  .catch((error) => {
 			console.error('Error requesting permission:', error);
@@ -143,7 +145,7 @@ function App() {
 				<Route path="/items/edit/:id" element={ user ? <EditItem getCookie={getCookie} currentLanguage={currentLanguage}/> : <Login setCookie={setCookie} currentLanguage={currentLanguage}/>} />
 				<Route path="/items/:primaryId/tradez/:id" element={ user ? <ItemDetails getCookie={getCookie} enableTrade={true} currentLanguage={currentLanguage} user={user}/> : <Login setCookie={setCookie} currentLanguage={currentLanguage}/>} />
 				<Route path="/items/archived" element={ user ? <ArchivedItems getCookie={getCookie} currentLanguage={currentLanguage}/> : <Login setCookie={setCookie} currentLanguage={currentLanguage}/>} />
-				<Route path="/profile" element={ user ? <UserProfilePage getCookie={getCookie} user={user} currentLanguage={currentLanguage} /> : <Login setCookie={setCookie} currentLanguage={currentLanguage}/>} />
+				<Route path="/profile/:id" element={ user ? <UserProfilePage getCookie={getCookie} user={user} currentLanguage={currentLanguage} /> : <Login setCookie={setCookie} currentLanguage={currentLanguage}/>} />
 				<Route path="/auth/reset/:token" element={<ResetPassword user={user} currentLanguage={currentLanguage}/>} />
 				<Route path="/forgot-password" element={<ForgotPassword currentLanguage={currentLanguage}/>} />
 				<Route path="/confirm-email/:token" element={<ConfirmEmail isCharity={false} currentLanguage={currentLanguage}/>} />
@@ -151,7 +153,7 @@ function App() {
 				<Route path="/charity/login" element={<LoginCharity setCookie={setCookie} currentLanguage={currentLanguage}/>} />
 				<Route path="/charity/confirm-email/:token" element={<ConfirmEmail isCharity={true} currentLanguage={currentLanguage}/>} />
 				<Route path="/charity/profile/:id" element={ <CharityProfilePage getCookie={getCookie} user={user} currentLanguage={currentLanguage}/>} />
-				<Route path="/charity/posts/create" element={ <AddPost getCookie={getCookie} currentLanguage={currentLanguage}/> } />
+				<Route path="/charity/posts/create" element={ <AddPost user={user} getCookie={getCookie} currentLanguage={currentLanguage}/> } />
 				<Route path="/charity/posts/edit/:id" element={ <EditPost getCookie={getCookie} currentLanguage={currentLanguage}/> } />
 				<Route path="/charity/posts" element={ <AllPosts getCookie={getCookie} user={user} currentLanguage={currentLanguage}/> } />
 				<Route path="/charities" element={ <AllCharities getCookie={getCookie} user={user} currentLanguage={currentLanguage}/> } />

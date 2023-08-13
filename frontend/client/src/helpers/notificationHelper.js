@@ -46,9 +46,22 @@ const adminNotificationSender = async({message, title, message_ar, title_ar, cur
 
     const admins = await axios.get('http://localhost:3000/api/auth/admins');
 
-    for(const admin of admins){
+    console.log("Admins to send notification: ", admins);
+    
+    for(const admin of admins.data.result){
         await notificationSender({userId: admin, message: message, title: title, message_ar: message_ar, title_ar: title_ar, currentLanguage: currentLanguage});
     }
 };
 
-export {notificationSender, adminNotificationSender}
+const followersNotificationSender = async({charityId, message, title, message_ar, title_ar, currentLanguage}) => {
+
+    const followers = await axios.get('http://localhost:3000/api/charity/auth/profile/' + charityId);
+
+    console.log("Followers to send notifications: ", followers.data.result.followers);
+
+    for(const follower of followers.data.result.followers){
+        await notificationSender({userId: follower.userId, message: message, title: title, message_ar: message_ar, title_ar: title_ar, currentLanguage: currentLanguage});
+    }
+}
+
+export {notificationSender, adminNotificationSender, followersNotificationSender}

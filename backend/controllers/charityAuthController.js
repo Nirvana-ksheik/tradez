@@ -1,5 +1,5 @@
 import * as dotenv from 'dotenv';
-import { login, signup, confirmAndUpdateState, forgotPassword, resetPassword, getById, getAllCharities, updateCharityCategories, changeCharityStatus } from '../helpers/charityHelper.js';
+import { login, signup, confirmAndUpdateState, forgotPassword, resetPassword, getById, getAllCharities, updateCharityCategories, changeCharityStatus, editCharitySubscription } from '../helpers/charityHelper.js';
 import { ImageModel } from '../models/Image.js';
 
 dotenv.config();
@@ -148,3 +148,18 @@ const _changeCharityStatusController = async (req, res) => {
 };
 export { _changeCharityStatusController as changeCharityStatusController };
 
+const _editCharitySubscriptionsController = async (req, res) => {
+
+    console.log("reached edit charity subscriptions controller");
+    try{
+        const {id} = req.params;
+        const _id = req.user.id;
+        const isFollower = await editCharitySubscription(_id, id);
+        console.log("finished editing subscription to charity : ", id);
+        res.status(200).json(isFollower);
+    } catch(err){
+        console.log("error: ", err);    
+        res.status(500).json(err.message);
+    }
+};
+export { _editCharitySubscriptionsController as editCharitySubscriptionsController };

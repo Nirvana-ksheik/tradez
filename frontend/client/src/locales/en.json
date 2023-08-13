@@ -104,7 +104,8 @@
     "whatToDonateLabel": "What can you donate to us ?",
     "ItemCategories": "Categories",
     "ItemCategoriesSubText": "Choose the categories for your item",
-    "CharityDidntAddCategories": "This Charity hasn't added categories for it's needs yet"
+    "CharityDidntAddCategories": "This Charity hasn't added categories for it's needs yet",
+    "Delete": "Delete"
 }
 
 

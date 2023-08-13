@@ -26,22 +26,66 @@ const getTrade = async (item1, item2) => {
     return trade;
 }
 
-const getTradez = async (itemId) => {
+const getTradez = async (itemId, query) => {
     console.log("item iddd: ", itemId);
     const tradez = await model.find({
         primaryItemId: itemId,
         accepted: false
     });
+    const itemIds = [];
+    tradez.forEach((trade, i) => {
+        itemIds.push(trade.secondaryItemId);
+    });
+
+    const order = [];
+    query.order ? order.push(query.order) : order.push("publishedDate");
+    query.orderDirection ? order.push(query.orderDirection) : order.push(-1);
+
+    const itemsQuery = ItemModel.find({'_id': { $in: itemIds }}).sort([order]);
+    itemsQuery.getFilter();
+
+    const searchText = query.searchText;
+    const locationFilter = query.location;
+    const categoriesFilter = query.category;
+
+    if(searchText){
+        itemsQuery.find({
+            $or:[
+                {name: { $regex: '.*' + searchText + '.*' }},
+                {locationName: { $regex: '.*' + searchText + '.*' }},
+                {description: { $regex: '.*' + searchText + '.*' }}
+            ]
+        });
+        itemsQuery.getFilter();
+    }
+
+    if(categoriesFilter !== null && categoriesFilter !== undefined && categoriesFilter !== []){
+        console.log("categories filter array: ", categoriesFilter);
+        itemsQuery.find({
+            categories: {$in: categoriesFilter}
+        });
+        itemsQuery.getFilter();
+    }
+
+    if(locationFilter !== null && locationFilter !== undefined){
+        itemsQuery.find({
+            location: locationFilter
+        });
+        itemsQuery.getFilter();
+    }
+
     console.log("tradezItems: ", tradez);
-    let items = [];
-    await Promise.all(tradez.map(async (trade, i) => {
-        const id = trade.secondaryItemId;
-        const item = await getItemDetails({id});
-        console.log("Trade item: ", item);
-        items.push(item);
+    const items = await itemsQuery.exec();
+    const itemsResults = [];
+
+    await Promise.all(items.map(async (item, i) => {
+        const itemModel = await getItemDetails({id: item._id});
+        console.log("Trade item: ", itemModel);
+        itemsResults.push(itemModel);
     }));
-    console.log("items: ", items);
-    return items;
+
+    console.log("items: ", itemsResults);
+    return itemsResults;
 }
 
 const acceptTrade = async (body) => {

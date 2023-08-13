@@ -8,6 +8,7 @@ import { formatNumberWithCommas } from "../../helpers/numberFormatHelper";
 import { formatDateWithLanguage } from "../../helpers/dateFormatHelper";
 import { Dropdown } from "react-bootstrap";
 import "./post.css";
+import { useNavigate } from "react-router-dom";
 
 const Post = ({ getCookie, user, initialData, currentLanguage }) => {
   const [liked, setLiked] = useState();
@@ -16,6 +17,8 @@ const Post = ({ getCookie, user, initialData, currentLanguage }) => {
   const [imagesPaths, setImagesPaths] = useState([]);
   const [data, setData] = useState(initialData);
   const [showAllComments, setShowAllComments] = useState(false);
+
+  const navigate = useNavigate();
 
   const { t } = useTranslation();
 
@@ -81,7 +84,7 @@ const Post = ({ getCookie, user, initialData, currentLanguage }) => {
             message: notificationMessage,
             title: notificationObject.title,
             message_ar: notificationMessageAr,
-            title_ar: notificationObject.title,
+            title_ar: notificationObject.title_ar,
             currentLanguage: currentLanguage
           });
         }
@@ -148,7 +151,7 @@ const Post = ({ getCookie, user, initialData, currentLanguage }) => {
             message: notificationMessage,
             title: notificationObject.title,
             message_ar: notificationMessageAr,
-            title_ar: notificationObject.title,
+            title_ar: notificationObject.title_ar,
             currentLanguage: currentLanguage
           });
         })
@@ -182,7 +185,9 @@ const Post = ({ getCookie, user, initialData, currentLanguage }) => {
       <div className="col-12 d-flex align-items-center mb-4">
         <img className="post-charity-logo me-4 ms-4" src={"http://localhost:3000/" + data.logo} alt="" />
         <div className="d-flex flex-column">
-          <label>{data.username}</label>
+          <label className="username background-color-none item-details-text" onClick={()=>{
+            navigate("/charity/profile/" + data.charityId);
+          }}>{data.username}</label>
           <label>{formatDateWithLanguage(data.publishedDate, currentLanguage)}</label>
         </div>
       </div>
@@ -246,7 +251,7 @@ const Post = ({ getCookie, user, initialData, currentLanguage }) => {
                               <Dropdown.Menu size="sm" title=""> 
                                 <Dropdown.Item onClick={() => {
                                   handleDeleteComment(obj._id);
-                                }}>Delete</Dropdown.Item>
+                                }}>{t("Delete")}</Dropdown.Item>
                               </Dropdown.Menu>
                           </Dropdown>
                         </>
