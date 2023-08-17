@@ -11,20 +11,16 @@ const getAllNotifications = async ({userId}) => {
         })
     }
 
-    console.log("Notifications: ", notifications);
     return notifications;
 }
 
 const saveNotification = async ({notification}) => {
-
-    console.log("Notification to be saved: ", notification);
 
     const notificationResult = await model.create({...notification})
         .catch((err) => {
             console.log("Error saving notification: ", err);
         });
 
-    console.log("Notifications: ", notificationResult);
     return notificationResult;
 }
 

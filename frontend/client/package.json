@@ -11,8 +11,8 @@
     "@testing-library/user-event": "^13.5.0",
     "@trendmicro/react-sidenav": "^0.5.0",
     "axios": "^0.24.0",
-    "bootstrap": "^5.2.3",
-    "classnames": "^2.3.2",
+    "bootstrap": "5.2.3",
+    "classnames": "2.3.2",
     "date-fns": "^2.29.3",
     "font-awesome": "^4.7.0",
     "i18next": "^23.2.8",
@@ -29,6 +29,8 @@
     "react-paginate": "^8.1.4",
     "react-router-dom": "^6.2.1",
     "react-scripts": "^5.0.0",
+    "reactstrap": "8.10.0",
+    "sass": "1.62.1",
     "react-select": "^5.7.4",
     "react-select-multi-level": "^1.0.1",
     "react-slideshow-image": "^4.2.1",
@@ -40,7 +42,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "compile-sass": "sass src/assets/scss/argon-design-system-react.scss src/assets/css/argon-design-system-react.css",
+    "minify-sass": "sass src/assets/scss/argon-design-system-react.scss src/assets/css/argon-design-system-react.min.css --style compressed"
   },
   "eslintConfig": {
     "extends": [

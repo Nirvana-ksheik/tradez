@@ -57,6 +57,10 @@ const itemSchema = new Schema({
     }],
     rejectMessage:{
         type: String
+    },
+    isDelivered:{
+        type: Boolean,
+        default: false
     }
 }, { _id: false });
 
@@ -79,10 +83,11 @@ export class ItemModel {
         this.categories = data.categories;
         this.rejectMessage = data.rejectMessage;
         this.location = data.location;
+        this.isDelivered = data.isDelivered;
     }
 
     setOwnerId = (id) => { this.ownerId = id; }
-    setItemOwner = (user) => { this.itemOwner = new UserModel(user); }
+    setItemOwner = (user) => { console.log("userrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr: ", user); this.itemOwner = new UserModel(user); }
     setItemId = (id) => { this._id = id; }
     setImageReferences = (refs) => { this.imagesReferences = refs; }
     setImagePaths = (refs) => { this.imagePaths = refs; }

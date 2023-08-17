@@ -192,11 +192,15 @@ const UserProfilePage = ({getCookie, user, currentLanguage}) => {
                                                 profilePictureUrl :
                                                 "http://localhost:3000" + userData.result.logo
                                             } alt=''/>
-                                        <i className="fa-solid fa-pen-to-square update-profile-pic-link edit-profile-picture-button" onClick={
-                                            () => {
-                                                inputFile.current.click();
-                                            }
-                                        }></i>
+                                        {
+                                            userData.result.id === user.id &&
+                                            <i className="fa-solid fa-pen-to-square update-profile-pic-link edit-profile-picture-button" onClick={
+                                                () => {
+                                                    inputFile.current.click();
+                                                }
+                                            }></i>
+                                        }
+
                                     </div>
                                     {
                                         profilePictureUrl && profilePictureUrl != null &&
@@ -204,19 +208,22 @@ const UserProfilePage = ({getCookie, user, currentLanguage}) => {
                                     }
                                 </> :
                                 <div style={{position: "relative"}}>
-                                    <i className="fas fa-user-circle col-12 icon"></i>
-                                    <i className="fa-solid fa-pen-to-square update-profile-pic-link edit-profile-picture-button" onClick={
-                                        () => {
-                                            inputFile.current.click();
-                                        }
-                                    }></i>
+                                    <i className="fas fa-user-circle col-12 no-user-icon-logo"></i>
+                                    {
+                                        userData.result.id === user.id &&
+                                        <i className="fa-solid fa-pen-to-square update-profile-pic-link edit-profile-picture-button" onClick={
+                                            () => {
+                                                inputFile.current.click();
+                                            }
+                                        }></i>
+                                    }
                                 </div> 
                             }
                             <div className='d-flex col-12 mt-3 justify-content-around align-items-end'>
                                 <input type='file' id='file' ref={inputFile} style={{display: 'none'}} onChange={imageChange}/>
                             </div>
                             {
-                                screenWidth >= 600 &&
+                                screenWidth >= 600 && userData.result.id === user.id &&
                                 <>
                                     <button className="mt-3 btnn">{t("LogOutLink")}</button>
                                     <button className="mt-3 btnn" onClick={changePassword}>{t("ChangePasswordLink")}</button>
@@ -274,14 +281,14 @@ const UserProfilePage = ({getCookie, user, currentLanguage}) => {
                         </div>
                     }
                     <div className='col-lg-8 col-12 d-flex flex-column justify-content-lg-center align-items-center p-lg-5'>
-                        <div className='col-md-10 col-12 d-flex flex-column justify-content-center align-items-center mt-5 mt-lg-2'>
-                            <div className='col-11 d-flex flex-column'>
+                        <div className='col-12 d-flex flex-column justify-content-center align-items-center mt-5 mt-lg-2'>
+                            <div className='col-12 d-flex flex-column'>
                                 <UserItems userId={userData.result.id} currentLanguage={currentLanguage} />
                             </div>
                         </div>
                     </div>
                     {
-                        screenWidth < 600 &&
+                        screenWidth < 600 && userData.result.id === user.id &&
                         <div className='d-flex col-10 flex-column mt-5 align-items-center'>
                             <button className="mt-3 btnn col-12">{t("LogOutLink")}</button>
                             <button className="mt-3 btnn col-12" onClick={changePassword}>{t("ChangePasswordLink")}</button>

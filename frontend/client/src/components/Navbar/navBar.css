@@ -17,33 +17,35 @@ u{
 
 #popup-list > .tooltip-inner {
 	background-color: whitesmoke !important;
-	border: 1px solid var(--secondary-color);
+	border: 1px solid var(--secondary-color) !important;
+	padding: 0 !important;
+	margin: 0 !important;
 }
 
 #popup-list > .tooltip-arrow::before {
 	border-top: 1px solid var(--secondary-color) !important;
-	border-bottom-color: whitesmoke;
+	border-bottom-color: whitesmoke !important;
 }
 
 .popup-list-button{
-	background-color: whitesmoke;
-	color: var(--primary-color);
+	background-color: whitesmoke !important;
+	color: var(--primary-color) !important;
 	border: none !important;
 	margin: 0 !important;
 }
 
 .popup-list-button:hover{
-	background-color: var(--primary-color);
+	background-color: var(--primary-color) !important;
 	color: whitesmoke !important;
 }
 
 .popup-list-button::selection{
-	background-color: var(--secondary-color);
+	background-color: var(--secondary-color) !important;
 	color: whitesmoke !important;
 }
 
 .logo-icon{
-	height: 12vh;
+	height: 10vh;
 	margin-left: 2%;
 }
 
@@ -219,4 +221,16 @@ u{
 		justify-content: flex-end;
 	}
   
+  }
+
+  .list-group-item{
+	background-color: white !important;
+  }
+
+  .no-padding{
+	padding: 0 !important
+  }
+
+  .navbar-icon:hover{
+	cursor: pointer;
   }

@@ -6,6 +6,14 @@
   margin: 0 !important
 }
 
+.product-item-title-small{
+  font-size: 1.2rem;
+  color: var(--secondary-variant-color);
+  text-align: start;
+  text-size-adjust: auto;
+  margin: 0 !important
+}
+
 .product-item-price{
   color: var(--secondary-variant-color);
   font-weight: bold;
@@ -14,9 +22,24 @@
   display: flex;
 }
 
+.product-item-price-small{
+  color: var(--secondary-variant-color);
+  font-weight: bold;
+  font-size: 0.7rem;
+  justify-content: flex-end;
+  display: flex;
+}
+
+
 .product-item-tradez{
   color: var(--secondary-variant-color);
   font-size: 1rem;
+  font-weight: bold;
+}
+
+.product-item-tradez-small{
+  color: var(--secondary-variant-color);
+  font-size: 0.7rem;
   font-weight: bold;
 }
 
@@ -36,19 +59,32 @@
   display: -webkit-box;
 }
 
+.product-description-container-small{
+  max-height: 2rem;
+  margin-bottom: 3px;
+  overflow: clip;
+  display: -webkit-box;
+}
+
 .product-img{
   position: relative;
   max-width:12rem;
   max-height:12rem;
 }
 
-.item-container, .pending, .approved, .rejected{
+.product-img-small{
+  position: relative;
+  max-width:6rem;
+  max-height:6rem;
+}
+
+.item-container, .pending, .approved, .rejected, .is-delivered-true, .is-delivered-false{
   box-shadow: var(--primary-variant-color) 0px 10px 15px -5px;
   position: relative;
   overflow: hidden;
 }
 
-.item-container::before, .pending::before, .approved::before, .rejected::before{
+.item-container::before, .pending::before, .approved::before, .rejected::before, .is-delivered-true::before, .is-delivered-false::before{
   position: absolute;
   top: 1rem;
   right: -2rem;
@@ -77,6 +113,16 @@
   content: "Rejecetd";
 }
 
+.is-delivered-false::before{
+  background: var(--reject);
+  content: "Not Delivered";
+}
+
+.is-delivered-true::before{
+  background: var(--approve);
+  content: "Delivered";
+}
+
 .item-container:hover{
   cursor: pointer;
 }
@@ -95,12 +141,34 @@
   padding: 3px;
 }
 
+.subcat-label-item-small{
+  color: whitesmoke;
+  font-size: 0.7rem;
+  background-color: var(--primary-color);
+  border-radius: 0.5rem;
+  width: fit-content;
+  margin: 4px;
+  padding: 3px;
+}
+
 .item-location-icon{
   font-size: 1.3rem;
   color: var(--primary-variant-color)
 }
 
+.item-location-icon-small{
+  font-size: 1rem;
+  color: var(--primary-variant-color)
+}
+
+
 .item-description{
   text-align: center !important;
   margin: 0 !important;
+}
+
+.item-description-small{
+  text-align: center !important;
+  margin: 0 !important;
+  font-size: 0.8rem;
 }

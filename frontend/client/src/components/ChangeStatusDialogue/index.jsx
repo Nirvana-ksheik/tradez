@@ -2,10 +2,10 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { ItemStatus } from '../../lookups'
+import { Notifications } from '../../notifications'
+import { notificationSender } from '../../helpers/notificationHelper'
 import axios from "axios";
-import {ItemStatus} from '../../lookups'
-import {Notifications} from '../../notifications'
-import {notificationSender} from '../../helpers/notificationHelper'
 
 const ChangeStatusDialogue = ({id, status, getCookie, setShowDialogue, ownerId, currentLanguage, isCharity}) => {
 
@@ -71,7 +71,7 @@ const ChangeStatusDialogue = ({id, status, getCookie, setShowDialogue, ownerId, 
         <div className={isCharity ? "d-flex col-12 align-items-center justify-content-center" : "d-flex col-8 align-items-center justify-content-center"}>
             <div className={isCharity ? "d-flex col-12 mb-5 flex-column confirmation-dialogue": "d-flex col-8 mb-5 flex-column confirmation-dialogue"}>
                 <div className="col-12 d-flex justify-content-start m-2 font-white">
-                    <button className="btn btn-danger justify-content-start col-1" onClick={()=>{setShowDialogue(false)}}>X</button>
+                    <button className="btn btn-danger justify-content-start col-1" onClick={ ()=>{setShowDialogue(false)} }>X</button>
                 </div>
                 <div className="d-flex col-12 flex-column justify-content-center align-items-center">
                     <form onSubmit={changeItemStatus} className="col-12 justify-content-center align-items-center d-flex flex-column" method="POST">

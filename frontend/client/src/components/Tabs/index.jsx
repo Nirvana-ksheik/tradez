@@ -145,6 +145,7 @@ function Tabs(props) {
                         isLoading={isLoading} currentLanguage={props.currentLanguage}
                         categoryValue={categoryValue} setCategoryValue={setCategoryValue}
                         locationValue={locationValue} setLocationValue={setLocationValue}
+                        isUserProfile={true}
                         />            
                 </div>
             )}

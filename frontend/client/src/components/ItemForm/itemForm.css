@@ -8,7 +8,7 @@
 }
 
 .font-label{
-    color: var(--primary-color)
+    color: var(--primary-color);
 }
 
 .sub-text{
@@ -68,7 +68,7 @@ input:focus, input::after, input:active{
     background-color: var(--primary-color);
 }
 
-.submit-btn:hover{
+.submit-btn:hover, .submit-btn:focus{
     color: whitesmoke;
     background-color: var(--primary-variant-color);
 }

@@ -1,8 +1,7 @@
 import model, {ItemModel} from '../models/Item.js';
 import {default as userModel} from '../models/User.js';
 import {default as imageModel} from '../models/Image.js';
-import {default as tradezModel} from '../models/Tradez.js';
-import { getTradez } from './tradeHelper.js';
+import {TradezModel, default as tradezModel} from '../models/Tradez.js';
 import mongoose from 'mongoose';
 import { ItemStatus, Role } from '../models/Statics.js';
 
@@ -183,4 +182,40 @@ const changeItemStatus = async (itemId, status, rejectMessage) => {
     return item;
 }
 
-export { createItem, getAllItems, editItem, getItemMetaData, changeItemStatus, getItemDetails };
+const setItemDelivered = async (itemId, tradeId) => {
+    console.log("item id in helper: ", itemId);
+
+    await model.findOneAndUpdate({_id: itemId}, {isDelivered: true})
+        .then((res) => {
+            console.log("successfully update item to isDelivered: ", res);
+        })
+        .catch((err) => {
+            console.log("error in helper: ", err);
+            throw Error(err);
+        });
+    
+    const trade = await tradezModel.findById(tradeId)
+        .catch((err)=> {
+            console.log("error getting trade by id: ", err);
+        });
+    
+    const item1 = await model.findById(trade.primaryItemId);
+    const item2 = await model.findById(trade.secondaryItemId);
+
+    const result = item1.isDelivered && item2.isDelivered;
+
+    if(result){
+        await tradezModel.findByIdAndUpdate({_id: tradeId}, {isArchived: true})
+            .then((res) => {
+                console.log("trade archived successfully: ", res);
+            })
+            .catch((err) => {
+                console.log("error in archiving trade: ", err);
+                throw Error(err);
+            });
+    }
+    
+    return result;
+}
+
+export { createItem, getAllItems, editItem, getItemMetaData, changeItemStatus, getItemDetails, setItemDelivered };

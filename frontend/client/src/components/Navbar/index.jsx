@@ -57,7 +57,11 @@ function NavBar({user, getCookie, changeLanguage, currentLanguage}) {
 	<>
 		<nav className="navbar d-flex col-12">
 			<div className="col-12 d-flex justify-content-between align-items-center">
-				<img src="http://localhost:3000/logo.png" className="logo-icon" alt="logo icon"/>
+				<img src="http://localhost:3000/logo-cropped.png" className="logo-icon navbar-icon" alt="logo icon" onClick={
+					() => {
+						navigate('/');
+					}
+				}/>
 				<div className="d-flex pe-2 ps-2 align-items-center justify-content-center">
 					{
 						user != null && user.role !== Role.CHARITY  && screenWidth >= 600 &&
@@ -271,75 +275,85 @@ function PopupList({user, handleLogout}) {
 								}
 							}
 						}} className="popup-list-button">
-						<div className="d-flex align-items-center justify-content-between col-12">
-							<i className=" fa-solid fa-user-gear nav-bar-icon"></i>
-							<span className="col-8 offset-1 d-flex justify-content-start align-items-center">{t("ProfileLink")}</span>
+						<div className="d-flex align-items-center justify-content-between col-12 no-padding">
+							<i className="col-3 fa-solid fa-user-gear nav-bar-icon"></i>
+							<span className="col-8 offset-1 d-flex justify-content-start align-items-center no-padding">{t("ProfileLink")}</span>
 						</div>
 					</ListGroup.Item>
 					{
 						user.role == Role.USER &&
 						<ListGroup.Item action onClick={()=> {navigate("/items/create")}} className="popup-list-button">
-							<div className="d-flex align-items-center justify-content-between col-12">
-								<i className="col-3 fa fa-plus-circle nav-bar-icon"></i>
-								<span className="col-8 offset-1 d-flex justify-content-start align-items-center">{t("AddItemLink")}</span>
+							<div className="d-flex align-items-center justify-content-between col-12 no-padding">
+								<i className="col-3 fa-solid fa-plus-circle nav-bar-icon"></i>
+								<span className="col-8 offset-1 d-flex justify-content-start align-items-center no-padding">{t("AddItemLink")}</span>
 							</div>
 						</ListGroup.Item>
 					}
 					{
 						user.role == Role.USER &&
 						<ListGroup.Item action onClick={()=> {navigate("/items/mine")}} className="popup-list-button">
-							<div className="d-flex align-items-center justify-content-between col-12">
-								<i className="col-3 fa fa-cube nav-bar-icon"></i>
-								<span className="col-8 offset-1 d-flex justify-content-start align-items-center">{t("MyItemsLink")}</span>
+							<div className="d-flex align-items-center justify-content-between col-12 no-padding">
+								<i className="col-3 fa-solid fa-cube nav-bar-icon"></i>
+								<span className="col-8 offset-1 d-flex justify-content-start align-items-center no-padding">{t("MyItemsLink")}</span>
 							</div>
 						</ListGroup.Item>
 					}
 					{
 						user.role != Role.CHARITY &&
 						<ListGroup.Item action onClick={()=> {navigate("/allitems")}} className="popup-list-button">
-						<div className="d-flex align-items-center justify-content-between col-12">
-							<i className="col-3 fa fa-cubes nav-bar-icon"></i>
-							<span className="col-8 offset-1 d-flex justify-content-start align-items-center">{t("AllItems")}</span>
+						<div className="d-flex align-items-center justify-content-between col-12 no-padding">
+							<i className="col-3 fa-solid fa-cubes nav-bar-icon"></i>
+							<span className="col-8 offset-1 d-flex justify-content-start align-items-center no-padding">{t("AllItems")}</span>
 						</div>
 						</ListGroup.Item>
 					}
 					{
 						user.role == Role.USER && 
 						<ListGroup.Item action onClick={()=> {navigate("/items/archived")}} className="popup-list-button">
-							<div className="d-flex align-items-center justify-content-between col-12">
-								<i className="col-3 fa fa-file-archive nav-bar-icon"></i>
-								<span className="col-8 offset-1 d-flex justify-content-start align-items-center">{t("ArchivedLink")}</span>
+							<div className="d-flex align-items-center justify-content-between col-12 no-padding">
+								<i className="col-3 fa-solid fa-file-archive nav-bar-icon"></i>
+								<span className="col-8 offset-1 d-flex justify-content-start align-items-center no-padding">{t("ArchivedLink")}</span>
 							</div>
 						</ListGroup.Item>	
 					}
 					{
 						user.role === Role.CHARITY &&
-						<ListGroup.Item action onClick={()=> {navigate("/charity/posts/create")}} className="popup-list-button" disabled={user.status !== CharityStatus.APPROVED}>
-							<div className="d-flex align-items-center justify-content-between col-12">
-								<i className="col-3 fa fa-file-archive nav-bar-icon"></i>
-								<span className="col-8 offset-1 d-flex justify-content-start align-items-center">
+						<ListGroup.Item action onClick={()=> {navigate("/charity/posts/create")}} className="popup-list-button" disabled={false}>
+							<div className="d-flex align-items-center justify-content-between col-12 no-padding">
+								<i className="col-3 fa-solid fa-file-archive nav-bar-icon"></i>
+								<span className="col-8 offset-1 d-flex justify-content-start align-items-center no-padding">
 									{t("AddPostLink")}
 								</span>
 							</div>
 						</ListGroup.Item>	
 					}
 					<ListGroup.Item action onClick={()=> {navigate("/charities")}} className="popup-list-button">
-						<div className="d-flex align-items-center justify-content-between col-12">
-							<i className="col-3 fas fa-seedling nav-bar-icon"></i>
-							<span className="col-8 offset-1 d-flex justify-content-start align-items-center">{t("CharitiesLink")}</span>
+						<div className="d-flex align-items-center justify-content-between col-12 no-padding">
+							<i className="col-3 fa-solid fa-seedling nav-bar-icon"></i>
+							<span className="col-8 offset-1 d-flex justify-content-start align-items-center no-padding">{t("CharitiesLink")}</span>
 						</div>
 					</ListGroup.Item>
 					<ListGroup.Item action onClick={()=> {navigate("/charity/posts")}} className="popup-list-button">
-						<div className="d-flex align-items-center justify-content-between col-12">
-							<i className="col-3 fas fa-hand-holding-heart nav-bar-icon"></i>
-							<span className="col-8 offset-1 d-flex justify-content-start align-items-center">{t("DonationsLink")}</span>
+						<div className="d-flex align-items-center justify-content-between col-12 no-padding">
+							<i className="col-3 fa-solid fa-hand-holding-heart nav-bar-icon"></i>
+							<span className="col-8 offset-1 d-flex justify-content-start align-items-center no-padding">{t("DonationsLink")}</span>
 						</div>
 					</ListGroup.Item>	
-					
+					{
+						user.role === Role.ADMIN &&
+						<ListGroup.Item action onClick={()=> {navigate("/items/tradez")}} className="popup-list-button" disabled={false}>
+							<div className="d-flex align-items-center justify-content-between col-12 no-padding">
+								<i className="fa-solid fa-exchange-alt nav-bar-icon col-3"></i>
+								<span className="col-8 offset-1 d-flex justify-content-start align-items-center no-padding">
+									{t("TradezLink")}
+								</span>
+							</div>
+						</ListGroup.Item>	
+					}
 					<ListGroup.Item action onClick={handleLogout} className="popup-list-button">
-						<div className="d-flex align-items-center justify-content-between col-12">
-							<i className="col-3 fas fa-sign-out-alt nav-bar-icon"></i>
-							<span className="col-8 offset-1 d-flex justify-content-start align-items-center">
+						<div className="d-flex align-items-center justify-content-between col-12 no-padding">
+							<i className="col-3 fa-solid fa-sign-out-alt nav-bar-icon"></i>
+							<span className="col-8 offset-1 d-flex justify-content-start align-items-center no-padding">
 								{t("LogOutLink")}
 							</span>
 						</div>
@@ -351,7 +365,7 @@ function PopupList({user, handleLogout}) {
 			<div className="d-flex align-items-center justify-content-center">
 				<button type="button" onClick={handleShowList} className="white_btn">
 					<div className="d-flex justify-content-around align-items-center">
-						<span>{user.username}</span>
+						<span className="no-padding">{user.username}</span>
 						<i className="fa-solid fa-caret-down log-icon"></i>	
 					</div>
 				</button>

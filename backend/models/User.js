@@ -54,14 +54,14 @@ userSchema.pre('save', async function(next){
 export class UserModel {
 
     constructor(data){
-
+        console.log("USERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR; ", data)
         this.id = data.id;
         this.username = data.username;
+        this.logo = data.logo;
         this.email = data.email;
         this.role = data.role;
         this.numberOfTradez = data.numberOfTradez;
         this.totalItems = data.totalItems;
-        this.logo = data.logo;
         this.createdDate = data.createdDate;
     }
 }

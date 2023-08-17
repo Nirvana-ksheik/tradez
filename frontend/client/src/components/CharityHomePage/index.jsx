@@ -1,5 +1,5 @@
 import React from "react";
-import mainLogo from'../../assets/img/charity-image-home.jpg';
+// import mainLogo from'../../assets/img/charity-image-home.jpg';
 import "./charityHomePage.css"
 
 const CharityHomePage = ({currentLanguage}) => {
@@ -14,7 +14,7 @@ const CharityHomePage = ({currentLanguage}) => {
                     </p>
                 </div>
                 <div className="col-lg-7 col-md-10 col-12 d-flex justify-content-center align-items-center">
-                    <img src={mainLogo} className="charity-logo-home-page" alt=""/>
+                    {/* <img src={mainLogo} className="charity-logo-home-page" alt=""/> */}
                 </div>
             </div>
 

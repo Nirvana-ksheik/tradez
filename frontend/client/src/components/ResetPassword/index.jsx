@@ -80,7 +80,7 @@ function ResetPassword({user, currentLanguage}) {
 						}else{
 							navigate('/charity/login');
 						}
-					}, 5000);
+					}, 3000);
 				}).catch((err)=>{
 					setError(t("InvalidToken"));
 				});
@@ -101,7 +101,7 @@ function ResetPassword({user, currentLanguage}) {
 			<div className={styles.login_form_container}>
 				<div className={styles.left}>
 					<form className={styles.form_container} onSubmit={resetPassword}>
-						<h1>{t("EnterYourNewPassword")}</h1>
+						<h1 className='primary-variant'>{t("EnterYourNewPassword")}</h1>
 						<input
 							type="password"
 							placeholder={t("NewPassword")}

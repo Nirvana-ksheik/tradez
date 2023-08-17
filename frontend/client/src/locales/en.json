@@ -105,7 +105,14 @@
     "ItemCategories": "Categories",
     "ItemCategoriesSubText": "Choose the categories for your item",
     "CharityDidntAddCategories": "This Charity hasn't added categories for it's needs yet",
-    "Delete": "Delete"
+    "Delete": "Delete",
+    "Sorting": "Sorting: ",
+    "Filters": "Filters: ",
+    "TradezLink": "Tradez",
+    "EditItemLink": "Edit Item",
+    "ADDITEM": "ADD ITEM",
+    "EDITITEM": "EDIT ITEM",
+    "NoTradez": "You don't have any pending Tradez"
 }
 
 

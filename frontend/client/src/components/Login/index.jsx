@@ -62,7 +62,7 @@ const Login = ({setCookie, currentLanguage}) => {
 							onChange={handleChange}
 							value={data.username}
 							required
-							className="input col-8 offset-2"
+							className="input col-8 offset-2 m-0 p-0"
 						/>
 						<input
 							type="password"

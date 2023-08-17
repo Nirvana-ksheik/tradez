@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import * as _controller from '../controllers/charityAuthController.js';
-import { checkConfirmationEmailToken, checkResetPasswordToken, checkCharity, checkAdmin, checkUser } from '../middleware/authMiddleware.js';
 import { logoUpload } from '../middleware/fileMiddleware.js';
+import { checkConfirmationEmailToken, checkResetPasswordToken, checkCharity, checkAdmin, checkUser } from '../middleware/authMiddleware.js';
 
 const charityRouter = Router();
 

@@ -95,7 +95,7 @@ const EditItem = ({ getCookie, currentLanguage }) => {
                 <ItemForm data={data} setData={setData} setSelectedFile={setSelectedFile} 
                             submitForm={submitForm} currentLanguage={currentLanguage} 
                             categories={categories} setCategories={setCategories}
-                            location={location} setLocation={setLocation}/>
+                            location={location} setLocation={setLocation} isEdit={true}/>
             }
         </>
 	);

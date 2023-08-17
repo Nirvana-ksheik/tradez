@@ -104,5 +104,12 @@
     "ItemCategories": "الأصناف",
     "ItemCategoriesSubText": "اختر الأصناف لتحديد العنصر",
     "CharityDidntAddCategories": "هذه الجمعية لم تقم بإضافة تصنيفات وفقاً لإحتياجاتها بعد",
-    "Delete": "حذف"
+    "Delete": "حذف",
+    "Sorting": "الترتيب: ",
+    "Filters": "التصفية: ",
+    "TradezLink": "التبديلات",
+    "EditItemLink": "تعديل العنصر",
+    "ADDITEM": "اضافة عنصر",
+    "EDITITEM": "تعديل عنصر",
+    "NoTradez": "ليس لديك أي صفقات معلقة"
 }

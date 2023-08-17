@@ -1,4 +1,4 @@
-import model from "../models/Tradez.js";
+import model, { AdminTradezModel, TradezModel } from "../models/Tradez.js";
 import {default as ItemModel} from "../models/Item.js";
 import { getItemDetails, getItemMetaData } from "./itemHelper.js";
 import mongoose from "mongoose";
@@ -113,4 +113,58 @@ const acceptTrade = async (body) => {
     return trade;
 }
 
-export { createTrade, getTradez, getTrade, acceptTrade };
+const getAcceptedTradez = async() => {
+
+    const allTradez = [];
+    let kpis = {
+        delivered: 0,
+        notDelivered: 0,
+        total: 0
+    };
+    
+    const tradez = await model.find()
+        .catch((err) => {
+            console.log("Error getting tradez for admin list:", err);
+        });
+    
+    console.log("tradez for admin: ", tradez);
+
+    await Promise.all(tradez.map(async (trade, i) => {
+
+        console.log("trade in loop: ", trade)
+        const itemModel1 = await getItemDetails({id: trade.primaryItemId});
+        console.log("item 1: ", itemModel1);
+        const itemModel2 = await getItemDetails({id: trade.secondaryItemId});
+        console.log("item 2: ", itemModel2);
+        console.log("trade id: ", trade._id);
+
+        if(trade.isArchived === true){
+            const tradeId = trade._id.toString();
+            const tradeModel = new AdminTradezModel(itemModel1, itemModel2, tradeId);
+            allTradez.push(tradeModel);
+        }
+
+        if(itemModel1.isDelivered){
+            kpis.delivered += 1;
+        }
+        if(!itemModel1.isDelivered){
+            kpis.notDelivered += 1;
+        }
+        
+        if(itemModel2.isDelivered){
+            kpis.delivered += 1;
+        }
+        if(!itemModel2.isDelivered){
+            kpis.notDelivered += 1;
+        }
+    }));
+
+    kpis.total = kpis.notDelivered + kpis.delivered;
+
+    return {
+        tradez: allTradez,
+        kpis: kpis
+    };
+}
+
+export { createTrade, getTradez, getTrade, acceptTrade, getAcceptedTradez };

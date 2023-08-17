@@ -7,7 +7,7 @@ import locationsData from '../../locations.json';
 import { findLocationDescription } from '../../helpers/locationsHelper';
 import "./locationsDropDown.css";
 
-const LocationsDropDown = ({btnName, setDropValue, dropValue, currentLanguage, className}) => {
+const LocationsDropDown = ({btnName, setDropValue, dropValue, currentLanguage, className, isMine}) => {
 
     const [options, setOptions] = useState([]);
 
@@ -32,7 +32,10 @@ const LocationsDropDown = ({btnName, setDropValue, dropValue, currentLanguage, c
 
   return (
 
-    <div dir="ltr" className={className ? "" : "d-flex col-lg-3 col-4 justify-content-lg-center justify-content-around dropdown-container m-2"}>
+    <div dir={currentLanguage === "ar" ? "rtl" : "ltr"} className={className ? "" : 
+    isMine ? 
+    "d-flex col-lg-3 col-4 justify-content-lg-center justify-content-around dropdown-container m-2":
+    "d-flex col-4 justify-content-lg-center justify-content-around dropdown-container m-2"}>
         <Dropdown as={ButtonGroup} className="col-12">
             <Button variant="none" className="dropDown-button col-12">{ t(buttonName) }</Button>
             <Dropdown.Toggle  id="dropdown-basic-button" className="col-3"/>

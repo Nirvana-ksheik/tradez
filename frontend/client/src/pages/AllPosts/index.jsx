@@ -68,15 +68,16 @@ const AllPosts = ({getCookie, user, currentLanguage, isMine}) => {
     }, [getCookie, isMine, searchTextValue, orderValue, orderDirectionValue]);
 
     return(
-        <div dir={currentLanguage === "ar" ? "rtl" : "ltr"} className={isMine ? "col-md-12 col-lg-12 col-xl-8 d-flex flex-column" :"col-md-12 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3 d-flex flex-column"}>
+        <div dir={currentLanguage === "ar" ? "rtl" : "ltr"} className={isMine ? "col-12 d-flex flex-column align-items-center justify-content-center" :"d-flex flex-column col-xl-10 offset-xl-1 justify-content-center align-items-center"}>
+        
         <SearchBar 
             setOrderValue={setOrderValue} setOrderDirectionValue={setOrderDirectionValue} 
             setSearchTextValue={setSearchTextValue} isCharity={false} isPosts={true}
-            currentLanguage={currentLanguage}
+            currentLanguage={currentLanguage} isMine={isMine}
         />
         {
             posts && !isLoading && posts.length > 0 &&
-            <div className={isMine ? "col-12" :"col-12"}>
+            <div className={isMine ? "col-10" :"col-8"}>
                 {
                     (() => {
                         let container = [];       

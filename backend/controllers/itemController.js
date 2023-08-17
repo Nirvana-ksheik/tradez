@@ -1,11 +1,14 @@
 import * as dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import http from 'http';
 import { ItemModel } from '../models/Item.js';
-import { createItem, getItemMetaData, getAllItems, editItem, changeItemStatus } from '../helpers/itemHelper.js';
+import { createItem, getItemMetaData, getAllItems, editItem, changeItemStatus, setItemDelivered } from '../helpers/itemHelper.js';
 import { ImageModel } from '../models/Image.js';
 import { createImagesAndReturnIds } from '../helpers/imageHelper.js';
 import { deleteFilesWithItemId } from '../helpers/fileHelper.js';
 import { ItemStatus } from '../models/Statics.js';
+import { generateQrCode } from '../helpers/qrCodeGenerator.js';
+import fs from 'fs';
 dotenv.config();
 
 const _createItemController = async (req, res) => {
@@ -20,6 +23,8 @@ const _createItemController = async (req, res) => {
         const fileReferences = await createImagesAndReturnIds(files);
         item.setImageReferences(fileReferences);
         const result = await createItem({item});
+        console.log("result is: ", result);
+        generateQrCode(result);
         res.status(200).json(result);
         console.log("finished creating item");
     } catch (err) {
@@ -162,3 +167,44 @@ const _getAllItemsAdminController = async (req, res) => {
     }
 };
 export { _getAllItemsAdminController as getAllItemsAdminController };
+
+
+const _setItemDeliveredController = async (req, res) => {
+
+    console.log("reached approve item controller");
+    try{
+        const {id} = req.params;
+        const tradeId = req.body.tradeId;
+        console.log("tradeId: ", tradeId);
+        const result = await setItemDelivered(id, tradeId);
+        console.log("finished setting item as delivered");
+        res.status(200).json(result);
+    } catch(err){
+        console.log("error: ", err);    
+        res.status(500).json(err.message);
+    }
+};
+export { _setItemDeliveredController as setItemDeliveredController };
+
+const _downloadQrCode = async (req, res) => {
+
+    console.log("downloading");
+    try{
+        const id = req.params.id;
+        const idd = req.params.idd;
+
+        const fileUrl = 'public/' + idd + '/' + id.toString() + '/qr-code/' + id.toString() + '--qrCode.png'; // URL of the file you want to download
+        const fileName = id.toString() + '---qrCode.png';
+
+        res.setHeader('Content-disposition', `attachment; filename=${fileName}`);
+        res.setHeader('Content-type', 'image/png');
+
+        const fileStream = fs.createReadStream(fileUrl);
+        fileStream.pipe(res);
+    }
+    catch(err){
+        console.log("error: ", err);    
+        res.status(500).json(err.message);
+    }
+};
+export { _downloadQrCode as downloadQrCode };

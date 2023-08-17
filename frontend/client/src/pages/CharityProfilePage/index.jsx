@@ -398,111 +398,111 @@ const CharityProfilePage = ({getCookie, user, currentLanguage}) => {
                             </div>
                         </div>
                     }
-                <div className='col-lg-8 col-12 d-flex flex-column justify-content-lg-center align-items-start p-lg-5'>
-                    {
-                        user && user.id !== userData.result._id &&
-                        <div className='col-md-3 col-5 d-flex flex-column justify-content-center align-items-center mt-5 mt-lg-2'>
-                            <button className={isFollower ? 'unfollow-btn col-11 ms-2' : 'follow-btn col-11 ms-2'} onClick={editSubscription}>
-                                {isFollower ? t("UnFollow") : t("Follow")}
-                            </button>
-                        </div>
-                    }
-
-                    <div className='col-md-10 col-12 d-flex flex-column justify-content-center align-items-center mt-5 mt-lg-2'>
-                        <div className='col-11 d-flex flex-column'>
+                    <div className='col-8 d-flex flex-column justify-content-lg-center justiffy-content-center align-items-start p-lg-5'>
                         {
-                            userData.result && userData.result.status === CharityStatus.PENDING && user && user.role === Role.ADMIN &&
-                            <div className="d-flex col-12 mb-3 justify-content-between align-items-center">
-                                <IconTextButton 
-                                    text={t("Approve")}
-                                    onClick={() => {setItemStatus(CharityStatus.APPROVED); setShowConfirmationDialogue(true);}}
-                                    icon={<i className="fas fa-check"></i>}
-                                    btnClass={"approve"}
-                                />    
-                                <IconTextButton 
-                                    text={t("Reject")}
-                                    onClick={() => {setItemStatus(CharityStatus.REJECTED); setShowConfirmationDialogue(true);}}
-                                    icon={<i className="fas fa-times"></i>}
-                                    btnClass={"reject"}
-                                />         
-                            </div>  
-                        }
-                        {
-                            showConfirmationDialogue &&
-                            <ChangeStatusDialogue id={userData.result._id} status={itemStatus} getCookie={getCookie} setShowDialogue={setShowConfirmationDialogue} ownerId={userData.result._id} currentLanguage={currentLanguage} isCharity={true}/>
-                        }
-                            <div className='col-12 d-flex flex-md-row flex-column mt-lg-3'>
-                                <h3 className={currentLanguage === "ar" ? 'text-right charity-profile-text-headers ms-4' : 'text-left charity-profile-text-headers me-4'}>{t("whatToDonateLabel")} </h3>
-                                {
-                                    editCategories && userData.result._id === user.id &&
-                                    <div className='d-flex justify-content-start align-items-center col-lg-6'>
-                                        <CategoriesDropDown btnName={t("Categories")} setDropValue={setCategories} dropValue={categories} currentLanguage={currentLanguage} className={"col-12 form-control-sm"}/>
-                                        <i className="fa-solid fa-circle-check categories-approve me-2 ms-2" onClick={async() => {
-                                            await updateCharityCategories()
-                                        }}></i>
-                                        <i className="fa-solid fa-circle-xmark categories-reject me-2 ms-2" onClick={() => {
-                                            setEditCategories(false);
-                                        }}></i>
-                                    </div>
-                                }
-
-                                {
-                                    !editCategories && userData.result._id === user.id &&
-                                    <i className="fa-solid fa-pen-to-square ms-2 me-2 categories-edit" onClick={() => {
-                                        setEditCategories(true);
-                                    }}></i>
-                                }
+                            user && user.id !== userData.result._id &&
+                            <div className='col-md-3 col-5 d-flex flex-column justify-content-center align-items-center mt-5 mt-lg-2'>
+                                <button className={isFollower ? 'unfollow-btn col-11 ms-2' : 'follow-btn col-11 ms-2'} onClick={editSubscription}>
+                                    {isFollower ? t("UnFollow") : t("Follow")}
+                                </button>
                             </div>
+                        }
 
-                            <div className="col-12 d-flex flex-wrap mt-3">
+                        <div className='col-md-10 col-12 d-flex flex-column justify-content-center align-items-center mt-5 mt-lg-2'>
+                            <div className='col-11 d-flex flex-column'>
                             {
-                                ( () => {
-                                    let container = [];
-
-                                    categories.forEach((cat, j) => {
-                                        container.push(
-                                            <div key={j} className="subcat-label">
-                                                <span>
-                                                    {findCategoryDescription(cat, currentLanguage)}
-                                                </span>
-                                            </div>
-                                        )
-                                    })
-                                    return container;
-                                })()
+                                userData.result && userData.result.status === CharityStatus.PENDING && user && user.role === Role.ADMIN &&
+                                <div className="d-flex col-12 mb-3 justify-content-between align-items-center">
+                                    <IconTextButton 
+                                        text={t("Approve")}
+                                        onClick={() => {setItemStatus(CharityStatus.APPROVED); setShowConfirmationDialogue(true);}}
+                                        icon={<i className="fas fa-check"></i>}
+                                        btnClass={"approve"}
+                                    />    
+                                    <IconTextButton 
+                                        text={t("Reject")}
+                                        onClick={() => {setItemStatus(CharityStatus.REJECTED); setShowConfirmationDialogue(true);}}
+                                        icon={<i className="fas fa-times"></i>}
+                                        btnClass={"reject"}
+                                    />         
+                                </div>  
                             }
                             {
-                                ((categories == null || categories === undefined || categories.length === 0) && userData.result._id !== user.id) &&
-                                <h6 className={currentLanguage === "ar" ? 'text-right charity-profile-text' : 'text-left charity-profile-text'}>
-                                    {t("CharityDidntAddCategories")}
-                                </h6>
+                                showConfirmationDialogue &&
+                                <ChangeStatusDialogue id={userData.result._id} status={itemStatus} getCookie={getCookie} setShowDialogue={setShowConfirmationDialogue} ownerId={userData.result._id} currentLanguage={currentLanguage} isCharity={true}/>
                             }
+                                <div className='col-12 d-flex flex-md-row flex-column mt-lg-3'>
+                                    <h3 className={currentLanguage === "ar" ? 'text-right charity-profile-text-headers ms-4' : 'text-left charity-profile-text-headers me-4'}>{t("whatToDonateLabel")} </h3>
+                                    {
+                                        editCategories && userData.result._id === user.id &&
+                                        <div className='d-flex justify-content-start align-items-center col-lg-6'>
+                                            <CategoriesDropDown btnName={t("Categories")} setDropValue={setCategories} dropValue={categories} currentLanguage={currentLanguage} className={"col-12 form-control-sm"}/>
+                                            <i className="fa-solid fa-circle-check categories-approve me-2 ms-2" onClick={async() => {
+                                                await updateCharityCategories()
+                                            }}></i>
+                                            <i className="fa-solid fa-circle-xmark categories-reject me-2 ms-2" onClick={() => {
+                                                setEditCategories(false);
+                                            }}></i>
+                                        </div>
+                                    }
+
+                                    {
+                                        !editCategories && userData.result._id === user.id &&
+                                        <i className="fa-solid fa-pen-to-square ms-2 me-2 categories-edit" onClick={() => {
+                                            setEditCategories(true);
+                                        }}></i>
+                                    }
+                                </div>
+
+                                <div className="col-12 d-flex flex-wrap mt-3">
+                                {
+                                    ( () => {
+                                        let container = [];
+
+                                        categories.forEach((cat, j) => {
+                                            container.push(
+                                                <div key={j} className="subcat-label">
+                                                    <span>
+                                                        {findCategoryDescription(cat, currentLanguage)}
+                                                    </span>
+                                                </div>
+                                            )
+                                        })
+                                        return container;
+                                    })()
+                                }
+                                {
+                                    ((categories == null || categories === undefined || categories.length === 0) && userData.result._id !== user.id) &&
+                                    <h6 className={currentLanguage === "ar" ? 'text-right charity-profile-text' : 'text-left charity-profile-text'}>
+                                        {t("CharityDidntAddCategories")}
+                                    </h6>
+                                }
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className='col-md-10 col-12 d-flex flex-column justify-content-center align-items-center mt-5 mt-lg-3'>
-                        <div className='col-11 d-flex flex-column'>
-                            <h3 className={currentLanguage === "ar" ? 'text-right charity-profile-text-headers' : 'text-left charity-profile-text-headers'}>{t("Vision&MissionLabel")} </h3>
-                            <h6 className={currentLanguage === "ar" ? 'text-right charity-profile-text' : 'text-left charity-profile-text'}>{userData.result.mission}</h6>
+                        <div className='col-md-10 col-12 d-flex flex-column justify-content-center align-items-center mt-5 mt-lg-3'>
+                            <div className='col-11 d-flex flex-column'>
+                                <h3 className={currentLanguage === "ar" ? 'text-right charity-profile-text-headers' : 'text-left charity-profile-text-headers'}>{t("Vision&MissionLabel")} </h3>
+                                <h6 className={currentLanguage === "ar" ? 'text-right charity-profile-text' : 'text-left charity-profile-text'}>{userData.result.mission}</h6>
+                            </div>
                         </div>
-                    </div>
-                
-                    <div className='col-md-10 col-12 d-flex flex-column justify-content-center align-items-center mt-5 mt-lg-3'>
-                        <div className='col-11 d-flex flex-column'>
-                            <h3 className={currentLanguage === "ar" ? 'text-right charity-profile-text-headers' : 'text-left charity-profile-text-headers'}>{t("AdditionalInformationLabel")} </h3>
-                            <h6 className={currentLanguage === "ar" ? 'text-right charity-profile-text' : 'text-left charity-profile-text'}>{userData.result.additionalInfo}</h6>
+                    
+                        <div className='col-md-10 col-12 d-flex flex-column justify-content-center align-items-center mt-5 mt-lg-3'>
+                            <div className='col-11 d-flex flex-column'>
+                                <h3 className={currentLanguage === "ar" ? 'text-right charity-profile-text-headers' : 'text-left charity-profile-text-headers'}>{t("AdditionalInformationLabel")} </h3>
+                                <h6 className={currentLanguage === "ar" ? 'text-right charity-profile-text' : 'text-left charity-profile-text'}>{userData.result.additionalInfo}</h6>
+                            </div>
                         </div>
-                    </div>
-                    {
-                        screenWidth < 600 && userData.result._id === user.id &&
-                        <div className='d-flex col-10 flex-column mt-5 mt-lg-2 align-items-center justify-content-center'>
-                            <button className="mt-3 btnn col-12">{t("LogOutLink")}</button>
-                            <button className="mt-3 btnn col-12" onClick={changePassword}>{t("ChangePasswordLink")}</button>
-                        </div>
-                    }
-                    {
-                        <AllPosts getCookie={getCookie} user={user} currentLanguage={currentLanguage} isMine={true}/>
-                    }
+                        {
+                            screenWidth < 600 && userData.result._id === user.id &&
+                            <div className='d-flex col-10 flex-column mt-5 mt-lg-2 align-items-center justify-content-center'>
+                                <button className="mt-3 btnn col-12">{t("LogOutLink")}</button>
+                                <button className="mt-3 btnn col-12" onClick={changePassword}>{t("ChangePasswordLink")}</button>
+                            </div>
+                        }
+                        {
+                            <AllPosts getCookie={getCookie} user={user} currentLanguage={currentLanguage} isMine={true}/>
+                        }
                     </div>
                 </div>
             }

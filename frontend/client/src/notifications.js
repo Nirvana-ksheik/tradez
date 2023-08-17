@@ -39,7 +39,7 @@ const Notifications = {
         title: 'Item Approved ',
         message: 'Your item has been approved and added successfully',
         title_ar: 'تمت الموافقة على غرضك',
-        message_ar: 'لقد تمت الموافقة على غرضك ',
+        message_ar: 'لقد تمت الموافقة على غرضك',
     },
     ADMIN_REJECT_ITEM: {
         title: 'Item Rejected ',
@@ -57,34 +57,41 @@ const Notifications = {
         title: 'Application Rejected',
         message: 'Sorry, your application has been rejected, review for more details',
         title_ar: 'تم رفض الطلب',
-        message_ar: 'عذرًا، تم رفض طلبك. يرجى المراجعة للمزيد من التفاصيل.'
+        message_ar: 'عذرًا، تم رفض طلبك. يرجى المراجعة للمزيد من التفاصيل'
     },
     CHARITY_SIGNUP: {
         title: 'Charity Registered an Application',
         message: "##Model.username 's application is pending your review",
-        title_ar: 'تم تسجيل طلب منظمة خيرية.',
+        title_ar: 'تم تسجيل طلب منظمة خيرية',
         message_ar: "قيد الاإنتظار لمراجعتك ##Model.username طلب"
     },
     ITEM_UPLOADED: {
         title: 'New Item Uploaded',
         message: "##Model.username 's uploaded a new item for you review",
-        title_ar: 'تم رفع عنصر جديد.',
+        title_ar: 'تم رفع عنصر جديد',
         message_ar: "برفع عنصر جديد لمراجعتك ##Model.username قام المستخدم "
     },
     CHARITY_UPLOADED_POST: {
         title: 'New Post',
         message: '##Model.username uploaded a new post',
         title_ar: 'منشور جديد',
-        message_ar: 'جديد منشور بنشر ##Model.username قام '
+        message_ar: 'بنشر منشور جديد ##Model.username قام'
     },
     CHARITY_UPDATED_NEEDS: {
         title: 'New Charity Needs',
         message: "##Model.username has updated it's needs",
         title_ar: 'متطلبات جديدة',
         message_ar: 'بتعديل متطلباتها  ##Model.username قامت جمعية '
+    },
+    ITEM_DELIVERED: {
+        title: 'Item Delivered',
+        message: 'Your ##Model.itemname is ready, please pick up from nearest center',
+        title_ar: 'ايصال العنصر',
+        message_ar: 'جاهز للإستلام, الرجاء الإستلام من اقرب مركز ##Model.itemname'
     }
 }
 
+ 
 
 const parseModelString = (notificationText, modelData = undefined) => {
     console.log("Input string: ", notificationText);

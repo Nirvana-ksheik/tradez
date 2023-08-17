@@ -7,8 +7,8 @@ import { useTranslation } from "react-i18next";
 import { formatNumberWithCommas } from "../../helpers/numberFormatHelper";
 import { formatDateWithLanguage } from "../../helpers/dateFormatHelper";
 import { Dropdown } from "react-bootstrap";
-import "./post.css";
 import { useNavigate } from "react-router-dom";
+import "./post.css";
 
 const Post = ({ getCookie, user, initialData, currentLanguage }) => {
   const [liked, setLiked] = useState();
@@ -70,6 +70,7 @@ const Post = ({ getCookie, user, initialData, currentLanguage }) => {
         console.log("result is: ", res);
         setLiked(!liked);
         setData((prevData) => ({ ...prevData, ...res }));
+
         if(!liked){
 
           const modelData = {
@@ -109,7 +110,7 @@ const Post = ({ getCookie, user, initialData, currentLanguage }) => {
     await reqInstance.delete(url)
       .then(({ data: res }) => {
         console.log("result is: ", res);
-        setData(res);
+        setData((prevData) => ({ ...prevData, ...res }));
       })
       .catch((err) => {
         console.log("error is: ", err);
@@ -137,7 +138,7 @@ const Post = ({ getCookie, user, initialData, currentLanguage }) => {
         })
         .then(async({ data: res }) => {
           console.log("result is: ", res);
-          setData(res);
+          setData((prevData) => ({ ...prevData, ...res }));
 
           const modelData = {
             username: user.username
@@ -233,10 +234,16 @@ const Post = ({ getCookie, user, initialData, currentLanguage }) => {
       </div>
       <div className="post-comments">
         <ul className="p-1">
-          {showAllComments && data.comments.map((obj, index) => (
+          {showAllComments && data.comments && data.comments.map((obj, index) => (
             <div key={index} className="comment-li-none m-0 mt-3 ">
               <div className="d-flex flex-row m-0 col-12">
-                <img src={"http://localhost:3000" + obj.logo} alt="" className="comment-image-logo me-1 ms-1"/>
+                {
+                  obj.logo ? 
+                  <img src={"http://localhost:3000" + obj.logo} alt="" className="comment-image-logo me-1 ms-1" onLoad={(e) => {
+                    e.target.src = "http://localhost:3000" + obj.logo
+                  }}/> :
+                  <i className="fas fa-user-circle comment-image-logo me-1 ms-1 icon"></i>
+                }
                 <div className="d-flex justify-content-center flex-column align-items-start col-12 mb-1">
                   <div className="d-flex justify-content-start align-item-center col-12">
                       <p className="m-0 font-medium font-grey">{obj.username}</p>&nbsp;&nbsp;&nbsp;&nbsp;

@@ -39,7 +39,10 @@ const ItemsList = ({clickEvent, getData, items, orderValue, setOrderValue, order
     }, [itemOffset, items]);
 
     return (
-    <div dir={currentLanguage === "ar" ? "rtl" : "ltr"} className={isUserProfile ? "d-flex flex-column col-12 align-items-center justify-content-center" : "d-flex flex-column col-xl-10 align-items-center justify-content-center"}>
+    <div dir={currentLanguage === "ar" ? "rtl" : "ltr"} className={
+        isUserProfile ?
+        "d-flex flex-column col-12 align-items-center justify-content-center" :
+        "d-flex flex-column col-10 align-items-center justify-content-center"}>
 
         <SearchBar setOrderValue={setOrderValue} setOrderDirectionValue={setOrderDirectionValue}
                    setSearchTextValue={setSearchTextValue}
@@ -50,23 +53,25 @@ const ItemsList = ({clickEvent, getData, items, orderValue, setOrderValue, order
         />
         {
             items != null && items !== undefined && currentItems != null && currentItems !== undefined && currentItems.length > 0 && isLoading === false && 
-            <>
-                <div className="d-flex flex-wrap col-12 justify-content-center mt-4">
-                    {
-                        (() => {
-                            console.log("current items: ", currentItems);
-                            let container = [];                  
-                            currentItems && currentItems.forEach((data, index) => {
-                                console.log("single data is: ", data);
-                                container.push(
-                                    <Item isUserProfile={isUserProfile} currentLanguage={currentLanguage} key={index} data={data} clickEvent={()=> {clickEvent(data._id)}}/>
-                                )
-                            })
-                            return container;
-                        })()
-                    }
-                </div>
-            </>
+            <div className="col-12 d-flex flex-wrap justify-content-center align-items-center mt-4">
+                {
+                    (() => {
+                        console.log("current items: ", currentItems);
+                        let container = [];                  
+                        currentItems && currentItems.forEach((data, index) => {
+                            console.log("single data is: ", data);
+                            container.push(
+                                <div className="col-3 flex-wrap d-flex justify-content-center" key={index}>
+                                    <div className="col-10 m-3">
+                                        <Item isUserProfile={isUserProfile} currentLanguage={currentLanguage} key={index} data={data} clickEvent={()=> {clickEvent(data._id)}} isAdminPage={true}/>
+                                    </div>
+                                </div>
+                            )
+                        })
+                        return container;
+                    })()
+                }
+            </div>
         }
         {
             isLoading === true && <LoadingSpinner />

@@ -21,6 +21,7 @@ function ExpandableTextArea({className, name, handleChange, value}) {
       <textarea 
         onChange={handleTextInputChange}
         name={name}
+        value={value}
         className={className}
         ref={textRef}
         rows={10}></textarea>   

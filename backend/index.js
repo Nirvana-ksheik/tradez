@@ -15,18 +15,19 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import * as dotenv from 'dotenv';
 import notificationRouter from './routes/notificationRoutes.js';
+import path from 'path';
+
 dotenv.config();
 
 const app = express(); 
 const httpServer = createServer(app);
-
-app.use(express.static('./public'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use(cors({credentials: true, origin: true }));
+app.use(cors({origin: '*'}));
 
 app.use('/', (req, res, next) => {
     res.setHeader(
@@ -37,6 +38,8 @@ app.use('/', (req, res, next) => {
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/api/image/:id/:idd/:iddd', (req, res) => {
 

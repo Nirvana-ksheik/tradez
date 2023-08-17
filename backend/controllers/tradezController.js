@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv';
 import { TradezModel } from '../models/Tradez.js';
-import { createTrade, getTradez, getTrade, acceptTrade } from '../helpers/tradeHelper.js';
+import { createTrade, getTradez, getTrade, acceptTrade, getAcceptedTradez } from '../helpers/tradeHelper.js';
 import mongoose from 'mongoose';
 dotenv.config();
 
@@ -57,3 +57,17 @@ const _acceptTradezController = async (req, res) => {
     }
 };
 export { _acceptTradezController as acceptTradezController };
+
+
+const _getAcceptedTradezController = async (req, res) => {
+    try {
+        console.log("entered get accepted tradez controller");
+        const result = await getAcceptedTradez();
+        console.log("res is: ", result);
+        res.status(200).json({result});
+    } catch (err) {
+        console.log("error: ", err);
+        res.status(500).json(err.message);
+    }
+};
+export { _getAcceptedTradezController as getAcceptedTradezController };

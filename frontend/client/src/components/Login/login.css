@@ -43,12 +43,12 @@ input:-webkit-autofill {
 }
 
 .input {
-	outline: none;
+	outline: none !important;
 	border-bottom: 1px solid black !important;
-	padding: 15px;
-	border-radius: 3px;
-	margin: 5px 0;
-	font-size: 1.1em;
+	padding: 15px !important;
+	border-radius: 3px !important;
+	margin: 5px 0 !important;
+	font-size: 1.1em !important;
 }
 
 .error_msg {

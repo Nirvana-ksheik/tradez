@@ -15,7 +15,6 @@ import ArchivedItems from "pages/ArchivedItems";
 import ResetPassword from "components/ResetPassword";
 import ForgotPassword from "components/ForgotPassword";
 import ConfirmEmail from "components/ConfirmEmail";
-import HomePage from "pages/HomePage";
 import SignupCharity from "components/SignupCharity";
 import LoginCharity from "components/LoginCharity";
 import UserProfilePage from "pages/UserProfilePage";
@@ -27,8 +26,11 @@ import AllCharities from "pages/getAllCharities";
 import { subscribeUser } from "./subscription";
 import axios from "axios";
 import { useTranslation, I18nextProvider  } from "react-i18next";
+import Landing from "./pages/Landing";
 // eslint-disable-next-line no-unused-vars
 import i18n from "./i18n";
+import AllTradez from "./pages/AllTradez";
+import { Role } from "./lookups";
 
 function App() {
 
@@ -135,7 +137,7 @@ function App() {
 		<div>
 			<NavBar user={user} getCookie={getCookie} changeLanguage={changeLanguage} currentLanguage={currentLanguage}/>
 			<Routes>
-				<Route path="/" element={<HomePage getCookie={getCookie} user={user} currentLanguage={currentLanguage}/>} />
+				<Route path="/" element={<Landing />} />
 				<Route path="/signup" element={<Signup currentLanguage={currentLanguage}/>} />
 				<Route path="/login" element={<Login setCookie={setCookie} currentLanguage={currentLanguage}/>} />
 				<Route path="/items/mine" element={ user ? <MyItems getCookie={getCookie} user={user} currentLanguage={currentLanguage}/> : <Login setCookie={setCookie}/>} currentLanguage={currentLanguage}/>
@@ -157,6 +159,7 @@ function App() {
 				<Route path="/charity/posts/edit/:id" element={ <EditPost getCookie={getCookie} currentLanguage={currentLanguage}/> } />
 				<Route path="/charity/posts" element={ <AllPosts getCookie={getCookie} user={user} currentLanguage={currentLanguage}/> } />
 				<Route path="/charities" element={ <AllCharities getCookie={getCookie} user={user} currentLanguage={currentLanguage}/> } />
+				<Route path="/items/tradez" element={ user && user.role === Role.ADMIN ? <AllTradez getCookie={getCookie} user={user} currentLanguage={currentLanguage}/> : <Landing /> } />
 			</Routes>
 		</div>
 		</I18nextProvider>

@@ -1,0 +1,37 @@
+.two-way-arrow-icon{
+    color: var(--primary-variant-color);
+    font-size: 4rem;
+}
+
+.no-user-icon-logo{
+    font-size: 8rem;
+    color: var(--primary-variant-color)
+}
+
+.center{
+    align-items: center;
+}
+
+.deliver-button{
+    background-color: var(--approve) !important;
+}
+
+.trade-username:hover{
+    cursor: pointer;
+    color: var(--primary-variant-color)
+}
+
+.no-tradez{
+    color: var(--primary-color);
+    margin-top: 3%;
+}
+
+.kpi-icon{
+    color: var(--primary-color);
+    font-size: 5rem;
+}
+
+.kpi-container{
+    border-bottom: 2px solid var(--primary-color);
+    margin-bottom: 5%;
+}

@@ -113,7 +113,7 @@ const SignupCharity = ({currentLanguage}) => {
 	return (
 		<>
 		{isLoading === true && <LoadingSpinner />}
-		{signupRibbon === true && <Ribbon text={signupText} setShowValue={setSignupRibbon} isSuccess={error === ""} showTime={10000}/>}
+		{signupRibbon === true && <Ribbon text={signupText} setShowValue={setSignupRibbon} isSuccess={error === ""} showTime={5000}/>}
 		{
 			isLoading === false && 
 			<div dir={currentLanguage === "ar" ? "rtl" : "ltr"} className="d-flex flex-column justify-content-center align-items-center col-12 col-md-11 mt-5 mb-5 form-parent-container charity-container-signup">

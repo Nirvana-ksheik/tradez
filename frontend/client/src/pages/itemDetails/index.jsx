@@ -103,24 +103,55 @@ const ItemDetails = ({getCookie, enableTrade, user, currentLanguage}) => {
             }
         });
 
-        const itemUrl = "http://localhost:3000/api/tradez/accept";
-        await reqInstance.put(
-            itemUrl,
-            {
-                primaryItemId: primaryId,
-                secondaryItemId: item._id,
-                secondaryUserId: item.ownerId
-            },
-            {
-                withCredentials: true,
-                baseURL: 'http://localhost:3000'
-            }
-        );
+        try{
+            const itemUrl = "http://localhost:3000/api/tradez/accept";
+            await reqInstance.put(
+                itemUrl,
+                {
+                    primaryItemId: primaryId,
+                    secondaryItemId: item._id,
+                    secondaryUserId: item.ownerId
+                },
+                {
+                    withCredentials: true,
+                    baseURL: 'http://localhost:3000'
+                }
+            )
+            .catch((err) => {
+                console.log("error: ", err);
+            })
+    
+            const location = "/items/" + primaryId;
+            navigate(location);
+        }
+        catch(err){
+            console.log("error is: ", err);
+        }
 
-        const location = "/items/" + primaryId;
-        navigate(location);
     }
 
+    const DownloadQRCode = (itemId, userId) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', 'http://localhost:3000/api/item/' + itemId + '/user/' + userId + '/qr-code/download', true); // Replace with your actual server route
+        xhr.responseType = 'blob';
+      
+        xhr.onload = () => {
+          if (xhr.status === 200) {
+            const blob = xhr.response;
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'downloaded_image.jpg';
+            a.click();
+            window.URL.revokeObjectURL(url);
+          } else {
+            console.error('Error while downloading image');
+          }
+        };
+      
+        xhr.send();
+      };
+ 
 	return (
         <div className="d-flex col-12 justify-content-center align-items-center flex-column" dir={currentLanguage === "ar"? "rtl" : "ltr"}>
         {
@@ -141,6 +172,17 @@ const ItemDetails = ({getCookie, enableTrade, user, currentLanguage}) => {
                             onClick={() => {goToEdit(item._id)}}
                             icon={<i className="fa-regular fa-pen-to-square"></i>}
                         />
+                    }
+                    {
+                        item  && item.status === ItemStatus.APPROVED && user && user.role === Role.USER && user.id === item.itemOwner.id &&
+                        <>
+                            <IconTextButton 
+                                text={t("QR-Code")}
+                                onClick={() => {DownloadQRCode(item._id, user.id)}}
+                                icon={<i class="fa-solid fa-qrcode"></i>}
+                            />
+                            <img alt="" id="qr-code-img" src={"http://localhost:3000/" + user.id + "/" + item._id + "/qr-code/" + item._id + "--qrCode.png"} hidden/>
+                        </>
                     }
                     {
                         item && item.status === ItemStatus.APPROVED && item.archived === false && user && user.role === Role.USER && item.itemTradeInOrder === true && enableTrade === true &&
@@ -183,7 +225,7 @@ const ItemDetails = ({getCookie, enableTrade, user, currentLanguage}) => {
                     }
                     {
                         item && 
-                        <div className={"d-flex col-lg-10 col-12 mt-2 mb-5 " + item.status + "-details "}>
+                        <div className={item.archived ? "d-flex col-lg-10 col-12 mt-2 mb-5 " + item.isDelivered + "-details " : "d-flex col-lg-10 col-12 mt-2 mb-5 " + item.status + "-details "}>
                             <div className="d-flex col-12 flex-lg-row flex-column align-items-center align-items-lg-stretch ">
 
                                 <div className="col-lg-4 col-5 d-flex">

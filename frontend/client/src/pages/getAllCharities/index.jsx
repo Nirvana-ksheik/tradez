@@ -97,7 +97,7 @@ const AllCharities = ({getCookie, user, currentLanguage}) => {
     }, [charities, charitiesOffset]);
 
 	return (
-        <div dir={currentLanguage === "ar" ? "rtl" : "ltr"} className="d-flex flex-column col-xl-10 offset-xl-1 justify-content-center">
+        <div dir={currentLanguage === "ar" ? "rtl" : "ltr"} className="d-flex flex-column col-xl-10 offset-xl-1 justify-content-center align-items-center">
 
         <SearchBar 
                 setOrderValue={setOrderValue} setOrderDirectionValue={setOrderDirectionValue} 

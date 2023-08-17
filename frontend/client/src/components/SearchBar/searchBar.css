@@ -1,50 +1,50 @@
 .search-input{
-    border: none;
+    border: none !important;
     border-bottom: 1px solid var(--secondary-color) !important;
-    text-decoration: none;
-    border-radius: 0.2rem;
-    padding: 0.2rem;
+    text-decoration: none !important;
+    border-radius: 0.2rem !important;
+    padding: 0.2rem !important;
 }
 
 .search-icon{
-    border: none;
+    border: none !important;
 }
 
 .dropDown-button{
-    text-align: start;
-    align-items: start;
+    text-align: start !important;
+    align-items: start !important;
     background-color: none !important;
     border: 1px solid var(--primary-variant-color) !important;
-    color: var(--primary-variant-color);
-    width: 10vw;
+    color: var(--primary-variant-color) !important;
+    width: 10vw !important;
 }
 
 @media screen and (max-width: 769px) and (min-width: 426px) {
     .dropDown-button{
-        width: 20vw;
+        width: 20vw !important;
     }
 }
 
 @media screen and (max-width: 1025px) and (min-width: 769px){
     .dropDown-button{
-        width: 15vw;
+        width: 15vw !important;
     }
 }
 
 @media screen and (max-width: 426px) {
     .dropDown-button{
-        width: 40vw;
+        width: 40vw !important;
     }
 }
 
 .dropdown-toggle{
-    background-color: var(--primary-variant-color);
+    background-color: var(--primary-variant-color) !important;
     text-decoration-style: none !important;
     border: none !important;
     box-shadow: none !important;
 }
 
-.dropdown-toggle:focus, .dropdown-toggle:hover{
+.dropDown-toggle:focus, .dropDown-toggle:hover{
     background-color: var(--primary-color) !important;
     text-decoration-style: none !important;
     border: none !important;
@@ -52,15 +52,15 @@
 }
 
 .dropdown-container{
-    margin: 1rem;
+    margin: 1rem !important;
 }
 
 .dropDown-button{
-    background-color: whitesmoke;
+    background-color: whitesmoke !important;
 }
 
 .dropDown-button:hover{
-    background-color: whitesmoke;
+    background-color: whitesmoke !important;
 }
 
 .dropdown{
@@ -68,9 +68,13 @@
 }
 
 .hide-show-filters{
-    color: var(--primary-variant-color);
-    font-size: 1.8rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    color: var(--primary-variant-color) !important;
+    font-size: 1.8rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.primary-variant{
+    color: var(--primary-variant-color)
 }

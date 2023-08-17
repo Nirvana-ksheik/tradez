@@ -56,11 +56,11 @@
     box-shadow: 4px 4px var(--primary-color) !important;
   }
 
-  .approved-details, .rejected-details, .pending-details{
+  .approved-details, .rejected-details, .pending-details, .false-details, .true-details{
     position: relative;
     overflow: hidden;
   }
-  .item-details-container::before, .pending-details::before, .approved-details::before, .rejected-details::before{
+  .item-details-container::before, .pending-details::before, .approved-details::before, .rejected-details::before, .false-details::before, .true-details::before{
     position: absolute;
     top: 1rem;
     right: -2rem;
@@ -88,6 +88,16 @@
     content: "Rejecetd";
   }
 
+  .false-details::before{
+    background: var(--reject);
+    content: "Not Delivered";
+  }
+
+  .true-details::before{
+    background: var(--approve);
+    content: "Delivered";
+  }
+
   .sub-text{
     color: white !important;
     font-size: 12px;
@@ -104,6 +114,12 @@
   .submit-btn-confirm-dialogue{
     color: white;
     background-color: var(--primary-variant-color);
+    border-radius: 1rem;
+  }
+
+  .submit-btn-confirm-dialogue:hover,.submit-btn-confirm-dialogue:focus{
+    color: white;
+    background-color: var(--secondary-color);
     border-radius: 1rem;
   }
 

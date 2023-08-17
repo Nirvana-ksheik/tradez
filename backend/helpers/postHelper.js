@@ -97,7 +97,7 @@ const addPostComment = async ({postId, commentText, userId, username}) => {
     console.log("comment text is: ", commentText);
     console.log("userId is: ", userId);
     console.log("post id is: ", postId);
-
+        
     const newPost = await model.findByIdAndUpdate(postId,
         { $push: {"comments": 
             {
@@ -111,8 +111,10 @@ const addPostComment = async ({postId, commentText, userId, username}) => {
         console.log("Error adding comment: ", err);
     });
 
-    console.log("new post with comment: ", newPost);
-    return newPost;
+    const postModel = await getPostModel(newPost);
+
+    console.log("new post with comment: ", postModel);
+    return postModel;
 }
 
 const deletePostComment = async ({postId, commentId}) => {
@@ -126,9 +128,10 @@ const deletePostComment = async ({postId, commentId}) => {
         console.log("Error adding comment: ", err);
     });
 
-    console.log("new post without comment: ", newPost);
+    const postModel = await getPostModel(newPost);
 
-    return newPost;
+    console.log("new post with comment: ", postModel);
+    return postModel;
 }
 
 const likePostComment = async ({postId, userId}) => {
@@ -149,8 +152,10 @@ const likePostComment = async ({postId, userId}) => {
         console.log("Error adding comment: ", err);
     });
 
+    const postModel = await getPostModel(newPost);
 
-    return newPost;
+    console.log("new post with comment: ", postModel);
+    return postModel;
 }
 
 const unlikePostComment = async ({postId, userId}) => {
@@ -169,7 +174,10 @@ const unlikePostComment = async ({postId, userId}) => {
         console.log("Error adding comment: ", err);
     });
 
-    return newPost;
+    const postModel = await getPostModel(newPost);
+
+    console.log("new post with comment: ", postModel);
+    return postModel;
 }
 
 const getPostMetadata = async (postId) => {
@@ -192,4 +200,35 @@ const deletePost = async ({postId}) => {
             console.log("Error getting post: ", err);
         });
 }
+
+const getPostModel = async(post) => {
+    const postModel = new PostModel(post);
+    const charity = await modelCharity.findById(post.charityId);
+    if(charity){
+        postModel.setLogo(charity.logo);
+    }
+    if(post.comments && post.comments.length > 0){
+        await map(post.comments, async (comment) => {
+            const commentModel = new PostCommentModel(comment);
+            console.log("comment user id: ", commentModel.userId);
+            console.log("comment user id string: ", commentModel.userId.toString());
+            
+            const user = await modelUser.findById({_id: commentModel.userId.toString()})
+                .catch((err) => {
+                    console.log("Error getting user from comment: ", err);
+                }) ??
+                await modelCharity.findById({_id: commentModel.userId.toString()})
+                .catch((err) => {
+                    console.log("Error getting user from comment: ", err);
+                });
+                            
+            commentModel.logo = user.logo;
+            commentModel.commentDate = convertUtcToClientDate({utcDate: comment.commentDate});   
+            postModel.comments.push(commentModel);
+        })
+    }
+
+    return postModel;
+}
+
 export { createPost, editPost, getAllPosts, addPostComment, deletePostComment, likePostComment, unlikePostComment, getPostMetadata, deletePost };

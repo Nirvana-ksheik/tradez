@@ -24,6 +24,10 @@ const tradezSchema = new Schema({
     accepted:{
         type: Boolean,
         default: false
+    },
+    isArchived:{
+        type: Boolean,
+        default: false
     }
 });
 
@@ -34,6 +38,16 @@ export class TradezModel {
         this.primaryUserId = mongoose.Types.ObjectId(data.primaryUserId);
         this.secondaryUserId = mongoose.Types.ObjectId(data.secondaryUserId);
         this.accepted = false;
+        this.isArchived = false;
+    }
+}
+
+export class AdminTradezModel {
+    constructor(itemModel1, itemModel2, tradeId){
+        console.log('trade id in constructor: ', tradeId);
+        this.item1 = itemModel1
+        this.item2 = itemModel2;
+        this.tradeId = tradeId;
     }
 }
 
